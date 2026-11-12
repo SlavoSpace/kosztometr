@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Księgowa">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-12 15:08 · de6cf0b">
+<meta name="ksiegowa-wersja" content="2026-11-12 19:25 · 629ae03">
 <title>Księgowa</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -447,11 +447,13 @@ button.liczba:active{filter:brightness(.95)}
 .strona-g .pod{margin-top:4px}
 .sygn{font-size:12px;font-weight:700;color:var(--tekst3);letter-spacing:.04em}
 
-/* dwa pliki — A po lewej, B po prawej, ta sama budowa */
-.pliki{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
-.plik{border:1px solid var(--ramka);background:var(--pow);border-radius:16px;padding:16px;display:grid;grid-template-rows:auto 1fr;gap:12px;min-width:0}
-.plik-g{display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:12px}
-.plik-lit{width:40px;height:40px;border-radius:12px;border:2px solid var(--kol,var(--ramka2));color:var(--kol,var(--tekst2));display:flex;align-items:center;justify-content:center;font-size:24px;padding-top:2px}
+/* trzy pliki — A (księgowa), B1 (FIRMINO towary), B2 (FIRMINO koszty), ta sama budowa */
+.pliki{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+.plik{border:1px solid var(--ramka);background:var(--pow);border-radius:16px;padding:16px;display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-width:0}
+.plik-g{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:12px}
+.plik-lit{width:40px;height:40px;border-radius:12px;border:2px solid var(--kol,var(--ramka2));color:var(--kol,var(--tekst2));display:flex;align-items:center;justify-content:center;font-size:24px;padding-top:2px;flex:0 0 auto}
+.plik-lit.dwa{font-size:21px;letter-spacing:.02em}
+.plik-lit.mini{display:inline-flex;width:26px;height:22px;border-radius:7px;border-width:1.5px;font-size:13px;vertical-align:middle;padding-top:1px}
 .plik-tyt b{display:block;font-size:16px;font-weight:800;letter-spacing:.02em}
 .plik-tyt span{display:block;font-size:13px;color:var(--tekst2)}
 .plik-pole{position:relative;border:1.5px dashed var(--ramka2);border-radius:14px;min-height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px;text-align:center;color:var(--tekst2);cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -462,7 +464,9 @@ button.liczba:active{filter:brightness(.95)}
 .plik-pole small{font-size:12.5px;color:var(--tekst3)}
 .plik-ok{border:1px solid var(--linia);background:var(--pow2);border-radius:14px;padding:12px 14px;display:grid;gap:10px;align-content:start;min-height:118px}
 .plik-ok .nz{display:flex;align-items:center;gap:8px;min-width:0;font-weight:700;font-size:14px}
-.plik-ok .nz span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plik-ok .nz > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1 1 auto}
+.plik-ok .nz .plik-zmien{flex:0 0 auto;margin-left:auto;font-size:13px;min-height:32px;padding:0 10px}
+.plik-ok .nz .plik-zmien .ikona{color:inherit;width:15px;height:15px}
 .plik-ok .nz .ikona{color:var(--okTekst)}
 .plik-ok .licz-w b{font-size:16px}
 .plik-ok .ark{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;font-size:12.5px}
@@ -575,7 +579,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 
 /* telefon i iPad w pionie */
 @media (max-width:640px){.liczby{grid-template-columns:1fr}.tab .nv{display:none}}
-@media (max-width:760px){.pliki{grid-template-columns:1fr}}
+@media (max-width:1060px){.pliki{grid-template-columns:1fr}}
 @media (max-width:640px){.tab td:first-child small{max-width:150px}.tab td,.tab th{padding:8px 9px}}
 
 /* ── produkcja (12.11): miesiąc z bazy, wyjaśnienia, zapis plików, wersje ── */
@@ -613,6 +617,67 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .wers-n small{display:block;font-size:12.5px;color:var(--tekst3)}
 @media (max-width:640px){.miesiac-w{flex:1 1 100%}.wyj-akcje{grid-template-columns:1fr 1fr}.wyj-akcje > span{grid-column:1 / -1}}
 @media (max-width:1000px){.licz-w small .szer{display:none}}
+
+/* ── 1.1 (12.11 wieczór): trzy pliki, ZATWIERDŹ, UZGODNIJ, historia ── */
+.plik-czeka{border:1.5px dashed var(--ramka2);border-radius:14px;min-height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px;text-align:center;color:var(--tekst3)}
+.plik-czeka .ikona{width:24px;height:24px}
+.plik-czeka b{color:var(--tekst2);font-size:15px}
+.plik-czeka small{font-size:12.5px}
+.zatw{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"stan akcja" "kto kto";gap:6px 10px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid var(--linia);background:var(--pow2)}
+.zatw > .pill{grid-area:stan;justify-self:start;max-width:100%;overflow:hidden}
+.zatw > .zatw-k{grid-area:kto}
+.zatw > :nth-child(3){grid-area:akcja}
+.zatw.ok{border-color:var(--okRamka);background:var(--okTlo)}
+.zatw.czeka{border-color:var(--uwRamka)}
+.zatw .pill .ikona{width:14px;height:14px}
+.zatw-k{font-size:13px;font-weight:700;color:var(--tekst2);min-width:0;overflow-wrap:anywhere}
+.zatw.ok .zatw-k{color:var(--okTekst)}
+.zatw .zatwierdz{letter-spacing:.04em;white-space:nowrap}
+.zatw .zatwierdz:disabled{opacity:1}
+.zatw .drugi.maly{min-height:34px}
+@media (max-width:640px){.plik-ok .licz-w .ark{grid-column:1 / -1;justify-content:flex-start}}
+
+.uzg{margin-top:14px;border:1px solid var(--ramka);background:var(--pow);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"kroki przycisk" "opis opis";gap:12px 18px;align-items:center}
+.uzg-kroki{grid-area:kroki;display:flex;flex-wrap:wrap;gap:8px}
+.uzg-p{grid-area:przycisk;justify-self:end}
+.uzg-o{grid-area:opis;display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
+.uzg-o p{margin:0;font-size:14px;color:var(--tekst2);max-width:96ch;line-height:1.45}
+.uzg-o p b{color:var(--tekst)}
+.uzg-l{display:inline-flex;gap:14px;flex-wrap:wrap}
+.uzg-l .link{min-height:30px;font-size:13.5px}
+.uzg-l .ikona{width:16px;height:16px}
+.krok{display:inline-flex;align-items:center;gap:9px;padding:5px 12px 5px 6px;border-radius:13px;border:1px solid var(--ramka2);background:var(--pow2);min-width:0}
+.krok b{display:block;font-size:13px;font-weight:800;white-space:nowrap}
+.krok small{display:flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:var(--tekst3);white-space:nowrap}
+.krok small .ikona{width:13px;height:13px}
+.krok.ok{border-color:var(--okRamka);background:var(--okTlo)} .krok.ok small{color:var(--okTekst)}
+.krok.czeka{border-color:var(--uwRamka);background:var(--uwTlo)} .krok.czeka small{color:var(--uwTekst)}
+.krok.brak{border-style:dashed;background:transparent}
+.glowny.uzgodnij{min-height:56px;padding:0 28px;font-size:17px;letter-spacing:.08em}
+.glowny.uzgodnij .ikona{width:22px;height:22px}
+.pill.duza{min-height:40px;padding:0 16px;border-radius:12px;font-size:15px;font-weight:800}
+.pill.duza .ikona{width:18px;height:18px}
+@media (max-width:760px){.uzg{grid-template-columns:1fr;grid-template-areas:"kroki" "przycisk" "opis"}.uzg-p{justify-self:stretch}.uzg-p > *{width:100%;justify-content:center}
+  .uzg-kroki{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .uzg-kroki .krok{flex-direction:column;align-items:flex-start;gap:5px;padding:7px 8px}
+  .krok b{display:none}.krok small{white-space:normal;align-items:flex-start;line-height:1.25}}
+
+.tab .tagi{display:flex;gap:4px;margin-top:3px}
+.tab .nr + .tagi,.tab .kontr + .tagi{margin-top:4px}
+.tab .grupa{font-size:12px;color:var(--tekst3);font-weight:700;max-width:170px;display:inline-block;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+.tab.b td .plik-lit.mini{margin-right:2px}
+.porown small{color:var(--tekst3);font-size:12.5px}
+.porown .inne small{color:inherit}
+
+.lista-hist{display:grid;gap:6px}
+.hist{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2)}
+.hist-i{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;border:1px solid var(--ramka2);color:var(--tekst2)}
+.hist.zatwierdzenie .hist-i{border-color:var(--okRamka);background:var(--okTlo);color:var(--okTekst)}
+.hist.cofniecie .hist-i{border-color:var(--uwRamka);background:var(--uwTlo);color:var(--uwTekst)}
+.hist.uzgodnienie .hist-i{border-color:var(--mocRamka);background:var(--mocTlo);color:var(--mocTekst)}
+.hist-t b{display:block;font-size:13.5px;font-weight:700;overflow-wrap:anywhere}
+.hist-t small{display:block;font-size:12.5px;color:var(--tekst3)}
+.wers-p{display:inline-flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 
 </style>
 </head>
@@ -1228,6 +1293,140 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     return { arkusze: arkusze };
   }
 
+  /* ───────────── .xls (Excel 97–2003: plik złożony OLE2 + rekordy BIFF8) ───────────── */
+  // FIRMINO zapisuje tak plik kosztów (12.11.2026). Bez bibliotek: czytamy teksty, liczby, daty i nazwy arkuszy.
+  function strumienCfb(u8, nazwy) {
+    var dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+    var u32 = function (o) { return dv.getUint32(o, true); };
+    if (u8.length < 512 || u32(0) !== 0xE011CFD0 || u32(4) !== 0xE11AB1A1) throw new Error('To nie jest plik Excela .xls.');
+    var szS = 1 << dv.getUint16(30, true), szM = 1 << dv.getUint16(32, true), SPEC = 0xFFFFFFFA;
+    var sektor = function (x) { return (x + 1) * szS; };
+    var difat = [], i, j;
+    for (i = 0; i < 109; i++) { var d0 = u32(76 + 4 * i); if (d0 < SPEC) difat.push(d0); }
+    for (var ds = u32(68), nd = 0; ds < SPEC && nd <= u32(72) && sektor(ds) + szS <= u8.length; nd++) {
+      for (j = 0; j < szS / 4 - 1; j++) { var d1 = u32(sektor(ds) + 4 * j); if (d1 < SPEC) difat.push(d1); }
+      ds = u32(sektor(ds) + szS - 4);
+    }
+    var fat = [];
+    difat.forEach(function (x) { for (var k = 0; k < szS / 4 && sektor(x) + 4 * k + 4 <= u8.length; k++) fat.push(u32(sektor(x) + 4 * k)); });
+    function lancuch(start, tab) { var l = []; for (var x = start; x < SPEC && l.length <= tab.length; x = tab[x]) l.push(x); return l; }
+    function czytajL(start, rozmiar) {
+      var l = lancuch(start, fat), out = new Uint8Array(l.length * szS);
+      l.forEach(function (x, k) { out.set(u8.subarray(sektor(x), Math.min(sektor(x) + szS, u8.length)), k * szS); });
+      return rozmiar == null ? out : out.subarray(0, Math.min(rozmiar, out.length));
+    }
+    var kat = czytajL(u32(48)), kv = new DataView(kat.buffer, kat.byteOffset, kat.byteLength), wpisy = [];
+    for (var e = 0; e + 128 <= kat.length; e += 128) {
+      var dl = kv.getUint16(e + 64, true), n = '';
+      for (var c = 0; c + 2 < dl && c < 64; c += 2) n += String.fromCharCode(kv.getUint16(e + c, true));
+      wpisy.push({ nazwa: n, typ: kat[e + 66], start: kv.getUint32(e + 116, true), rozmiar: kv.getUint32(e + 120, true) });
+    }
+    var cel = null;
+    nazwy.forEach(function (nz) { cel = cel || wpisy.filter(function (w) { return w.typ === 2 && w.nazwa === nz; })[0] || null; });
+    if (!cel) return null;
+    if (cel.rozmiar >= u32(56)) return czytajL(cel.start, cel.rozmiar);
+    var korzen = wpisy.filter(function (w) { return w.typ === 5; })[0], mini = korzen ? czytajL(korzen.start, korzen.rozmiar) : new Uint8Array(0);
+    var mf = u32(60) < SPEC ? czytajL(u32(60)) : new Uint8Array(0), mv = new DataView(mf.buffer, mf.byteOffset, mf.byteLength), mfat = [];
+    for (i = 0; i + 4 <= mf.length; i += 4) mfat.push(mv.getUint32(i, true));
+    var lm = lancuch(cel.start, mfat), out = new Uint8Array(lm.length * szM);
+    lm.forEach(function (x, k) { out.set(mini.subarray(x * szM, x * szM + szM), k * szM); });
+    return out.subarray(0, cel.rozmiar);
+  }
+  function czytajXls(u8) {                    // → { arkusze: [{ nazwa, wiersze: [[…]] }] } jak z .xlsx
+    var s = strumienCfb(u8, ['Workbook', 'WORKBOOK', 'workbook', 'Book', 'BOOK']);
+    if (!s) throw new Error('W pliku .xls nie ma skoroszytu.');
+    var dv = new DataView(s.buffer, s.byteOffset, s.byteLength);
+    var u16 = function (o) { return dv.getUint16(o, true); }, u32 = function (o) { return dv.getUint32(o, true); };
+    function znaki(o, ile, hi) {               // ile znaków od o: 2 bajty (hi) albo 1 bajt (Latin-1)
+      var t = '', k;
+      if (hi) for (k = 0; k < ile && o + 2 * k + 1 < s.length; k++) t += String.fromCharCode(u16(o + 2 * k));
+      else for (k = 0; k < ile && o + k < s.length; k++) t += String.fromCharCode(s[o + k]);
+      return t;
+    }
+    function rk(v) {
+      var n;
+      if (v & 2) n = (v | 0) >> 2;
+      else { var b = new DataView(new ArrayBuffer(8)); b.setUint32(4, (v & 0xFFFFFFFC) >>> 0, true); n = b.getFloat64(0, true); }
+      return v & 1 ? n / 100 : n;
+    }
+    // ── część wspólna: format dat, teksty (SST), arkusze ──
+    var p = 0, s1904 = false, formaty = {}, xfFmt = [], arkusze = [], sst = [], sstDane = null;
+    if (u16(0) !== 0x0809) throw new Error('Plik .xls ma nieznaną budowę.');
+    if (u16(4) !== 0x0600) throw new Error('To bardzo stary format Excela (5.0/95). Otwórz plik i zapisz go jako .xlsx.');
+    for (; p + 4 <= s.length;) {
+      var t = u16(p), n = u16(p + 2), d = p + 4;
+      if (sstDane && t === 0x003C) { sstDane.push(s.subarray(d, d + n)); p = d + n; continue; }
+      if (sstDane) { sst = tekstySst(sstDane); sstDane = null; }
+      if (t === 0x002F) throw new Error('Plik .xls jest zabezpieczony hasłem — zapisz go bez hasła.');
+      if (t === 0x0022) s1904 = u16(d) === 1;
+      else if (t === 0x041E) formaty[u16(d)] = znaki(d + 5, u16(d + 2), s[d + 4] & 1);
+      else if (t === 0x00E0) xfFmt.push(u16(d + 2));
+      else if (t === 0x0085) { if (s[d + 5] === 0) arkusze.push({ od: u32(d), nazwa: znaki(d + 8, s[d + 6], s[d + 7] & 1) }); }
+      else if (t === 0x00FC) sstDane = [s.subarray(d, d + n)];
+      p = d + n;
+      if (t === 0x000A) break;
+    }
+    if (sstDane) sst = tekstySst(sstDane);
+    function tekstySst(czesci) {              // teksty mogą przechodzić do rekordów CONTINUE (nowy bajt opcji)
+      var wyn = [], nr = 0, dane = czesci[0], dlg = dane.length, poz = 8;
+      var ile = dane.length >= 8 ? (dane[4] | dane[5] << 8 | dane[6] << 16) + dane[7] * 16777216 : 0;
+      var dalej = function () { nr++; dane = czesci[nr] || new Uint8Array(0); dlg = dane.length; };
+      for (var x = 0; x < ile && nr < czesci.length; x++) {
+        if (poz + 3 > dlg) { poz -= dlg; dalej(); if (!dlg) break; }
+        var znakow = dane[poz] | dane[poz + 1] << 8, op = dane[poz + 2], bogaty = 0, fon = 0;
+        poz += 3;
+        if (op & 0x08) { bogaty = dane[poz] | dane[poz + 1] << 8; poz += 2; }
+        if (op & 0x04) { fon = (dane[poz] | dane[poz + 1] << 8 | dane[poz + 2] << 16) + dane[poz + 3] * 16777216; poz += 4; }
+        var tekst = '', jest = 0;
+        for (;;) {
+          var potrzeba = znakow - jest, k;
+          if (op & 1) { var dost = Math.min((dlg - poz) >> 1, potrzeba); for (k = 0; k < dost; k++) tekst += String.fromCharCode(dane[poz + 2 * k] | dane[poz + 2 * k + 1] << 8); poz += 2 * dost; jest += dost; }
+          else { var dost1 = Math.min(dlg - poz, potrzeba); for (k = 0; k < dost1; k++) tekst += String.fromCharCode(dane[poz + k]); poz += dost1; jest += dost1; }
+          if (jest >= znakow) break;
+          dalej(); if (!dlg) break;
+          op = dane[0]; poz = 1;
+        }
+        poz += 4 * bogaty + fon;
+        while (poz >= dlg && nr < czesci.length) { poz -= dlg; dalej(); }
+        wyn.push(tekst);
+      }
+      return wyn;
+    }
+    function data(xf) { var f = xfFmt[xf]; return f == null ? false : formaty[f] != null ? formatDaty(formaty[f]) : !!DATY_WBUDOWANE[f]; }
+    function liczbaKom(v, xf) { return isFinite(v) ? (data(xf) ? { data: serialNaIso(v, s1904) } : v) : null; }
+    // ── arkusze: komórki ──
+    var wynik = [];
+    arkusze.forEach(function (a) {
+      var w = [], q = a.od, gl = 0, czeka = null;
+      var ustaw = function (r, c, v) { (w[r] = w[r] || [])[c] = v; };
+      for (; q + 4 <= s.length;) {
+        var t = u16(q), n = u16(q + 2), d = q + 4;
+        q = d + n;
+        if (t === 0x0809) { gl++; continue; }
+        if (t === 0x000A) { if (--gl <= 0) break; continue; }
+        if (gl !== 1) continue;
+        if (t === 0x00FD) ustaw(u16(d), u16(d + 2), sst[u32(d + 6)] != null ? sst[u32(d + 6)] : '');
+        else if (t === 0x0203) ustaw(u16(d), u16(d + 2), liczbaKom(dv.getFloat64(d + 6, true), u16(d + 4)));
+        else if (t === 0x027E) ustaw(u16(d), u16(d + 2), liczbaKom(rk(u32(d + 6)), u16(d + 4)));
+        else if (t === 0x00BD) {
+          var r = u16(d), c0 = u16(d + 2), ilu = (n - 6) / 6;
+          for (var m = 0; m < ilu; m++) ustaw(r, c0 + m, liczbaKom(rk(u32(d + 6 + 6 * m)), u16(d + 4 + 6 * m)));
+        } else if (t === 0x0204 || t === 0x00D6) ustaw(u16(d), u16(d + 2), znaki(d + 9, u16(d + 6), s[d + 8] & 1));
+        else if (t === 0x0205) ustaw(u16(d), u16(d + 2), s[d + 7] ? null : s[d + 6] !== 0);
+        else if (t === 0x0006) {
+          var r2_ = u16(d), c2 = u16(d + 2);
+          if (u16(d + 12) === 0xFFFF) {
+            var rodz = s[d + 6];
+            if (rodz === 0) czeka = [r2_, c2]; else ustaw(r2_, c2, rodz === 1 ? s[d + 8] !== 0 : rodz === 3 ? '' : null);
+          } else ustaw(r2_, c2, liczbaKom(dv.getFloat64(d + 6, true), u16(d + 4)));
+        } else if (t === 0x0207 && czeka) { ustaw(czeka[0], czeka[1], znaki(d + 3, u16(d), s[d + 2] & 1)); czeka = null; }
+      }
+      for (var i = 0; i < w.length; i++) if (!w[i]) w[i] = [];
+      wynik.push({ nazwa: a.nazwa, wiersze: w });
+    });
+    return { arkusze: wynik };
+  }
+
   /* ───────────── CSV ───────────── */
   function dekoduj(u8) {
     var b = u8;
@@ -1256,7 +1455,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   async function czytajPlik(nazwa, buf) {      // nazwa pliku + ArrayBuffer → skoroszyt
     var u8 = buf instanceof Uint8Array ? buf : new Uint8Array(buf);
     if (u8[0] === 0x50 && u8[1] === 0x4B) return czytajXlsx(u8);
-    if (u8[0] === 0xD0 && u8[1] === 0xCF) throw new Error('To stary format .xls. Otwórz plik i zapisz go jako .xlsx albo CSV.');
+    if (u8[0] === 0xD0 && u8[1] === 0xCF && u8[2] === 0x11 && u8[3] === 0xE0) return czytajXls(u8);
     if (/\.(csv|txt|tsv)$/i.test(nazwa || '') || u8.length) return czytajCsv(u8);
     throw new Error('Nie rozpoznaję pliku.');
   }
@@ -1280,7 +1479,9 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     numer: [/^(numer|nr\.?)$/, /^(numer|nr\.?) (dokumentu|faktury)/],
     kontrahent: [/^kontrahent/, /^dostawca/],
     wartosc: [/^wartosc( brutto)?$/, /^brutto$/, /^kwota( brutto)?$/],
-    waluta: [/^waluta/]
+    waluta: [/^waluta/],
+    netto: [/^wartosc netto$/, /^netto$/, /^kwota netto$/],         // plik kosztów FIRMINO (12.11.2026)
+    opis: [/^opis/], grupa: [/^grupa/], korekta: [/^korekta/], status: [/^status/], pojazd: [/^pojazd/], uwagi: [/^uwagi/]
   };
   function naglowek(v) { return bezOgonkow(txt(v)).toLowerCase(); }
   function mapuj(wiersz, wzory) {
@@ -1412,6 +1613,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         ile++;
         dokumenty.push({ id: 'b' + dokumenty.length, arkusz: ark.nazwa, wiersz: nrWiersza(ark, i), data: wartoscDaty(komorka(w, k.data)), typ: txt(komorka(w, k.typ)),
           numer: numer, kontrahent: kontrahent, wartosc: r2(wartosc), waluta: txt(komorka(w, k.waluta)) || 'PLN' });
+        if (k.netto != null || k.grupa != null || k.opis != null) {   // plik kosztów: do obrazu finansów firmy
+          var dk = dokumenty[dokumenty.length - 1], nt = liczba(komorka(w, k.netto));
+          dk.netto = nt == null ? null : r2(nt);
+          dk.opis = txt(komorka(w, k.opis)); dk.grupa = txt(komorka(w, k.grupa)); dk.pojazd = txt(komorka(w, k.pojazd));
+          dk.uwagi = txt(komorka(w, k.uwagi)); dk.korekta = txt(komorka(w, k.korekta)); dk.status = txt(komorka(w, k.status));
+        }
       }
       opis.push({ nazwa: ark.nazwa, dokumentow: ile, uzyty: true });
     });
@@ -1495,16 +1702,19 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var nl = poziomNumeru(a.numer, b.numer);
     var ns = podobienstwoNazw(a.nazwa, b.kontrahent);
     var roznica = r2(b.wartosc - a.brutto), ad = Math.abs(roznica), wzgl = ad / Math.max(Math.abs(a.brutto), 1);
+    // FIRMINO dokładnie 2× więcej niż rejestr (np. koszty pojazdów liczone w rejestrze w połowie) — 12.11.2026
+    var polowa = ad >= 1 && Math.abs(a.brutto) >= 1 && Math.abs(r2(b.wartosc - 2 * a.brutto)) <= 0.05;
     var dw = dniMiedzy(a.dataWyst, b.data), dO = dniMiedzy(a.dataOtrz, b.data);
     var dd = dw == null && dO == null ? null : Math.min(dw == null ? 1e9 : Math.abs(dw), dO == null ? 1e9 : Math.abs(dO));
-    return { a: a, b: b, numer: nl, nazwa: ns, roznica: roznica, ad: ad, wzgl: wzgl, dd: dd,
+    return { a: a, b: b, numer: nl, nazwa: ns, roznica: roznica, ad: ad, wzgl: wzgl, dd: dd, polowa: polowa,
       dni: dw != null ? dw : dO,
-      punkty: PUNKTY_NUMERU[nl] + ns * 30 + (ad < 0.005 ? 40 : ad <= 1 ? 25 : Math.max(0, 20 - wzgl * 200)) +
+      punkty: PUNKTY_NUMERU[nl] + ns * 30 + (ad < 0.005 ? 40 : ad <= 1 || polowa ? 25 : Math.max(0, 20 - wzgl * 200)) +
         (dd == null ? 0 : dd === 0 ? 10 : dd <= 1 ? 8 : dd <= 3 ? 5 : dd <= 7 ? 2 : 0) };
   }
   // pewność: 3 — pewne, 2 — prawdopodobne, 1 — możliwe (do sprawdzenia), 0 — nie łączymy
   function pewnosc(p, op) {
-    var nazwaOk = p.nazwa >= PROG_NAZWY, rowna = p.ad < 0.005, bliska = p.ad <= 1 || p.wzgl <= 0.002;
+    var nazwaOk = p.nazwa >= PROG_NAZWY, pol = p.polowa && nazwaOk;   // „2×” liczy się tylko u tego samego kontrahenta
+    var rowna = p.ad < 0.005 || pol, bliska = p.ad <= 1 || p.wzgl <= 0.002 || pol;
     var blisko = p.dd != null && p.dd <= op.oknoDni, tenDzien = p.dd != null && p.dd <= 1;
     switch (p.numer) {
       case 'ten': case 'zapis':
@@ -1529,6 +1739,35 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     }
   }
 
+  // rejestr księgowej T (towary) ↔ plik FIRMINO „towary”, P (pozostałe) ↔ „koszty”; bez kategorii — zawsze zgodne
+  function zgodnaKategoria(a, b) {
+    if (!b.kat || !a.rejestr) return 1;
+    return (a.rejestr === 'T') === (b.kat === 'towary') ? 1 : 0;
+  }
+  // dwa pliki FIRMINO (towary i koszty) → jeden zbiór B; dokument wie, z którego pliku jest (kat)
+  function polaczB(czesci) {
+    var dokumenty = [], arkusze = [];
+    czesci.forEach(function (c) {
+      if (!c || !c.dane) return;
+      var lit = c.kat === 'koszty' ? 'K' : 'T';
+      c.dane.dokumenty.forEach(function (d, i) { var x = {}; for (var k in d) x[k] = d[k]; x.id = 'b' + lit + i; x.kat = c.kat; dokumenty.push(x); });
+      c.dane.arkusze.forEach(function (a) { arkusze.push({ nazwa: a.nazwa, dokumentow: a.dokumentow, uzyty: a.uzyty, kat: c.kat }); });
+    });
+    var daty = dokumenty.map(function (d) { return d.data; }).filter(Boolean).sort();
+    var naj = miesiacZDat(daty);
+    return { typ: 'B', dokumenty: dokumenty, arkusze: arkusze,
+      okres: daty.length ? { od: daty[0], do: daty[daty.length - 1], klucz: naj, tekst: nazwaMiesiaca(naj) } : null };
+  }
+  // plik FIRMINO: towary czy koszty? po kolumnach (koszty mają Grupę kosztową / Opis zdarzenia, towary — Typ), potem po nazwie pliku
+  function rodzajB(rozp, nazwaPliku) {
+    var kol = (rozp && rozp.arkusze || []).map(function (a) { return a.kol || {}; });
+    if (kol.some(function (k) { return k.grupa != null || k.opis != null; })) return 'koszty';
+    var n = bezOgonkow(String(nazwaPliku || '')).toLowerCase();
+    if (/koszt/.test(n)) return 'koszty';
+    if (kol.some(function (k) { return k.typ != null; }) || /zakup|towar/.test(n)) return 'towary';
+    return null;
+  }
+
   function uzgodnij(A, B, opcje) {
     var op = {};
     Object.keys(DOMYSLNE).forEach(function (k) { op[k] = opcje && opcje[k] != null ? opcje[k] : DOMYSLNE[k]; });
@@ -1536,10 +1775,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     A.dokumenty.forEach(function (a) {
       B.dokumenty.forEach(function (b) {
         var p = porownaj(a, b, op), pw = pewnosc(p, op);
-        if (pw) { p.pewnosc = pw; kandydaci.push(p); }
+        if (!pw) return;
+        p.pewnosc = pw; p.kat = zgodnaKategoria(a, b);
+        if (pw === 1 && !p.kat) return;          // sama kwota i dzień, ale towar ↔ koszt — to raczej przypadek
+        kandydaci.push(p);
       });
     });
-    kandydaci.sort(function (x, y) { return (y.pewnosc - x.pewnosc) || (y.punkty - x.punkty) || (x.a.id < y.a.id ? -1 : 1); });
+    kandydaci.sort(function (x, y) { return (y.pewnosc - x.pewnosc) || (y.kat - x.kat) || (y.punkty - x.punkty) || (x.a.id < y.a.id ? -1 : 1); });
     var paraA = {}, paraB = {};
     kandydaci.forEach(function (p) { if (!paraA[p.a.id] && !paraB[p.b.id]) { paraA[p.a.id] = p; paraB[p.b.id] = p; } });
 
@@ -1548,16 +1790,20 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       var p = paraA[a.id], w = { a: a, para: p || null };
       if (!p) { w.firmino = 'nie'; w.zgodny = ''; w.status = 'brak'; w.flagi = {}; w.roznica = null; return w; }
       w.firmino = p.pewnosc === 1 ? 'tak?' : 'tak';
-      w.zgodny = p.ad <= tol ? 'tak' : 'nie';
-      w.roznica = p.ad >= 0.005 ? p.roznica : null;   // różnica do pokazania także wtedy, gdy mieści się w tolerancji
+      var obca = p.b.waluta && p.b.waluta !== 'PLN' ? p.b.waluta : null;   // FIRMINO w EUR, rejestr w złotych — kwot nie porównujemy
+      w.zgodny = obca ? '' : p.ad <= tol ? 'tak' : 'nie';
+      w.roznica = !obca && p.ad >= 0.005 ? p.roznica : null;   // różnica do pokazania także wtedy, gdy mieści się w tolerancji
       w.flagi = {
         kwota: p.ad > tol ? p.roznica : null,
         numer: p.numer === 'ten' ? null : p.numer === 'literowka2' ? 'literowka' : p.numer,
         kontrahent: p.nazwa < PROG_NAZWY ? p.b.kontrahent : null,
-        dni: p.dni ? p.dni : null
+        dni: p.dni ? p.dni : null,
+        kat: p.kat ? null : p.b.kat,             // w innym pliku FIRMINO niż rejestr księgowej (T ↔ towary, P ↔ koszty)
+        polowa: !obca && p.polowa && p.ad > tol ? true : null,   // FIRMINO = 2 × rejestr
+        waluta: obca
       };
-      w.status = w.zgodny === 'tak' ? 'zgodne' : 'kwota';
-      w.sprawdz = p.pewnosc === 1 || /^(literowka|literowka2|inny|czesc|brak)$/.test(p.numer) || p.nazwa < PROG_NAZWY ||
+      w.status = obca ? 'waluta' : w.zgodny === 'tak' ? 'zgodne' : 'kwota';
+      w.sprawdz = !!obca || p.pewnosc === 1 || /^(literowka|literowka2|inny|czesc|brak)$/.test(p.numer) || p.nazwa < PROG_NAZWY ||
         (p.dni != null && Math.abs(p.dni) > op.oknoDni);
       return w;
     });
@@ -1625,7 +1871,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     czytajPlik: czytajPlik, rozpoznaj: rozpoznaj, czytajA: czytajA, czytajB: czytajB, uzgodnij: uzgodnij, najblizsze: najblizsze,
     poziomNumeru: poziomNumeru, podobienstwoNazw: podobienstwoNazw, liczba: liczba, dataIso: dataIso, dniMiedzy: dniMiedzy,
     alnum: alnum, r2: r2, MIESIACE: MIESIACE, DOMYSLNE: DOMYSLNE, PROG_NAZWY: PROG_NAZWY,
-    doZapisu: doZapisu, kluczA: kluczA, kluczB: kluczB, nazwaMiesiaca: nazwaMiesiaca, miesiacZDat: miesiacZDat
+    doZapisu: doZapisu, kluczA: kluczA, kluczB: kluczB, nazwaMiesiaca: nazwaMiesiaca, miesiacZDat: miesiacZDat,
+    czytajXls: czytajXls, polaczB: polaczB, rodzajB: rodzajB
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = Rdzen;
   else glob.Rdzen = Rdzen;
@@ -1636,7 +1883,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 /* ksiegowa.dysza.app — połączenie z bazą Supabase „Tablica Mocy” (wzór: Transport i Manager).
    Logowanie: funkcja „dysza-logowanie” (login + PIN z manager.dysza.app; blokada po 5 złych PIN-ach liczy się na serwerze).
    Sesja osoby w localStorage tej przeglądarki; dane tylko przez funkcje bazy ksiegowa_* (same sprawdzają dostęp).
-   KsiegowaBaza.pokaz(...) — ta sama obsługa w pamięci strony (pokaz w artefakcie, bez bazy). */
+   KsiegowaBaza.pokaz(...) — te same funkcje bazy w pamięci strony (pokaz w artefakcie, bez bazy): role, ZATWIERDŹ, UZGODNIJ. */
 (function (glob) {
   'use strict';
   function czytaj(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
@@ -1713,23 +1960,33 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     return { sesja: function () { return sesja; }, zaloguj: zaloguj, prosba: prosba, wyloguj: wyloguj, rpc: rpc, pokaz: false };
   }
 
-  /* ───────────── pokaz: te same funkcje bazy w pamięci strony ───────────── */
+  /* ───────────── pokaz: te same funkcje bazy w pamięci strony (role, ZATWIERDŹ, UZGODNIJ, historia) ───────────── */
   function pokaz(ust) {
-    var KL = ust.KL, osoby = ust.osoby || [], pliki = [], wpisy = [], nr = { p: 0, w: 0 };
+    var KL = ust.KL, osoby = ust.osoby || [], pliki = [], wpisy = [], dziennik = [], uzg = [], nr = { p: 0, w: 0, d: 0, u: 0 };
+    var STRONY = ['A', 'B1', 'B2'], MOZE = { A: 'ksiegowa', B1: 'magazynier', B2: 'zarzadzajaca' }, KOLEJ = { ksiegowa: 1, magazynier: 2, zarzadzajaca: 3 };
     var sesja = czytaj(KL.sesja + '-pokaz', null);
     function teraz() { return new Date().toISOString(); }
     function blad(kod) { var e = new Error(kod); return e; }
     function ja() { return sesja && osoby.filter(function (o) { return o.id === sesja.user.id; })[0]; }
     function wymagaj() { var o = ja(); if (!o || !o.rola) { var e = blad('BRAK_DOSTEPU'); e.status = 403; throw e; } return o; }
+    function moze(o, s) { return o.rola === 'architekt' || MOZE[s] === o.rola; }
     function imie(id) { var o = osoby.filter(function (x) { return x.id === id; })[0]; return o ? (o.kafelek || o.imie) : ''; }
     function plikJson(p, zDanymi) {
-      var j = { id: p.id, miesiac: p.miesiac, strona: p.strona, nazwa: p.nazwa, skrot: p.skrot, dokumentow: p.dokumentow, kiedy: p.kiedy, kto: p.kto, kto_imie: imie(p.kto) };
+      var j = { id: p.id, miesiac: p.miesiac, strona: p.strona, nazwa: p.nazwa, skrot: p.skrot, dokumentow: p.dokumentow, kiedy: p.kiedy, kto: p.kto, kto_imie: imie(p.kto),
+        zatwierdzono: p.zatwierdzono || null, zatwierdzil: p.zatwierdzil || null, zatwierdzil_imie: p.zatwierdzil ? imie(p.zatwierdzil) : null };
       if (zDanymi) j.dane = p.dane;
       return j;
     }
+    function uzgJson(u) { return { id: u.id, miesiac: u.miesiac, plik_a: u.plik_a, plik_b1: u.plik_b1, plik_b2: u.plik_b2, podsumowanie: u.podsumowanie, kiedy: u.kiedy, kto: u.kto, kto_imie: imie(u.kto) }; }
     function wpisJson(w) { return { id: w.id, klucz: w.klucz, tekst: w.tekst, stan: w.stan, kiedy: w.kiedy, kto: w.kto, kto_imie: imie(w.kto) }; }
     function miesiacOk(m) { if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(m || '')) throw blad('ZLA_WARTOSC:miesiac'); }
     function ostatni(m, s) { var l = pliki.filter(function (p) { return p.miesiac === m && p.strona === s; }); return l.length ? l[l.length - 1] : null; }
+    function ostatnieUzg(m) { var l = uzg.filter(function (u) { return u.miesiac === m; }); return l.length ? l[l.length - 1] : null; }
+    function plikId(id) { return pliki.filter(function (p) { return p.id === id; })[0] || null; }
+    function stan(m) {
+      return STRONY.map(function (s) { var p = ostatni(m, s); return p ? s + ':' + p.id + ':' + (p.zatwierdzono || '-') : ''; }).join(',') + '|' + ((ostatnieUzg(m) || {}).id || '-');
+    }
+    function zapiszDz(m, rodzaj, strona, plik, opis, kto) { dziennik.push({ id: ++nr.d, miesiac: m, rodzaj: rodzaj, strona: strona, plik: plik, opis: opis, kto: kto, kiedy: teraz() }); }
     function kopia(x) { return JSON.parse(JSON.stringify(x)); }
     var F = {
       ksiegowa_ja: function () {
@@ -1742,36 +1999,76 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         var m = {}; pliki.forEach(function (p) { m[p.miesiac] = 1; }); wpisy.forEach(function (w) { m[w.miesiac] = 1; });
         return Object.keys(m).sort().reverse().map(function (k) {
           var st = {}; wpisy.forEach(function (w) { if (w.miesiac === k && w.stan) st[w.klucz] = w.stan; });
-          return { miesiac: k, A: ostatni(k, 'A') ? plikJson(ostatni(k, 'A')) : null, B: ostatni(k, 'B') ? plikJson(ostatni(k, 'B')) : null,
+          var x = { miesiac: k, uzgodnienie: ostatnieUzg(k) ? uzgJson(ostatnieUzg(k)) : null,
             wpisow: wpisy.filter(function (w) { return w.miesiac === k; }).length,
-            wyjasnionych: Object.keys(st).filter(function (x) { return st[x] === 'wyjasnione'; }).length };
+            wyjasnionych: Object.keys(st).filter(function (y) { return st[y] === 'wyjasnione'; }).length };
+          STRONY.forEach(function (s) { x[s] = ostatni(k, s) ? plikJson(ostatni(k, s)) : null; });
+          return x;
         });
       },
       ksiegowa_miesiac: function (a) {
         wymagaj(); miesiacOk(a.p_miesiac);
-        var m = a.p_miesiac, pa = ostatni(m, 'A'), pb = ostatni(m, 'B');
-        return { miesiac: m, A: pa ? plikJson(pa, true) : null, B: pb ? plikJson(pb, true) : null,
-          wersje: pliki.filter(function (p) { return p.miesiac === m; }).slice().reverse().map(function (p) { return plikJson(p); }),
-          wpisy: wpisy.filter(function (w) { return w.miesiac === m; }).map(wpisJson), teraz: teraz() };
+        var m = a.p_miesiac, u = ostatnieUzg(m), x = { miesiac: m };
+        STRONY.forEach(function (s) { x[s] = ostatni(m, s) ? plikJson(ostatni(m, s), true) : null; });
+        x.uzgodnienie = u ? uzgJson(u) : null;
+        x.pliki_uzgodnienia = null;
+        if (u) {
+          var id = { A: u.plik_a, B1: u.plik_b1, B2: u.plik_b2 };
+          x.pliki_uzgodnienia = {};
+          STRONY.forEach(function (s) { var o = ostatni(m, s); x.pliki_uzgodnienia[s] = o && o.id === id[s] ? null : plikJson(plikId(id[s]), true); });
+        }
+        x.wersje = pliki.filter(function (p) { return p.miesiac === m; }).slice().reverse().map(function (p) { return plikJson(p); });
+        x.wpisy = wpisy.filter(function (w) { return w.miesiac === m; }).map(wpisJson);
+        x.dziennik = dziennik.filter(function (d) { return d.miesiac === m; }).slice().reverse().map(function (d) {
+          return { id: d.id, rodzaj: d.rodzaj, strona: d.strona, plik: d.plik, opis: d.opis, kiedy: d.kiedy, kto_imie: imie(d.kto) }; });
+        x.odpowiedzialni = osoby.filter(function (o) { return KOLEJ[o.rola]; }).sort(function (p, q) { return KOLEJ[p.rola] - KOLEJ[q.rola]; })
+          .map(function (o) { return { rola: o.rola, imie: o.kafelek || o.imie, nazwisko: o.nazwisko || '' }; });
+        x.stan = stan(m); x.teraz = teraz();
+        return x;
       },
       ksiegowa_zmiany: function (a) {
         wymagaj(); miesiacOk(a.p_miesiac);
-        var pa = ostatni(a.p_miesiac, 'A'), pb = ostatni(a.p_miesiac, 'B');
-        return { A: pa ? pa.id : null, B: pb ? pb.id : null, teraz: teraz(),
+        return { stan: stan(a.p_miesiac), teraz: teraz(),
           wpisy: wpisy.filter(function (w) { return w.miesiac === a.p_miesiac && w.id > (a.p_po || 0); }).map(wpisJson) };
       },
       ksiegowa_zapisz_plik: function (a) {
         var o = wymagaj(); miesiacOk(a.p_miesiac);
-        if (a.p_strona !== 'A' && a.p_strona !== 'B') throw blad('ZLA_WARTOSC:strona');
+        if (STRONY.indexOf(a.p_strona) < 0) throw blad('ZLA_WARTOSC:strona');
+        if (!moze(o, a.p_strona)) throw blad('BRAK_PRAWA:' + a.p_strona);
         var nazwa = String(a.p_nazwa || '').replace(/\s+/g, ' ').trim();
         if (!nazwa || nazwa.length > 200) throw blad('ZLA_WARTOSC:nazwa');
         if (!/^[0-9a-f]{64}$/.test(a.p_skrot || '')) throw blad('ZLA_WARTOSC:skrot');
         if (!a.p_dane || !Array.isArray(a.p_dane.arkusze) || JSON.stringify(a.p_dane).length > 4000000) throw blad('ZLA_WARTOSC:plik');
+        if (a.p_strona !== 'A' && (!Array.isArray(a.p_dokumenty) || a.p_dokumenty.length !== a.p_dokumentow ||
+          a.p_dokumenty.some(function (d) { return !d || typeof d.brutto !== 'number'; }))) throw blad('ZLA_WARTOSC:dokumenty');
         var o2 = ostatni(a.p_miesiac, a.p_strona);
         if (o2 && o2.skrot === a.p_skrot) return Object.assign(plikJson(o2), { nowy: false });
         var p = { id: ++nr.p, miesiac: a.p_miesiac, strona: a.p_strona, nazwa: nazwa, skrot: a.p_skrot, dokumentow: a.p_dokumentow, dane: kopia(a.p_dane), kto: o.id, kiedy: teraz() };
         pliki.push(p);
+        zapiszDz(p.miesiac, 'wgranie', p.strona, p.id, (nazwa + ' · ' + p.dokumentow + ' dok.').slice(0, 300), o.id);
         return Object.assign(plikJson(p), { nowy: true });
+      },
+      ksiegowa_zatwierdz: function (a) {
+        var o = wymagaj(), p = plikId(a.p_plik);
+        if (!p) throw blad('NIE_MA:plik');
+        if (!moze(o, p.strona)) throw blad('BRAK_PRAWA:' + p.strona);
+        if (ostatni(p.miesiac, p.strona) !== p) throw blad('NIE_OSTATNI');
+        if (a.p_zatwierdz !== false) {
+          if (!p.zatwierdzono) { p.zatwierdzono = teraz(); p.zatwierdzil = o.id; zapiszDz(p.miesiac, 'zatwierdzenie', p.strona, p.id, p.nazwa, o.id); }
+        } else if (p.zatwierdzono) { p.zatwierdzono = null; p.zatwierdzil = null; zapiszDz(p.miesiac, 'cofniecie', p.strona, p.id, p.nazwa, o.id); }
+        return plikJson(p);
+      },
+      ksiegowa_uzgodnij: function (a) {
+        var o = wymagaj(); miesiacOk(a.p_miesiac);
+        var m = a.p_miesiac, pa = ostatni(m, 'A'), b1 = ostatni(m, 'B1'), b2 = ostatni(m, 'B2');
+        if (!pa || !b1 || !b2) throw blad('BRAK_PLIKOW');
+        if (!pa.zatwierdzono || !b1.zatwierdzono || !b2.zatwierdzono) throw blad('NIE_ZATWIERDZONE');
+        var u = ostatnieUzg(m);
+        if (u && u.plik_a === pa.id && u.plik_b1 === b1.id && u.plik_b2 === b2.id) return Object.assign(uzgJson(u), { nowe: false });
+        u = { id: ++nr.u, miesiac: m, plik_a: pa.id, plik_b1: b1.id, plik_b2: b2.id, podsumowanie: kopia(a.p_podsumowanie || {}), kto: o.id, kiedy: teraz() };
+        uzg.push(u);
+        zapiszDz(m, 'uzgodnienie', null, null, 'A ' + pa.id + ' · B1 ' + b1.id + ' · B2 ' + b2.id, o.id);
+        return Object.assign(uzgJson(u), { nowe: true });
       },
       ksiegowa_wpisz: function (a) {
         var o = wymagaj(); miesiacOk(a.p_miesiac);
@@ -1786,7 +2083,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         return wpisJson(w);
       }
     };
-    (ust.pliki || []).forEach(function (p) { pliki.push(Object.assign({ id: ++nr.p, kiedy: teraz() }, p)); });
+    (ust.pliki || []).forEach(function (p) {     // przykład: pliki wgrane (i część zatwierdzona) przez odpowiedzialne osoby
+      var x = Object.assign({ id: ++nr.p, kiedy: teraz() }, p);
+      if (x.zatwierdzil) x.zatwierdzono = teraz(); else { x.zatwierdzil = null; x.zatwierdzono = null; }
+      pliki.push(x);
+      zapiszDz(x.miesiac, 'wgranie', x.strona, x.id, (x.nazwa + ' · ' + x.dokumentow + ' dok.').slice(0, 300), x.kto);
+      if (x.zatwierdzono) zapiszDz(x.miesiac, 'zatwierdzenie', x.strona, x.id, x.nazwa, x.zatwierdzil);
+    });
     function opoznij(x) { return new Promise(function (ok) { setTimeout(function () { ok(x); }, 160); }); }
     return {
       pokaz: true,
@@ -1821,9 +2124,10 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 <script>
 /* ksiegowa.dysza.app — moduł Księgowa · pierwsza funkcja: uzgodnienie faktur Księgowa ↔ FIRMINO (sprawa S33).
    Logowanie: wspólne okno dysza-wejscie + funkcja „dysza-logowanie” (login i PIN z manager.dysza.app).
-   Dostęp: Architekt albo rola „Księgowa” w managerze — sprawdzają to funkcje bazy ksiegowa_*.
-   Pliki czyta przeglądarka; do bazy idą tylko kolumny potrzebne do uzgodnienia. Każdy miesiąc = obowiązujący plik A
-   (rejestr księgowej) i B (FIRMINO) + wyjaśnienia różnic — porównanie liczy strona, więc wszyscy widzą to samo. */
+   Miesiąc = trzy pliki: A — rejestr zakupów księgowej (towary i koszty), B1 — zakupy towarów z FIRMINO, B2 — koszty z FIRMINO.
+   Każdy plik wgrywa i zatwierdza jego strona (A: Księgowa, B1: Magazynier, B2: Zarządzająca; Architekt — każdy).
+   Gdy trzy pliki są zatwierdzone, UZGODNIJ zapisuje uzgodnienie w bazie i dopiero wtedy strona pokazuje wynik — ten sam dla wszystkich.
+   Pliki czyta przeglądarka; do bazy idą kolumny potrzebne do uzgodnienia, a dokumenty FIRMINO także wierszami (obraz finansów firmy). */
 (function () {
   'use strict';
   var R = window.Rdzen;
@@ -1834,21 +2138,38 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   var KONF = window.__KSIEGOWA_KONFIG__ || {};
   var KL = { sesja: 'ksiegowa-sesja', osoby: 'ksiegowa-osoby', motyw: 'ksiegowa-motyw', miesiac: 'ksiegowa-miesiac' };
   var czytaj = KB.czytaj, pisz = KB.pisz;
+
+  /* ───────────── trzy pliki miesiąca ───────────── */
+  var STRONY = ['A', 'B1', 'B2'];
+  var OPIS = {
+    A: { tyt: 'KSIĘGOWA', pod: 'Rejestr zakupów: towary i koszty', kol: 'var(--mKsi)', rola: 'ksiegowa', krotko: 'Rejestr księgowej',
+      wgraj: 'Wgraj rejestr zakupów', przyklad: 'np. „psUSsHI 2610 REJ ZAKUPOW.xlsx”', kwota: 'Brutto', co: 'rejestr zakupów księgowej' },
+    B1: { tyt: 'FIRMINO · TOWARY', pod: 'Dokumenty zakupów (towary)', kol: 'var(--mMag)', rola: 'magazynier', krotko: 'FIRMINO towary',
+      wgraj: 'Wgraj zakupy z FIRMINO', przyklad: 'np. „Dokumenty_zakupow_2026-11-12.xlsx”', kwota: 'Wartość', co: 'plik zakupów (towary) z FIRMINO' },
+    B2: { tyt: 'FIRMINO · KOSZTY', pod: 'Dokumenty kosztowe', kol: 'var(--mObe)', rola: 'zarzadzajaca', krotko: 'FIRMINO koszty',
+      wgraj: 'Wgraj koszty z FIRMINO', przyklad: 'np. „Dokumenty_kosztowe_2026-11-12.xls”', kwota: 'Wartość', co: 'plik kosztów z FIRMINO' }
+  };
+  var ROLE = { architekt: 'Architekt', ksiegowa: 'Księgowa', magazynier: 'Magazynier', zarzadzajaca: 'Zarządzająca' };
+  var KAT = { towary: 'B1', koszty: 'B2' };
+  var PLIKI_TYPY = '.xlsx,.xls,.csv,.txt';
+
   if (POKAZ && POKAZ.surowe) {                // pokaz: przykład z 12.11 zapisany tak, jak zapisałaby go strona
     POKAZ.pliki = POKAZ.surowe.map(function (p) {
       var rz = R.rozpoznaj({ arkusze: p.arkusze }), d = rz.typ === 'A' ? R.czytajA(rz.arkusze) : R.czytajB(rz.arkusze);
-      return { miesiac: p.miesiac, strona: rz.typ, nazwa: p.plik, skrot: p.skrot, dokumentow: d.dokumenty.length, dane: R.doZapisu(rz), kto: p.kto };
+      var strona = rz.typ === 'A' ? 'A' : KAT[R.rodzajB(rz, p.plik)] || 'B1';
+      return { miesiac: p.miesiac, strona: strona, nazwa: p.plik, skrot: p.skrot, dokumentow: d.dokumenty.length, dane: R.doZapisu(rz), kto: p.kto, zatwierdzil: p.zatwierdzil || null };
     });
   }
   var baza = POKAZ ? KB.pokaz({ KL: KL, osoby: POKAZ.osoby, pliki: POKAZ.pliki })
     : KB.supabase(KONF.url || 'https://srmiealxhcbjornmnboe.supabase.co', KONF.klucz || 'sb_publishable_NkiS-_7GBmW5d3ufWjjFEg_CuCpaADz', KL);
-  var CO_ILE = KONF.coIle || 60000;           // co minutę: nowe wpisy i nowe wersje plików
+  var CO_ILE = KONF.coIle || 60000;           // co minutę: nowe pliki, zatwierdzenia, uzgodnienia i wpisy
 
   /* ───────────── stan ───────────── */
   var S = {
     etap: 'logowanie', ja: null, motyw: czytaj(KL.motyw, 'ciemny') === 'jasny' ? 'jasny' : 'ciemny', menu: false,
-    miesiace: [], miesiac: null, laduje: false, wersje: [], wpisy: [], ostatniWpis: 0,
-    pliki: { A: null, B: null }, wynik: null, filtr: 'wszystkie', rejestr: 'T', szukaj: '',
+    miesiace: [], miesiac: null, laduje: false, wersje: [], wpisy: [], ostatniWpis: 0, dziennik: [], odpowiedzialni: [], stan: '',
+    pliki: { A: null, B1: null, B2: null }, uzg: null, plikiUzg: null, B: null, wynik: null,
+    filtr: 'wszystkie', rejestr: 'T', szukaj: '', plikiOtwarte: false,
     opcje: { tolerancja: R.DOMYSLNE.tolerancja, oknoDni: R.DOMYSLNE.oknoDni }, okno: null, zasadyOtwarte: false,
     zapis: null, blad: '', szkic: {}, wysyla: false
   };
@@ -1885,7 +2206,10 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     slonce: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     odswiez: '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
     dymek: '<path d="M4 5h16v11H9l-5 4z"/>',
-    wgraj: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>'
+    wgraj: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
+    zegar: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    historia: '<path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v4h4M12 8v4l3 2"/>',
+    uzgodnij: '<path d="M4 7h11M11 3l4 4-4 4"/><path d="M20 17H9M13 13l-4 4 4 4"/>'
   };
   var ik = function (n, kl) { return '<svg class="ikona ' + (kl || '') + '" viewBox="0 0 24 24" aria-hidden="true">' + (IK[n] || '') + '</svg>'; };
   function zdz(poza, kl) { return '<span class="zdz ' + (kl || '') + '"><img alt="" src="' + POZY[poza] + '"></span>'; }
@@ -1893,10 +2217,26 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   function nazwaM(m) { return R.nazwaMiesiaca(m) || m || ''; }
   var MSC = ['styczniu', 'lutym', 'marcu', 'kwietniu', 'maju', 'czerwcu', 'lipcu', 'sierpniu', 'wrześniu', 'październiku', 'listopadzie', 'grudniu'];
   function wMiesiacu(m) { return /^\d{4}-\d{2}$/.test(m || '') ? 'w ' + MSC[+m.slice(5, 7) - 1] + ' ' + m.slice(0, 4) : ''; }
+  function lit(k, kl) { return '<span class="plik-lit bebas' + (k.length > 1 ? ' dwa' : '') + (kl ? ' ' + kl : '') + '" style="--kol:' + OPIS[k].kol + '">' + k + '</span>'; }
+
+  // kto może wgrać i zatwierdzić plik (to samo sprawdza baza): A — Księgowa, B1 — Magazynier, B2 — Zarządzająca; Architekt — każdy
+  function moze(k) { return !!S.ja && (S.ja.rola === 'architekt' || OPIS[k].rola === S.ja.rola); }
+  function ktoOdpowiada(k) {                  // „Imię · Magazynier” (imiona z bazy)
+    var r = OPIS[k].rola, l = S.odpowiedzialni.filter(function (o) { return o.rola === r; }).map(function (o) { return o.imie; });
+    return (l.length ? l.join(', ') + ' · ' : '') + ROLE[r];
+  }
 
   var BLEDY = {
     BRAK_DOSTEPU: 'Brak dostępu do Księgowej — dostęp nadaje kierownik w manager.dysza.app.',
+    'BRAK_PRAWA:A': 'Rejestr zakupów wgrywa i zatwierdza księgowa.',
+    'BRAK_PRAWA:B1': 'Zakupy z FIRMINO (towary) wgrywa i zatwierdza magazynier.',
+    'BRAK_PRAWA:B2': 'Koszty z FIRMINO wgrywa i zatwierdza zarządzająca.',
+    NIE_OSTATNI: 'Jest już nowsza wersja tego pliku — strona pokazuje ją teraz.',
+    NIE_ZATWIERDZONE: 'Nie wszystkie trzy pliki są zatwierdzone — strona pokazuje aktualny stan.',
+    BRAK_PLIKOW: 'Brakuje plików miesiąca — strona pokazuje aktualny stan.',
+    'NIE_MA:plik': 'Tego pliku nie ma w bazie — strona pokazuje aktualny stan.',
     'ZLA_WARTOSC:plik': 'Plik pusty, uszkodzony albo za duży.',
+    'ZLA_WARTOSC:dokumenty': 'Baza nie przyjęła dokumentów z pliku — wgraj go jeszcze raz.',
     'ZLA_WARTOSC:miesiac': 'Zły miesiąc — wybierz go jeszcze raz.',
     'ZLA_WARTOSC:nazwa': 'Nazwa pliku jest za długa — skróć ją i wgraj jeszcze raz.',
     'ZLA_WARTOSC:tekst': 'Uwaga: do 1000 znaków — i nie pusta.',
@@ -1910,6 +2250,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (k === 'ZLA_WARTOSC') return 'Baza nie przyjęła wartości (' + (m.split(':')[1] || 'dane') + ').';
     return BLEDY[k] || m || 'Coś poszło nie tak.';
   }
+  var NIEAKTUALNE = /^(NIE_OSTATNI|NIE_ZATWIERDZONE|BRAK_PLIKOW|NIE_MA:plik)$/;
 
   /* ───────────── motyw ───────────── */
   function zastosujMotyw() {
@@ -1940,15 +2281,17 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     kto: 'Kto się loguje?', inna: '+ Inna osoba', etykietaLogin: 'Login', placeholder: 'np. SlawomirSz',
     pomoc: 'Login z karty — ten sam co w managerze. Wielkość liter nie ma znaczenia.',
     dalej: 'Dalej', wpiszPin: 'Wpisz PIN', podpowiedzPin: 'PIN ma 8 cyfr.',
-    zdzKafelki: 'Faktury z dwóch systemów spotykają się tutaj. Stuknij swój kafelek — PIN wpiszesz za chwilę.',
+    zdzKafelki: 'Rejestr księgowej i dwa pliki z FIRMINO spotykają się tutaj. Stuknij swój kafelek — PIN wpiszesz za chwilę.',
     zdzLogin: 'Do Księgowej wchodzą tylko osoby wskazane w managerze. Wpisz login, potem PIN — ja w tym czasie się odwrócę.',
     pokaz: !!POKAZ,
-    notkaPin: POKAZ ? function () { return 'Pokaz: każdy PIN z 8 cyfr wpuszcza SlawomirSz, 00000000 to zły PIN.'; } : undefined,
+    notkaPin: POKAZ ? function () { return 'Pokaz: każdy PIN z 8 cyfr wpuszcza wybraną osobę, 00000000 to zły PIN.'; } : undefined,
     edycja: true,
     osoby: function () {
-      var l = osobyUrz();
-      if (!l.length && POKAZ) return [{ login: 'SlawomirSz', imie: 'Sławek', podpis: 'Architekt', dl: 8 }];
-      return l.map(function (o) { return { login: o.login, imie: o.imie || o.login, podpis: o.podpis || '', dl: o.dl || 8 }; });
+      var l = osobyUrz().map(function (o) { return { login: o.login, imie: o.imie || o.login, podpis: o.podpis || '', dl: o.dl || 8 }; });
+      if (POKAZ) (POKAZ.osoby || []).forEach(function (o) {   // w pokazie zawsze cztery osoby — można zobaczyć stronę oczami każdej
+        if (!l.some(function (x) { return x.login.toLowerCase() === o.login.toLowerCase(); })) l.push({ login: o.login, imie: o.kafelek || o.imie, podpis: ROLE[o.rola] || '', dl: 8 });
+      });
+      return l;
     },
     zapomnij: zapomnijOsobe,
     prosba: function (login) { return baza.prosba(login); },
@@ -1974,9 +2317,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (komunikat && /^Sesja wygasła/.test(komunikat) && ost) okno.pokaz({ krok: 'pin', osoba: { login: ost.login, imie: ost.imie, dl: ost.dl || 8 }, komunikat: komunikat });
     else okno.pokaz(komunikat ? { komunikat: komunikat, rodzaj: /^Wylogowano/.test(komunikat) ? 'info' : 'blad' } : {});
   }
+  function wyczysc() {
+    S.miesiace = []; S.miesiac = null; S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.B = null; S.wynik = null;
+    S.wpisy = []; S.wersje = []; S.dziennik = []; S.odpowiedzialni = []; S.stan = ''; S.szkic = {}; S.zapis = null;
+  }
   async function wyloguj() {
     await baza.wyloguj();
-    S.ja = null; S.miesiace = []; S.miesiac = null; S.pliki = { A: null, B: null }; S.wynik = null; S.wpisy = []; S.wersje = []; S.szkic = {}; S.zapis = null;
+    S.ja = null; wyczysc();
     pokazLogowanie('Wylogowano.');
   }
   async function start(zLogowania) {
@@ -1994,9 +2341,10 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       if (zLogowania) throw new Error(t);
       pokazLogowanie(t); return;
     }
+    if (S.ja && S.ja.id !== ja.id) wyczysc();
     S.ja = ja; S.blad = '';
     var dawna = osobyUrz().filter(function (x) { return x.login.toLowerCase() === String(ja.login).toLowerCase(); })[0];
-    zapamietajOsobe({ login: ja.login, imie: ja.kafelek || ja.imie, podpis: ja.architekt ? 'Architekt' : 'Księgowa', dl: ostatniPin || (dawna && dawna.dl) || 8 });
+    zapamietajOsobe({ login: ja.login, imie: ja.kafelek || ja.imie, podpis: ROLE[ja.rola] || '', dl: ostatniPin || (dawna && dawna.dl) || 8 });
     ostatniPin = 0;
     S.etap = 'app';
     okno.ukryj();
@@ -2009,48 +2357,85 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   async function odswiezListe(wybierz) {
     try {
       S.miesiace = await baza.rpc('ksiegowa_miesiace', {}) || [];
+      if (!S.miesiace.length && !S.odpowiedzialni.length) {   // pusta baza: kto odpowiada za który plik (do podpowiedzi w kartach)
+        var pusty = await baza.rpc('ksiegowa_miesiac', { p_miesiac: new Date().toISOString().slice(0, 7) });
+        S.odpowiedzialni = (pusty && pusty.odpowiedzialni) || [];
+      }
       S.blad = '';
     } catch (e) { return obsluzBlad(e); }
     if (wybierz) {
       var zap = czytaj(KL.miesiac, null), jest = function (m) { return S.miesiace.some(function (x) { return x.miesiac === m; }); };
       var m = S.miesiac && jest(S.miesiac) ? S.miesiac : zap && jest(zap) ? zap : S.miesiace.length ? S.miesiace[0].miesiac : null;
-      if (m) await wczytajMiesiac(m, true); else { S.miesiac = null; S.pliki = { A: null, B: null }; S.wynik = null; render(); }
+      if (m) await wczytajMiesiac(m, true); else { S.miesiac = null; S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; render(); }
     } else render();
   }
   function zBazy(p) {                         // plik z bazy → jak wczytany z dysku (te same funkcje rdzenia)
     if (!p || !p.dane) return null;
-    var x = { id: p.id, nazwa: p.nazwa, kto_imie: p.kto_imie, kiedy: p.kiedy, skrot: p.skrot, rozp: p.dane };
+    var x = { id: p.id, strona: p.strona, nazwa: p.nazwa, kto_imie: p.kto_imie, kiedy: p.kiedy, skrot: p.skrot, rozp: p.dane,
+      zatwierdzono: p.zatwierdzono || null, zatwierdzil_imie: p.zatwierdzil_imie || '' };
     if (p.strona === 'A') { x.wybrane = p.dane.arkusze.map(function (a) { return a.nazwa; }); x.dane = R.czytajA(p.dane.arkusze, x.wybrane); }
     else x.dane = R.czytajB(p.dane.arkusze);
     return x;
   }
+  var zadanieM = 0;                            // tylko ostatnie wczytanie miesiąca może zmienić stronę (szybkie przełączanie miesięcy)
   async function wczytajMiesiac(m, nowy) {
+    var nr = ++zadanieM;
     var inny = m !== S.miesiac;
     S.miesiac = m; pisz(KL.miesiac, m);
-    S.laduje = true; if (inny) { S.pliki = { A: null, B: null }; S.wynik = null; } render();
+    S.laduje = true; if (inny) { S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; S.plikiOtwarte = false; } render();
     var d;
     try { d = await baza.rpc('ksiegowa_miesiac', { p_miesiac: m }); }
-    catch (e) { S.laduje = false; return obsluzBlad(e); }
+    catch (e) { if (nr !== zadanieM) return; S.laduje = false; return obsluzBlad(e); }
+    if (nr !== zadanieM) return;
     S.laduje = false; S.blad = '';
-    S.pliki = { A: zBazy(d.A), B: zBazy(d.B) };
-    S.wersje = d.wersje || []; S.wpisy = d.wpisy || [];
+    S.pliki = { A: zBazy(d.A), B1: zBazy(d.B1), B2: zBazy(d.B2) };
+    var bylo = S.uzg && S.uzg.id;
+    S.uzg = d.uzgodnienie || null;
+    if (S.uzg && S.uzg.id !== bylo) S.plikiOtwarte = false;   // nowe uzgodnienie: na wierzchu wynik, karty plików zwinięte
+    S.plikiUzg = null;
+    if (S.uzg) {                              // wynik zawsze z wersji plików, które uzgodniono (nowsze czekają na zatwierdzenie i UZGODNIJ)
+      var pu = d.pliki_uzgodnienia || {}, id = { A: S.uzg.plik_a, B1: S.uzg.plik_b1, B2: S.uzg.plik_b2 };
+      S.plikiUzg = {};
+      STRONY.forEach(function (k) { S.plikiUzg[k] = S.pliki[k] && S.pliki[k].id === id[k] ? S.pliki[k] : zBazy(pu[k]); });
+    }
+    S.wersje = d.wersje || []; S.wpisy = d.wpisy || []; S.dziennik = d.dziennik || []; S.odpowiedzialni = d.odpowiedzialni || []; S.stan = d.stan || '';
     S.ostatniWpis = S.wpisy.reduce(function (x, w) { return Math.max(x, w.id); }, 0);
-    if ((inny || nowy) && S.pliki.A) {
-      var rej = {}; S.pliki.A.dane.dokumenty.forEach(function (x) { rej[x.rejestr] = 1; });
+    var A = S.plikiUzg && S.plikiUzg.A || S.pliki.A;
+    if ((inny || nowy) && A) {
+      var rej = {}; A.dane.dokumenty.forEach(function (x) { rej[x.rejestr] = 1; });
       S.rejestr = rej.T ? 'T' : '*'; S.filtr = 'wszystkie';
     }
     przelicz();
     if (inny) { var tr = document.getElementById('tresc'); if (tr) tr.scrollTop = 0; }
     odswiezWynik();
   }
-  function przelicz() { S.wynik = S.pliki.A && S.pliki.B ? R.uzgodnij(S.pliki.A.dane, S.pliki.B.dane, S.opcje) : null; }
+  function przelicz() {
+    var P = S.plikiUzg;
+    if (!P || !P.A || !P.B1 || !P.B2) { S.B = null; S.wynik = null; return; }
+    S.B = R.polaczB([{ kat: 'towary', dane: P.B1.dane }, { kat: 'koszty', dane: P.B2.dane }]);
+    S.wynik = R.uzgodnij(P.A.dane, S.B, S.opcje);
+  }
   function obsluzBlad(e) {
     if (e && e.sesja) { pokazLogowanie('Sesja wygasła — zaloguj się ponownie.'); return; }
     if (String(e && e.message) === 'BRAK_DOSTEPU') { baza.wyloguj(); pokazLogowanie(BLEDY.BRAK_DOSTEPU); return; }
     S.blad = tekstBledu(e); render();
   }
 
-  // co minutę: nowe wpisy i nowe wersje plików (drugiej osoby)
+  // stan uzgodnienia miesiąca: czy są trzy pliki, czy zatwierdzone, czy ostatnie uzgodnienie dotyczy obecnych wersji
+  function stanUzg() {
+    var p = S.pliki, u = S.uzg;
+    var wszystkie = STRONY.every(function (k) { return p[k]; });
+    var zatw = wszystkie && STRONY.every(function (k) { return p[k].zatwierdzono; });
+    var aktualne = !!(u && wszystkie && u.plik_a === p.A.id && u.plik_b1 === p.B1.id && u.plik_b2 === p.B2.id);
+    var braki = [];
+    STRONY.forEach(function (k) {
+      if (!p[k]) braki.push({ k: k, t: 'plik ' + k + ' (' + ktoOdpowiada(k) + ')' });
+      else if (!p[k].zatwierdzono) braki.push({ k: k, t: 'ZATWIERDŹ ' + k + ' (' + ktoOdpowiada(k) + ')' });
+    });
+    return { wszystkie: wszystkie, zatw: zatw, aktualne: aktualne, braki: braki };
+  }
+
+  // co minutę: nowe pliki, zatwierdzenia, uzgodnienia (podpis stanu z bazy) i nowe wpisy
   var cykl = 0;
   function planuj(ms) { clearTimeout(cykl); cykl = setTimeout(sprawdzZmiany, ms); }
   function zatrzymajCykl() { clearTimeout(cykl); }
@@ -2061,10 +2446,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       if (S.blad && !S.ja) { await start(false); return; }
       if (S.miesiac) {
         var z = await baza.rpc('ksiegowa_zmiany', { p_miesiac: S.miesiac, p_po: S.ostatniWpis });
-        var idA = S.pliki.A ? S.pliki.A.id : null, idB = S.pliki.B ? S.pliki.B.id : null;
-        if ((z.A || null) !== idA || (z.B || null) !== idB) {
+        if (z.stan !== S.stan) {
+          var bylo = S.dziennik.reduce(function (x, d) { return Math.max(x, d.id); }, 0);
           await odswiezListe(false); await wczytajMiesiac(S.miesiac, false);
-          toast('Nowa wersja pliku za ' + nazwaM(S.miesiac) + ' — porównanie przeliczone.');
+          var nowe = S.dziennik.filter(function (d) { return d.id > bylo; });
+          toast(nowe.length ? opisZdarzenia(nowe[0]) + (nowe.length > 1 ? ' (i ' + (nowe.length - 1) + ' ' + odm(nowe.length - 1, 'inna zmiana', 'inne zmiany', 'innych zmian') + ')' : '') + '.'
+            : 'Zmiany w plikach za ' + nazwaM(S.miesiac) + ' — strona pokazuje aktualny stan.');
         } else if (z.wpisy && z.wpisy.length) {
           dolozWpisy(z.wpisy); odswiezWynik();
         }
@@ -2090,7 +2477,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   function wyjasniony(w) { return wyj(R.kluczA(w.a)).stan === 'wyjasnione'; }
   function bWyjasniony(b) { return wyj(R.kluczB(b)).stan === 'wyjasnione'; }
 
-  /* ───────────── wgrywanie: plik → rozpoznanie → okno „Zapisać?” → baza ───────────── */
+  /* ───────────── wgrywanie: plik → rozpoznanie (A / B1 towary / B2 koszty) → okno „Zapisać?” → baza ───────────── */
   async function skrotPliku(buf) {
     try {
       var h = await crypto.subtle.digest('SHA-256', buf);
@@ -2101,7 +2488,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       return x.map(function (v) { return ('0000000' + v.toString(16)).slice(-8); }).join('');
     }
   }
-  async function wczytajPliki(lista) {
+  async function wczytajPliki(lista, cel) {    // cel: karta, w której wybrano plik — podpowiedź, gdy nie widać, czy FIRMINO to towary, czy koszty
     if (!lista.length || S.wysyla) return;
     var gotowe = [], zle = [];
     for (var i = 0; i < lista.length; i++) {
@@ -2111,51 +2498,62 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         var sk = await R.czytajPlik(f.name, buf);
         var rz = R.rozpoznaj(sk);
         if (!rz.typ) { zle.push(f.name + ': nie widzę kolumn rejestru księgowej (Numer dokumentu, Nazwa podmiotu, Brutto) ani FIRMINO (Numer, Kontrahent, Wartość).'); continue; }
-        var dane = rz.typ === 'A' ? R.czytajA(rz.arkusze) : R.czytajB(rz.arkusze);
+        var strona = rz.typ === 'A' ? 'A' : KAT[R.rodzajB(rz, f.name)] || (cel === 'B1' || cel === 'B2' ? cel : null);
+        if (!strona) { zle.push(f.name + ': to plik z FIRMINO, ale nie widzę, czy to towary, czy koszty — wgraj go w karcie B1 albo B2.'); continue; }
+        if (!moze(strona)) { zle.push(f.name + ': to ' + OPIS[strona].co + ' — wgrywa go ' + ktoOdpowiada(strona) + '.'); continue; }
+        var dane = strona === 'A' ? R.czytajA(rz.arkusze) : R.czytajB(rz.arkusze);
         if (!dane.dokumenty.length) { zle.push(f.name + ': nie znalazłem w nim dokumentów.'); continue; }
-        var p = { nazwa: f.name, rozmiar: f.size, typ: rz.typ, skrot: await skrotPliku(buf), dane: dane, zapis: R.doZapisu(rz) };
-        gotowe = gotowe.filter(function (x) { return x.typ !== p.typ; }).concat([p]);   // dwa pliki tej samej strony — liczy się ostatni
+        var p = { nazwa: f.name, rozmiar: f.size, strona: strona, inna: !!cel && cel !== strona, skrot: await skrotPliku(buf), dane: dane, zapis: R.doZapisu(rz) };
+        gotowe = gotowe.filter(function (x) { return x.strona !== strona; }).concat([p]);   // dwa pliki tej samej karty — liczy się ostatni
       } catch (e) {
         zle.push((f.name ? f.name + ': ' : '') + (e && e.message ? e.message : 'nie udało się przeczytać pliku.'));
       }
     }
     if (!gotowe.length) { S.zapis = null; S.okno = null; toast(zle.join(' ') || 'Nie rozpoznaję pliku.'); render(); return; }
-    var m = miesiacDlaPlikow(gotowe);
-    S.zapis = { pliki: gotowe, miesiac: m, zle: zle, blad: '' };
+    gotowe.sort(function (x, y) { return STRONY.indexOf(x.strona) - STRONY.indexOf(y.strona); });
+    S.zapis = { pliki: gotowe, miesiac: miesiacDlaPlikow(gotowe), zle: zle, blad: '' };
     S.okno = { typ: 'zapis' };
     renderOkno();
   }
   function miesiacDlaPlikow(pl) {
-    var a = pl.filter(function (p) { return p.typ === 'A'; })[0], b = pl.filter(function (p) { return p.typ === 'B'; })[0];
+    var a = pl.filter(function (p) { return p.strona === 'A'; })[0], b = pl.filter(function (p) { return p.strona !== 'A'; })[0];
     if (a && a.dane.okres) return a.dane.okres.klucz;
     if (b && S.miesiac && b.dane.dokumenty.some(function (d) { return (d.data || '').slice(0, 7) === S.miesiac; })) return S.miesiac;
     if (b && b.dane.okres && b.dane.okres.klucz) return b.dane.okres.klucz;
     return S.miesiac || new Date().toISOString().slice(0, 7);
   }
   function sasiednie(m, o) { var r = +m.slice(0, 4), k = +m.slice(5, 7) - 1 + o; r += Math.floor(k / 12); k = ((k % 12) + 12) % 12; return r + '-' + ('0' + (k + 1)).slice(-2); }
+  function dokumentyFinansowe(d) {            // dokumenty FIRMINO wierszami do bazy (finanse_dokumenty) — pod obraz finansów firmy
+    return d.dokumenty.map(function (x) {
+      return { wiersz: x.wiersz, data: x.data || null, numer: x.numer || '', kontrahent: x.kontrahent || '', typ: x.typ || '', netto: x.netto == null ? null : x.netto,
+        brutto: x.wartosc, waluta: x.waluta || 'PLN', opis: x.opis || '', grupa: x.grupa || '', pojazd: x.pojazd || '', uwagi: x.uwagi || '', korekta: x.korekta || '', status: x.status || '' };
+    });
+  }
   async function zapiszPliki() {
     var z = S.zapis;
     if (!z || S.wysyla) return;
     S.wysyla = true; z.blad = ''; renderOkno();
-    var nowe = 0, te = 0;
+    var nowe = [], te = 0;
     try {
       for (var i = 0; i < z.pliki.length; i++) {
         var p = z.pliki[i];
-        var r = await baza.rpc('ksiegowa_zapisz_plik', { p_miesiac: z.miesiac, p_strona: p.typ, p_nazwa: p.nazwa, p_skrot: p.skrot,
-          p_dokumentow: p.dane.dokumenty.length, p_dane: p.zapis });
-        if (r && r.nowy) nowe++; else te++;
+        var arg = { p_miesiac: z.miesiac, p_strona: p.strona, p_nazwa: p.nazwa, p_skrot: p.skrot, p_dokumentow: p.dane.dokumenty.length, p_dane: p.zapis };
+        if (p.strona !== 'A') arg.p_dokumenty = dokumentyFinansowe(p.dane);
+        var r = await baza.rpc('ksiegowa_zapisz_plik', arg);
+        if (r && r.nowy) nowe.push(p.strona); else te++;
         z.pliki.splice(i, 1); i--;            // zapisany — przy błędzie następnego nie wysyłamy go drugi raz
       }
     } catch (e) {
       S.wysyla = false;
       if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { S.okno = null; S.zapis = null; obsluzBlad(e); return; }
-      z.blad = tekstBledu(e) + (nowe ? ' Zapisane wcześniej pliki zostały w bazie.' : '');
+      z.blad = tekstBledu(e) + (nowe.length ? ' Zapisane wcześniej pliki zostały w bazie.' : '');
       renderOkno(); return;
     }
     S.wysyla = false; S.zapis = null; S.okno = null; renderOkno();
+    S.plikiOtwarte = true;
     await odswiezListe(false);
     await wczytajMiesiac(z.miesiac, true);
-    toast(nowe ? 'Zapisane w bazie: ' + nazwaM(z.miesiac) + '. Każdy z dostępem do Księgowej widzi teraz ten sam wynik.'
+    toast(nowe.length ? 'Zapisane ' + wMiesiacu(z.miesiac) + ': ' + nowe.join(', ') + '. Sprawdź liczby w ' + (nowe.length > 1 ? 'kartach' : 'karcie') + ' i naciśnij ZATWIERDŹ.'
       : 'Ten sam plik był już zapisany — nic się nie zmieniło.');
   }
   function przelaczArkusz(nazwa) {             // widok tylko u siebie: wyłączenie arkusza nie zmienia zapisu w bazie
@@ -2168,13 +2566,72 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     przelicz(); odswiezWynik();
   }
 
+  /* ───────────── ZATWIERDŹ i UZGODNIJ ───────────── */
+  async function zatwierdz(k, tak) {
+    var p = S.pliki[k];
+    if (!p || S.wysyla || !moze(k)) return;
+    S.wysyla = true; odswiezWynik();
+    try {
+      await baza.rpc('ksiegowa_zatwierdz', { p_plik: p.id, p_zatwierdz: tak });
+    } catch (e) {
+      S.wysyla = false;
+      if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { obsluzBlad(e); return; }
+      toast(tekstBledu(e));
+      if (NIEAKTUALNE.test(String(e && e.message))) { await odswiezListe(false); await wczytajMiesiac(S.miesiac, false); } else odswiezWynik();
+      return;
+    }
+    S.wysyla = false;
+    await odswiezListe(false); await wczytajMiesiac(S.miesiac, false);
+    var st = stanUzg();
+    toast(tak ? 'Zatwierdzony ' + OPIS[k].co + ' (' + k + '). ' + (st.zatw && !st.aktualne ? 'Trzy pliki zatwierdzone — można UZGODNIĆ.' : st.braki.length ? 'Czekamy jeszcze na: ' + st.braki.map(function (b) { return b.t; }).join(', ') + '.' : '')
+      : 'Cofnięte zatwierdzenie: ' + OPIS[k].co + ' (' + k + ').');
+  }
+  function podsumowanieDoBazy() {             // krótkie liczby z uzgodnienia (do historii miesiąca i przyszłych raportów)
+    var P = S.pliki, A = R.czytajA(P.A.rozp.arkusze);
+    var B = R.polaczB([{ kat: 'towary', dane: P.B1.dane }, { kat: 'koszty', dane: P.B2.dane }]);
+    var U = R.uzgodnij(A, B, { tolerancja: R.DOMYSLNE.tolerancja, oknoDni: R.DOMYSLNE.oknoDni });
+    var s = U.podsumowanie, rej = {};
+    U.wiersze.forEach(function (w) {
+      var r = rej[w.a.rejestr || '—'] = rej[w.a.rejestr || '—'] || { dok: 0, zgodne: 0, kwota: 0, brak: 0, sprawdz: 0 };
+      r.dok++; if (w.zgodny === 'tak') r.zgodne++; else if (w.zgodny === 'nie') r.kwota++; if (w.firmino === 'nie') r.brak++; if (w.sprawdz) r.sprawdz++;
+    });
+    var kat = {};
+    B.dokumenty.forEach(function (b) { var k = kat[b.kat] = kat[b.kat] || { dok: 0, wartosc: 0 }; k.dok++; k.wartosc = R.r2(k.wartosc + b.wartosc); });
+    return { a: s.a, b: s.b, zgodne: s.zgodne, wTolerancji: s.wTolerancji, kwota: s.kwota, brak: s.nie, niepewne: s.takNiepewne, sprawdz: s.sprawdz,
+      tylkoB: s.tylkoB, rejestry: rej, firmino: kat, tolerancja: R.DOMYSLNE.tolerancja, wersja: WERSJA };
+  }
+  async function uzgodnijMiesiac() {
+    var st = stanUzg();
+    if (S.wysyla || !st.zatw || st.aktualne) return;
+    S.wysyla = true; odswiezWynik();
+    var r;
+    try {
+      r = await baza.rpc('ksiegowa_uzgodnij', { p_miesiac: S.miesiac, p_podsumowanie: podsumowanieDoBazy() });
+    } catch (e) {
+      S.wysyla = false;
+      if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { obsluzBlad(e); return; }
+      toast(tekstBledu(e));
+      if (NIEAKTUALNE.test(String(e && e.message))) { await odswiezListe(false); await wczytajMiesiac(S.miesiac, false); } else odswiezWynik();
+      return;
+    }
+    S.wysyla = false; S.plikiOtwarte = false;
+    await odswiezListe(false); await wczytajMiesiac(S.miesiac, true);
+    toast((r && r.nowe === false ? 'Te pliki są już uzgodnione' : 'Uzgodnione: ' + nazwaM(S.miesiac)) + ' — każdy z dostępem do Księgowej widzi teraz ten sam wynik.');
+    var el = document.getElementById('wynik'); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   /* ───────────── wiersze widoku ───────────── */
+  function plikA() { return S.plikiUzg && S.plikiUzg.A; }
   function rejestry() {
-    var licz = {};
-    if (S.pliki.A) S.pliki.A.dane.dokumenty.forEach(function (d) { licz[d.rejestr || '—'] = (licz[d.rejestr || '—'] || 0) + 1; });
+    var licz = {}, A = plikA();
+    if (A) A.dane.dokumenty.forEach(function (d) { licz[d.rejestr || '—'] = (licz[d.rejestr || '—'] || 0) + 1; });
     return licz;
   }
   function wRejestrze(w) { return S.rejestr === '*' || (w.a.rejestr || '—') === S.rejestr; }
+  function tylkoBWidoku() {                   // rejestr T ↔ plik towarów, P ↔ plik kosztów
+    var kat = S.rejestr === 'T' ? 'towary' : S.rejestr === 'P' ? 'koszty' : null;
+    return S.wynik ? S.wynik.tylkoB.filter(function (b) { return !kat || b.kat === kat; }) : [];
+  }
   function pasujeFiltr(w, f) {
     switch (f) {
       case 'zgodne': return w.zgodny === 'tak';
@@ -2217,60 +2674,92 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
 
   function renderStrona() {
-    var opcje = S.miesiace.map(function (x) { return x.miesiac; });
+    var opcje = S.miesiace.map(function (x) { return x; });
     var h = '<div class="strona-g"><div><h1 class="h1">Uzgodnienie faktur</h1>' +
-      '<p class="pod">' + T('Rejestr zakupów od księgowej porównany z dokumentami zakupu w FIRMINO — dokument po dokumencie: numer, kontrahent, kwota i data.') + '</p></div>' +
-      (opcje.length ? '<label class="pole miesiac-w"><span class="maly">Miesiąc</span><select id="miesiac" aria-label="Miesiąc">' + opcje.map(function (m) {
-        return '<option value="' + m + '"' + (m === S.miesiac ? ' selected' : '') + '>' + esc(nazwaM(m)) + '</option>'; }).join('') + '</select></label>' : '') + '</div>';
+      '<p class="pod">' + T('Rejestr zakupów od księgowej porównany z dwoma plikami FIRMINO — zakupami towarów i kosztami — dokument po dokumencie: numer, kontrahent, kwota i data.') + '</p></div>' +
+      (opcje.length ? '<label class="pole miesiac-w"><span class="maly">Miesiąc</span><select id="miesiac" aria-label="Miesiąc">' + opcje.map(function (x) {
+        return '<option value="' + x.miesiac + '"' + (x.miesiac === S.miesiac ? ' selected' : '') + '>' + esc(nazwaM(x.miesiac)) + (x.uzgodnienie ? ' ✓' : '') + '</option>'; }).join('') + '</select></label>' : '') + '</div>';
     if (S.blad) h += '<div class="info uw blad-w" role="alert"><span>' + esc(S.blad) + '</span><button class="drugi maly" data-a="ponow">' + ik('odswiez', 'mala') + ' Spróbuj jeszcze raz</button></div>';
-    if (POKAZ) h += '<p class="przyklad podp">' + T('Pokaz bez bazy: pliki z 12.11 z UZGODNIENIA › KSIĘGOWE zapisane „w pamięci strony”, bez ' + (POKAZ.pominiete || 0) + ' rachunków bez VAT od osób fizycznych. Wgrane pliki i uwagi znikają po odświeżeniu.') + '</p>';
-    h += '<section class="pliki">' + kartaPliku('A') + kartaPliku('B') + '</section>';
+    if (POKAZ) h += '<p class="przyklad podp">' + T('Pokaz bez bazy: pliki z 12.11 z UZGODNIENIA › KSIĘGOWE zapisane „w pamięci strony”, bez rachunków osób fizycznych (' + (POKAZ.pominiete || 0) + ' w rejestrze, ' + (POKAZ.pominieteKoszty || 0) + ' w kosztach FIRMINO). Pliki, zatwierdzenia i uwagi znikają po odświeżeniu.') + '</p>';
+    var st = stanUzg(), zwin = st.aktualne && !S.plikiOtwarte;
+    if (!zwin) h += '<section class="pliki">' + STRONY.map(kartaPliku).join('') + '</section>';
+    if (S.miesiac) h += pasekUzg(st, zwin);
     if (S.laduje && !S.wynik) return h + '<div class="zdz-start">' + zdz('czyta', 'unosi') + '<div class="dymek ogon-lewo"><div class="d-tyt">ZDZISŁAW<span class="kursor"></span></div>' + T('Wczytuję ' + nazwaM(S.miesiac) + ' z bazy…') + '</div></div>';
     if (!S.wynik) {
       var tekst = !S.miesiac
-        ? 'Wgraj dwa pliki: rejestr zakupów od księgowej i dokumenty zakupów z FIRMINO. Sam rozpoznam, który jest który, zapiszę je w bazie pod właściwym miesiącem i porównam dokument po dokumencie — każdy z dostępem do Księgowej zobaczy ten sam wynik.'
-        : S.pliki.A ? 'Mam rejestr księgowej za ' + nazwaM(S.miesiac) + '. Czekam na eksport z FIRMINO — wgraj go w karcie B, a porównam dokument po dokumencie.'
-        : S.pliki.B ? 'Mam dokumenty z FIRMINO za ' + nazwaM(S.miesiac) + '. Czekam na rejestr zakupów od księgowej — wgraj go w karcie A.'
-        : 'Ten miesiąc nie ma jeszcze plików.';
-      return h + '<div class="zdz-start">' + zdz('czyta', 'unosi') + '<div class="dymek ogon-lewo"><div class="d-tyt">ZDZISŁAW<span class="kursor"></span></div>' + T(tekst) + '</div></div>';
+        ? 'Miesiąc uzgadniamy z trzech plików: rejestr zakupów od księgowej (towary i koszty) oraz dwa eksporty z FIRMINO — zakupy towarów i koszty. Każda osoba wgrywa swój plik i go zatwierdza. Gdy wszystkie trzy są zatwierdzone, UZGODNIJ pokaże wynik — ten sam dla każdego z dostępem do Księgowej.'
+        : st.zatw ? 'Trzy pliki za ' + nazwaM(S.miesiac) + ' są zatwierdzone. Naciśnij UZGODNIJ — porównam je dokument po dokumencie i zapiszę uzgodnienie w bazie.'
+        : 'Wynik pokażę po UZGODNIJ, gdy trzy pliki będą wgrane i zatwierdzone. Czekam na: ' + st.braki.map(function (b) { return b.t; }).join(', ') + '.';
+      return h + '<div class="zdz-start">' + zdz(st.zatw ? 'oczko' : 'czyta', 'unosi') + '<div class="dymek ogon-lewo"><div class="d-tyt">ZDZISŁAW<span class="kursor"></span></div>' + T(tekst) + '</div></div>';
     }
-    return h + renderWynik();
+    return h + '<div id="wynik">' + renderWynik() + '</div>';
   }
 
   function kartaPliku(k) {
-    var p = S.pliki[k], tyt = k === 'A' ? ['KSIĘGOWA', 'Rejestr zakupów z systemu księgowej'] : ['FIRMINO', 'Dokumenty zakupów z FIRMINO'];
+    var o = OPIS[k], p = S.pliki[k], mog = moze(k);
     var wersji = S.wersje.filter(function (v) { return v.strona === k; }).length;
-    var h = '<div class="plik" data-strona="' + k + '"><div class="plik-g"><span class="plik-lit bebas" style="--kol:' + (k === 'A' ? 'var(--mKsi)' : 'var(--mMag)') + '">' + k + '</span>' +
-      '<span class="plik-tyt"><b>' + tyt[0] + '</b><span>' + tyt[1] + '</span></span>' +
-      (p ? '<label class="drugi maly plik-zmien">' + ik('wgraj', 'mala') + ' Nowsza wersja<input type="file" accept=".xlsx,.csv,.txt" data-plik="' + k + '" hidden></label>' : '<span></span>') + '</div>';
+    var h = '<div class="plik" data-strona="' + k + '"><div class="plik-g">' + lit(k) +
+      '<span class="plik-tyt"><b>' + o.tyt + '</b><span>' + o.pod + '</span></span></div>';
     if (!p) {
-      h += '<label class="plik-pole" data-upusc="' + k + '">' + ik('plik') + '<b>' + (k === 'A' ? 'Wgraj rejestr zakupów' : 'Wgraj eksport z FIRMINO') + '</b>' +
-        '<small>' + (k === 'A' ? 'np. „psUSsHI 2610 REJ ZAKUPOW.xlsx”' : 'np. „Dokumenty_zakupow_2026-11-12.xlsx”') + ' · .xlsx albo .csv</small>' +
-        '<input type="file" accept=".xlsx,.csv,.txt" multiple data-plik="' + k + '"></label>';
+      h += mog
+        ? '<label class="plik-pole" data-upusc="' + k + '">' + ik('plik') + '<b>' + o.wgraj + '</b><small>' + o.przyklad + ' · .xlsx, .xls albo .csv</small>' +
+          '<input type="file" accept="' + PLIKI_TYPY + '" multiple data-plik="' + k + '"></label>'
+        : '<div class="plik-czeka">' + ik('zegar') + '<b>Czeka na plik</b><small>' + T('Wgrywa i zatwierdza: ' + ktoOdpowiada(k)) + '</small></div>';
+      return h + '</div>';
+    }
+    var d = p.dane, suma = 0;
+    d.dokumenty.forEach(function (x) { suma += k === 'A' ? x.brutto : x.wartosc; });
+    var okres = k === 'A' ? (d.okres ? d.okres.tekst : '—') : (d.okres ? dataKrotka(d.okres.od) + '–' + dataPelna(d.okres.do) : '—');
+    var przelacz = k === 'A' && p.rozp.arkusze.length > 1 && (!S.plikiUzg || S.plikiUzg.A === p);
+    var ark = p.rozp.arkusze.map(function (a) {
+      var opis = d.arkusze.filter(function (x) { return x.nazwa === a.nazwa; })[0], n = opis ? opis.dokumentow : 0;
+      return przelacz ? '<button data-a="arkusz" data-v="' + esc(a.nazwa) + '" aria-pressed="' + (p.wybrane.indexOf(a.nazwa) >= 0) + '">' + esc(a.nazwa) + ' · ' + n + '</button>'
+        : '<span class="ark-j">' + esc(a.nazwa) + '</span>';
+    }).join('');
+    h += '<div class="plik-ok"><div class="nz">' + ik('plik') + '<span>' + esc(p.nazwa) + '</span>' +
+      (mog ? '<label class="drugi maly plik-zmien" title="Wgraj nowszą wersję pliku">' + ik('wgraj', 'mala') + ' Nowsza<input type="file" accept="' + PLIKI_TYPY + '" data-plik="' + k + '" hidden></label>' : '') + '</div>' +
+      '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b>' +
+      '<span>' + o.kwota + '</span><b>' + zl(suma) + ' zł</b>' +
+      '<span>Okres</span><b>' + esc(okres) + '</b>' +
+      '<span>' + (p.rozp.arkusze.length > 1 ? 'Arkusze' : 'Arkusz') + '</span><b class="ark">' + ark + '</b>' +
+      '<span>Wgrane</span><b class="kto">' + esc(kiedy(p.kiedy)) + ' · ' + esc(p.kto_imie || '—') +
+        (wersji > 1 ? ' <button class="link wers" data-a="wersje" data-v="' + k + '">' + wersji + ' ' + odm(wersji, 'wersja', 'wersje', 'wersji') + '</button>' : '') + '</b></div></div>';
+    if (p.zatwierdzono) {
+      h += '<div class="zatw ok"><span class="pill ok">' + ik('ok', 'mala') + ' Zatwierdzony</span><span class="zatw-k">' + esc(kiedy(p.zatwierdzono)) + ' · ' + esc(p.zatwierdzil_imie || '—') + '</span>' +
+        (mog ? '<button class="drugi maly" data-a="cofnij" data-v="' + k + '"' + (S.wysyla ? ' disabled' : '') + '>Cofnij</button>' : '<span></span>') + '</div>';
     } else {
-      var d = p.dane, liczba = d.dokumenty.length, suma = 0;
-      d.dokumenty.forEach(function (x) { suma += k === 'A' ? x.brutto : x.wartosc; });
-      var okres = k === 'A' ? (d.okres ? d.okres.tekst : '—') : (d.okres ? dataKrotka(d.okres.od) + '–' + dataPelna(d.okres.do) : '—');
-      var ark = p.rozp.arkusze.map(function (a) {
-        var opis = d.arkusze.filter(function (x) { return x.nazwa === a.nazwa; })[0], n = opis ? opis.dokumentow : 0;
-        return k === 'A' && p.rozp.arkusze.length > 1
-          ? '<button data-a="arkusz" data-v="' + esc(a.nazwa) + '" aria-pressed="' + (p.wybrane.indexOf(a.nazwa) >= 0) + '">' + esc(a.nazwa) + ' · ' + n + '</button>'
-          : '<span class="ark-j">' + esc(a.nazwa) + '</span>';
-      }).join('');
-      h += '<div class="plik-ok"><div class="nz">' + ik('ok') + '<span>' + esc(p.nazwa) + '</span></div>' +
-        '<div class="licz-w"><span>Dokumenty</span><b>' + liczba + '</b>' +
-        '<span>' + (k === 'A' ? 'Brutto' : 'Wartość') + '</span><b>' + zl(suma) + ' zł</b>' +
-        '<span>Okres</span><b>' + esc(okres) + '</b>' +
-        '<span>' + (p.rozp.arkusze.length > 1 ? 'Arkusze' : 'Arkusz') + '</span><b class="ark">' + ark + '</b>' +
-        '<span>Wgrane</span><b class="kto">' + esc(kiedy(p.kiedy)) + ' · ' + esc(p.kto_imie || '—') +
-          (wersji > 1 ? ' <button class="link wers" data-a="wersje" data-v="' + k + '">' + wersji + ' ' + odm(wersji, 'wersja', 'wersje', 'wersji') + '</button>' : '') + '</b></div>';
-      h += '</div>';
+      h += '<div class="zatw czeka"><span class="pill uw">' + ik('zegar', 'mala') + ' Czeka</span><span class="zatw-k">' + T('Zatwierdza: ' + ktoOdpowiada(k)) + '</span>' +
+        '<button class="glowny maly zatwierdz" data-a="zatwierdz" data-v="' + k + '"' + (mog && !S.wysyla ? '' : ' disabled') +
+        (mog ? '' : ' title="' + esc('Zatwierdza: ' + ktoOdpowiada(k)) + '"') + '>' + ik('ok', 'mala') + ' ZATWIERDŹ</button></div>';
     }
     return h + '</div>';
   }
 
+  function pasekUzg(st, zwin) {
+    var kroki = STRONY.map(function (k) {
+      var p = S.pliki[k], kl = !p ? 'brak' : p.zatwierdzono ? 'ok' : 'czeka';
+      var t = !p ? 'brak pliku' : p.zatwierdzono ? 'zatwierdzony' : 'czeka na ZATWIERDŹ';
+      return '<span class="krok ' + kl + '">' + lit(k, 'mala') + '<span><b>' + OPIS[k].krotko + '</b><small>' + (p && p.zatwierdzono ? ik('ok', 'mala') : '') + t + '</small></span></span>';
+    }).join('');
+    var opis, prawa;
+    if (st.aktualne) {
+      var cof = STRONY.filter(function (k) { return !S.pliki[k].zatwierdzono; });
+      opis = '<b>Uzgodnione</b> ' + esc(kiedy(S.uzg.kiedy)) + ' · ' + esc(S.uzg.kto_imie || '—') + '. ' +
+        (cof.length ? '<span class="uw-t">' + T('Od tego czasu cofnięto zatwierdzenie: ' + cof.join(', ') + ' — wynik poniżej dotyczy uzgodnionych wersji.') + '</span>' : T('Wynik poniżej — ten sam dla każdego z dostępem do Księgowej.'));
+      prawa = '<span class="pill ok duza">' + ik('ok', 'mala') + ' Uzgodnione</span>';
+    } else {
+      opis = st.zatw ? '<b>' + T('Trzy pliki zatwierdzone') + '</b> — ' + T('można uzgodnić.') : T('UZGODNIJ zadziała, gdy trzy pliki będą wgrane i zatwierdzone. Czekamy na: ') + '<b>' + T(st.braki.map(function (b) { return b.t; }).join(', ')) + '</b>.';
+      if (S.uzg) opis += ' <span class="uw-t">' + T('Wynik poniżej pochodzi z uzgodnienia z ' + kiedy(S.uzg.kiedy) + ' (' + (S.uzg.kto_imie || '—') + ') — z wcześniejszych wersji plików.') + '</span>';
+      prawa = '<button class="glowny uzgodnij" data-a="uzgodnij"' + (st.zatw && !S.wysyla ? '' : ' disabled') + '>' + ik('uzgodnij') + (S.wysyla && st.zatw ? 'Uzgadniam…' : 'UZGODNIJ') + '</button>';
+    }
+    return '<section class="uzg" aria-label="Uzgodnienie miesiąca"><div class="uzg-kroki">' + kroki + '</div><div class="uzg-p">' + prawa + '</div>' +
+      '<div class="uzg-o"><p>' + opis + '</p><span class="uzg-l">' +
+        (st.aktualne ? '<button class="link" data-a="pliki-pokaz">' + (zwin ? 'Pokaż pliki' : 'Zwiń pliki') + '</button>' : '') +
+        (S.dziennik.length ? '<button class="link" data-a="historia">' + ik('historia', 'mala') + ' Historia miesiąca</button>' : '') + '</span></div></section>';
+  }
+
   function renderWynik() {
-    var W = S.wynik, wr = wierszeRejestru(), wid = wierszeWidoku();
+    var W = S.wynik, wr = wierszeRejestru(), wid = wierszeWidoku(), tB = tylkoBWidoku();
     var s = { dok: wr.length, brutto: 0, tak: 0, takN: 0, nie: 0, zgodne: 0, wTol: 0, kwota: 0, sprawdz: 0, otw: 0, wyj: 0 };
     wr.forEach(function (w) {
       s.brutto += w.a.brutto;
@@ -2279,10 +2768,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       if (w.sprawdz) s.sprawdz++;
       if (rozbieznosc(w)) { if (wyjasniony(w)) s.wyj++; else s.otw++; }
     });
-    var bOtw = W.tylkoB.filter(function (b) { return !bWyjasniony(b); }).length;
+    var bOtw = tB.filter(function (b) { return !bWyjasniony(b); }).length;
     var P = W.podsumowanie, rejNazwa = { T: 'towary', P: 'pozostałe', '*': 'wszystkie' }[S.rejestr] || S.rejestr;
+    var kat = { towary: { dok: 0, wartosc: 0 }, koszty: { dok: 0, wartosc: 0 } };
+    S.B.dokumenty.forEach(function (b) { var k = kat[b.kat]; if (k) { k.dok++; k.wartosc += b.wartosc; } });
     var h = '';
-    h += '<div class="zdz-rz">' + zdz(s.otw + bOtw > 0 ? 'czyta' : 'ok', 'wej') + '<div class="dymek ogon-lewo"><div class="d-tyt">ZDZISŁAW<span class="kursor"></span></div>' + wiesc(s, W, wr, bOtw) + '</div></div>';
+    h += '<div class="zdz-rz">' + zdz(s.otw + bOtw > 0 ? 'czyta' : 'ok', 'wej') + '<div class="dymek ogon-lewo"><div class="d-tyt">ZDZISŁAW<span class="kursor"></span></div>' + wiesc(s, tB, wr, bOtw) + '</div></div>';
     var sN = 0, sV = 0; wr.forEach(function (w) { sN += w.a.netto; sV += w.a.vat; });
     h += '<section class="liczby">' +
       '<div class="licz-k" style="--kol:var(--mKsi)"><h3>Księgowa · ' + esc(rejNazwa) + '</h3><div class="licz-w">' +
@@ -2292,8 +2783,9 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         '<span>Kwoty zgodne</span><b class="ok">' + s.zgodne + (s.wTol ? ' <small class="cicha-t" title="w tym ' + s.wTol + ' z różnicą do ' + zl(S.opcje.tolerancja).replace(',00', '') + ' zł">· ' + s.wTol + '<span class="szer"> do ' + zl(S.opcje.tolerancja).replace(',00', '') + ' zł</span></small>' : '') + '</b>' +
         '<span>Różnica kwoty</span><b class="' + (s.kwota ? 'uw' : '') + '">' + s.kwota + '</b>' +
         '<span>Brak w FIRMINO</span><b class="' + (s.nie ? 'bl' : '') + '">' + s.nie + '</b></div></div>' +
-      '<div class="licz-k" style="--kol:var(--mMag)"><h3>FIRMINO · cały plik</h3><div class="licz-w">' +
-        '<span>Dokumenty</span><b>' + P.b.dok + '</b><span>Wartość</span><b>' + zl(P.b.wartosc) + '</b>' +
+      '<div class="licz-k" style="--kol:var(--mMag)"><h3>FIRMINO · dwa pliki</h3><div class="licz-w">' +
+        '<span>Towary (B1)</span><b>' + kat.towary.dok + ' <small class="cicha-t">· ' + zl(kat.towary.wartosc) + '</small></b>' +
+        '<span>Koszty (B2)</span><b>' + kat.koszty.dok + ' <small class="cicha-t">· ' + zl(kat.koszty.wartosc) + '</small></b>' +
         '<span>Z parą u księgowej</span><b>' + (P.b.dok - P.tylkoB.dok) + '</b>' +
         '<span>Tylko w FIRMINO</span><b class="' + (P.tylkoB.dok ? 'bl' : '') + '">' + P.tylkoB.dok + '</b></div></div>' +
       '</section>';
@@ -2307,15 +2799,16 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       var nazwy = { T: 'Towary', P: 'Pozostałe' };
       h += '<div class="seg rej" role="group" aria-label="Rejestr">' + klucze.sort(function (a, b) { return a === 'T' ? -1 : b === 'T' ? 1 : a < b ? -1 : 1; }).map(function (r) {
         return '<button data-a="rejestr" data-v="' + esc(r) + '" aria-pressed="' + (S.rejestr === r) + '">' + esc(nazwy[r] || r) + ' <span class="licz-s">' + rej[r] + '</span></button>';
-      }).join('') + '<button data-a="rejestr" data-v="*" aria-pressed="' + (S.rejestr === '*') + '">Wszystkie <span class="licz-s">' + S.pliki.A.dane.dokumenty.length + '</span></button></div>';
+      }).join('') + '<button data-a="rejestr" data-v="*" aria-pressed="' + (S.rejestr === '*') + '">Wszystkie <span class="licz-s">' + plikA().dane.dokumenty.length + '</span></button></div>';
     } else h += '<span class="rej"></span>';
     h += '<label class="szukaj">' + ik('szukaj') + '<input type="search" id="szukaj" placeholder="Szukaj: numer, kontrahent, kwota" value="' + esc(S.szukaj) + '" autocomplete="off"></label>' +
       '<button class="drugi kop" data-a="kopiuj">' + ik('kopiuj', 'mala') + ' Kopiuj widok do arkusza</button></div>';
     h += '<div class="tab-w" id="tab-a">' + tabelaA(wid) + '</div>';
-    h += '<section class="sekcja"><div class="sekcja-g"><h2>Tylko w FIRMINO <span class="licz-s podp">· ' + W.tylkoB.length + (W.tylkoB.length && bOtw < W.tylkoB.length ? ' · wyjaśnione ' + (W.tylkoB.length - bOtw) : '') + '</span></h2>' +
-      '<span class="pod">' + T('Dokumenty z FIRMINO bez pary w rejestrze księgowej — do dosłania albo do wyjaśnienia.') + '</span></div>' +
-      (W.tylkoB.length ? '<div class="tab-w">' + tabelaB(W.tylkoB) + '</div>' : '<div class="karta tab-pusta">' + T('Każdy dokument z FIRMINO ma parę u księgowej.') + '</div>') + '</section>';
-    var not = S.pliki.A.dane.notatki;
+    var katNazwa = S.rejestr === 'T' ? ' · plik towarów' : S.rejestr === 'P' ? ' · plik kosztów' : '';
+    h += '<section class="sekcja"><div class="sekcja-g"><h2>Tylko w FIRMINO <span class="licz-s podp">' + esc(katNazwa) + ' · ' + tB.length + (tB.length && bOtw < tB.length ? ' · wyjaśnione ' + (tB.length - bOtw) : '') + '</span></h2>' +
+      '<span class="pod">' + T('Dokumenty z FIRMINO bez pary w rejestrze księgowej — do dosłania albo do wyjaśnienia.' + (S.rejestr === 'T' || S.rejestr === 'P' ? ' Rejestr T ↔ plik towarów, P ↔ plik kosztów.' : '')) + '</span></div>' +
+      (tB.length ? '<div class="tab-w">' + tabelaB(tB) + '</div>' : '<div class="karta tab-pusta">' + T('Każdy dokument z FIRMINO w tym widoku ma parę u księgowej.') + '</div>') + '</section>';
+    var not = plikA().dane.notatki;
     if (not.length) {
       h += '<section class="sekcja"><div class="sekcja-g"><h2>Notatki w pliku księgowej</h2><span class="pod">' + T('Wiersze bez daty i kwoty brutto — nie liczą się do porównania.') + '</span></div>' +
         not.map(function (n) { return '<div class="notatka"><b>' + esc(n.dokKs || '—') + '</b><span>' + esc([n.numer, n.nazwa].filter(Boolean).join(' · ')) + '</span><span>' + (n.netto != null ? zl(n.netto) + ' netto' : '') + '</span></div>'; }).join('') + '</section>';
@@ -2326,31 +2819,37 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<span>Okno dat bez numeru</span><div class="seg" role="group">' + [1, 3, 7].map(function (d) {
         return '<button data-a="okno-dni" data-v="' + d + '" aria-pressed="' + (S.opcje.oknoDni === d) + '">± ' + d + ' ' + odm(d, 'dzień', 'dni', 'dni') + '</button>'; }).join('') + '</div>' +
       '<span></span><span class="podp">' + T('Ustawienia zmieniają tylko Twój widok — po odświeżeniu wraca 10 zł i ± 3 dni, takie same dla wszystkich.') + '</span>' +
-      '</div>' +
-      '<ol>' +
-        '<li><b>Ten sam numer</b> (spacje, ukośniki, wielkie litery i przedrostki FS / FV nie mają znaczenia) i ten sam kontrahent albo ta sama kwota — <b>pewne</b>.</li>' +
-        '<li><b>Literówka w numerze</b> (jeden znak, w długim numerze dwa) u tego samego kontrahenta przy tej samej albo prawie tej samej kwocie — FIRMINO <b>tak</b>, w kolumnie Numer: „literówka”.</li>' +
-        '<li><b>Paragony i inne numery</b>: ten sam kontrahent, kwota co do złotówki i data w oknie dni — FIRMINO <b>tak</b>, numer z FIRMINO pokazany obok.</li>' +
-        '<li><b>Tylko kwota i dzień</b> (inny kontrahent albo kwota różna o kilka procent) — FIRMINO <b>tak?</b>: wymaga oka człowieka.</li>' +
-        '<li>Każdy dokument FIRMINO łączy się najwyżej z jednym dokumentem księgowej; najpierw pary pewne, potem słabsze.</li>' +
-        '<li><b>ZGODNY</b> porównuje brutto księgowej z wartością w FIRMINO: <b>tak</b>, gdy różnica nie przekracza ' + zl(S.opcje.tolerancja).replace(',00', '') + ' zł. Mniejsza różnica zostaje w kolumnie Różnica (szara). Dokument z kilkoma stawkami VAT liczymy jako jeden.</li>' +
-        '<li>Plik księgowej może mieć kilka arkuszy (np. TOWARY i pełny rejestr) — te same pozycje liczymy raz, a arkusz można wyłączyć w karcie A (tylko w Twoim widoku).</li>' +
-        '<li><b>Wyjaśnienia</b>: stuknij dokument, dopisz uwagę albo oznacz go jako wyjaśniony. Uwagi zostają przy miesiącu — także po wgraniu nowszej wersji pliku.</li>' +
-      '</ol></div></details></section>';
+      '</div>' + zasady() + '</div></details></section>';
     return h;
   }
+  function zasady() {
+    return '<ol>' +
+      '<li><b>Trzy pliki</b>: rejestr księgowej (A) wgrywa i zatwierdza księgowa, zakupy towarów z FIRMINO (B1) — magazynier, koszty z FIRMINO (B2) — zarządzająca. <b>UZGODNIJ</b> działa, gdy wszystkie trzy są zatwierdzone; nowsza wersja pliku czeka na ponowne zatwierdzenie i uzgodnienie.</li>' +
+      '<li><b>Ten sam numer</b> (spacje, ukośniki, wielkie litery i przedrostki FS / FV nie mają znaczenia) i ten sam kontrahent albo ta sama kwota — <b>pewne</b>.</li>' +
+      '<li><b>Literówka w numerze</b> (jeden znak, w długim numerze dwa) u tego samego kontrahenta przy tej samej albo prawie tej samej kwocie — FIRMINO <b>tak</b>, w kolumnie Numer: „literówka”.</li>' +
+      '<li><b>Paragony i inne numery</b>: ten sam kontrahent, kwota co do złotówki i data w oknie dni — FIRMINO <b>tak</b>, numer z FIRMINO pokazany obok.</li>' +
+      '<li><b>Tylko kwota i dzień</b> (inny kontrahent albo kwota różna o kilka procent) — FIRMINO <b>tak?</b>: wymaga oka człowieka. Takiej pary nie tworzymy między towarem a kosztem.</li>' +
+      '<li><b>Rejestr T szukamy najpierw w pliku towarów, P — w pliku kosztów.</b> Para z drugiego pliku dostaje znacznik „w kosztach” albo „w towarach”.</li>' +
+      '<li><b>2×</b>: w FIRMINO kwota dokładnie dwa razy większa niż w rejestrze, u tego samego kontrahenta — para się liczy, ZGODNY „nie”, znacznik 2× (zwykle koszty samochodu ujęte w rejestrze w połowie).</li>' +
+      '<li><b>Inna waluta</b> (np. EUR w FIRMINO, złote w rejestrze) — para bez porównania kwot, do sprawdzenia.</li>' +
+      '<li>Każdy dokument FIRMINO łączy się najwyżej z jednym dokumentem księgowej; najpierw pary pewne, potem słabsze.</li>' +
+      '<li><b>ZGODNY</b> porównuje brutto księgowej z wartością w FIRMINO: <b>tak</b>, gdy różnica nie przekracza ' + zl(S.opcje.tolerancja).replace(',00', '') + ' zł. Mniejsza różnica zostaje w kolumnie Różnica (szara). Dokument z kilkoma stawkami VAT liczymy jako jeden.</li>' +
+      '<li>Plik księgowej może mieć kilka arkuszy (np. TOWARY i pełny rejestr) — te same pozycje liczymy raz, a arkusz można wyłączyć w karcie A (tylko w Twoim widoku).</li>' +
+      '<li><b>Wyjaśnienia</b>: stuknij dokument, dopisz uwagę albo oznacz go jako wyjaśniony. Uwagi zostają przy miesiącu — także po wgraniu nowszej wersji pliku.</li>' +
+      '</ol>';
+  }
 
-  function wiesc(s, W, wr, bOtw) {
+  function wiesc(s, tB, wr, bOtw) {
     if (!s.dok) return T('W tym rejestrze nie ma dokumentów.');
     var proc = Math.round((s.tak + s.takN) / s.dok * 100);
     var t = 'Na <b>' + s.dok + '</b> ' + odm(s.dok, 'dokument', 'dokumenty', 'dokumentów') + ' księgowej w FIRMINO jest <b>' + (s.tak + s.takN) + '</b> (' + proc + '%), kwoty zgodne w <b>' + s.zgodne + '</b>' +
       (s.wTol ? ' (w tym ' + s.wTol + ' z różnicą do ' + zl(S.opcje.tolerancja).replace(',00', '') + ' zł)' : '') + '. ';
     if (s.nie) t += 'Brakuje <b>' + s.nie + '</b>. ';
-    if (W.tylkoB.length) t += 'W FIRMINO jest <b>' + W.tylkoB.length + '</b> ' + odm(W.tylkoB.length, 'dokument', 'dokumenty', 'dokumentów') + ' bez pary u księgowej. ';
-    var wsk = wskazowkiWidoku(wr);
-    if (wsk) t += '<br>' + wsk;
-    var otw = s.otw + bOtw, wyj = s.wyj + (W.tylkoB.length - bOtw);
-    t += '<br>' + (otw ? 'Do wyjaśnienia: <b>' + otw + '</b>' + (wyj ? ' · wyjaśnione: <b>' + wyj + '</b>' : '') + '.' : wyj ? 'Wszystkie różnice wyjaśnione (' + wyj + ').' : '');
+    if (tB.length) t += 'W FIRMINO jest <b>' + tB.length + '</b> ' + odm(tB.length, 'dokument', 'dokumenty', 'dokumentów') + ' bez pary u księgowej. ';
+    var wsk = [wskazowkiWidoku(wr), polowaWidoku(wr), innaKategoria(wr)].filter(Boolean);
+    if (wsk.length) t += '<br>' + wsk.join('<br>');
+    var otw = s.otw + bOtw, wyjN = s.wyj + (tB.length - bOtw);
+    t += '<br>' + (otw ? 'Do wyjaśnienia: <b>' + otw + '</b>' + (wyjN ? ' · wyjaśnione: <b>' + wyjN + '</b>' : '') + '.' : wyjN ? 'Wszystkie różnice wyjaśnione (' + wyjN + ').' : '');
     var zart = !otw ? 'Faktury zgadzają się jak dwa skrzydła ważki.' : proc >= 80 ? 'Większość faktur tańczy w parach jak na studniówce — kilka czeka pod ścianą.' : 'Faktury mówią dziś dwoma językami, ale słownik już mamy.';
     return t + '<div class="d-pod">' + T(zart) + '</div>';
   }
@@ -2358,7 +2857,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var u = {};
     wr.forEach(function (w) {
       var k = w.roznica;
-      if (k == null || Math.abs(k) < 1) return;
+      if (k == null || Math.abs(k) < 1 || (w.flagi && w.flagi.polowa)) return;
       var n = (w.a.nazwa || '').trim().split(/\s+/)[0].toUpperCase();
       u[n] = u[n] || { nazwa: (w.a.nazwa || '').trim(), ile: 0, pelne: 0, plus: 0, suma: 0 };
       u[n].ile++; u[n].suma += k;
@@ -2369,6 +2868,19 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       .sort(function (x, y) { return y.ile - x.ile; })[0];
     if (!naj) return '';
     return '<b>' + esc(naj.nazwa) + '</b>: w ' + naj.ile + ' ' + odm(naj.ile, 'fakturze', 'fakturach', 'fakturach') + ' FIRMINO ma więcej (razem ' + zl(naj.suma) + ' zł), zwykle o pełne złote — wygląda na kaucję za opakowania, której nie ma w rejestrze VAT. Do potwierdzenia u księgowej.';
+  }
+  function polowaWidoku(wr) {                  // FIRMINO = 2 × rejestr (paliwo, leasing, naprawy aut)
+    var l = wr.filter(function (w) { return w.flagi && w.flagi.polowa; });
+    if (!l.length) return '';
+    var nazwy = {}; l.forEach(function (w) { nazwy[(w.a.nazwa || '').trim().split(/\s+/)[0].toUpperCase()] = 1; });
+    return 'W <b>' + l.length + '</b> ' + odm(l.length, 'dokumencie', 'dokumentach', 'dokumentach') + ' FIRMINO ma dokładnie <b>2 ×</b> kwotę z rejestru (' + esc(Object.keys(nazwy).slice(0, 5).join(', ')) +
+      ') — wygląda na koszty samochodu ujęte w rejestrze w połowie. Do potwierdzenia u księgowej.';
+  }
+  function innaKategoria(wr) {
+    var l = wr.filter(function (w) { return w.flagi && w.flagi.kat; });
+    if (!l.length) return '';
+    var dok = l.slice(0, 3).map(function (w) { return w.a.dokKs; }).join(', ') + (l.length > 3 ? '…' : '');
+    return '<b>' + l.length + '</b> ' + odm(l.length, 'dokument', 'dokumenty', 'dokumentów') + ' znalazłem w drugim pliku FIRMINO niż wskazuje rejestr (' + esc(dok) + ') — znacznik „w kosztach” / „w towarach”.';
   }
 
   function stan(t) {
@@ -2385,6 +2897,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     return '';
   }
   var TAG_NUMERU = { zapis: ['zapis', ''], literowka: ['literówka', 'uw'], czesc: ['inny', 'uw'], inny: ['inny', 'uw'], brak: ['brak', 'uw'] };
+  function znaczniki(f) {                      // w kosztach / w towarach · 2× · EUR
+    var t = [];
+    if (f.kat) t.push('<span class="tag uw" title="Para z pliku ' + (f.kat === 'koszty' ? 'kosztów' : 'towarów') + ' FIRMINO — rejestr wskazuje drugi plik">w ' + (f.kat === 'koszty' ? 'kosztach' : 'towarach') + '</span>');
+    if (f.polowa) t.push('<span class="tag uw" title="W FIRMINO kwota dokładnie 2 × większa niż w rejestrze">2×</span>');
+    if (f.waluta) t.push('<span class="tag uw" title="Dokument w FIRMINO w ' + esc(f.waluta) + ' — kwot nie porównujemy">' + esc(f.waluta) + '</span>');
+    return t.length ? '<span class="tagi">' + t.join('') + '</span>' : '';
+  }
   function tabelaA(wid) {
     if (!wid.length) return '<div class="tab-pusta">' + T(S.szukaj ? 'Nic nie pasuje do szukanego tekstu.' : S.filtr === 'otwarte' ? 'Wszystkie różnice w tym widoku są wyjaśnione.' : 'W tym widoku nie ma dokumentów.') + '</div>';
     var sN = 0, sV = 0, sB = 0, sR = 0;
@@ -2399,7 +2918,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         '<td class="s g">' + stan(w.firmino) + '</td><td class="s">' + stan(w.zgodny || '') + '</td>' +
         '<td class="k g">' + roz + '</td>' +
         '<td class="wf">' + (tag ? '<span class="nr"><span>' + esc(p.b.numer) + '</span><span class="tag ' + tag[1] + '">' + tag[0] + '</span></span>' : '') +
-          (f.kontrahent ? '<small class="kontr" title="' + esc(f.kontrahent) + '">' + esc(f.kontrahent) + '</small>' : '') + '</td>' +
+          (f.kontrahent ? '<small class="kontr" title="' + esc(f.kontrahent) + '">' + esc(f.kontrahent) + '</small>' : '') + znaczniki(f) + '</td>' +
         '<td class="k">' + (f.dni ? '<span class="dni ' + (Math.abs(f.dni) > S.opcje.oknoDni ? 'uw' : '') + '">' + (f.dni > 0 ? '+' : '−') + Math.abs(f.dni) + ' d</span>' : '') + '</td>' +
         '<td class="s g">' + komorkaWyj(R.kluczA(a), rozbieznosc(w)) + '</td></tr>';
     }).join('');
@@ -2410,17 +2929,18 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
   function tabelaB(lista) {
     var bezPary = S.wynik.wiersze.filter(function (w) { return !w.para; }).map(function (w) { return w.a; });
-    return '<table class="tab b"><thead><tr><th>Data</th><th>Numer w FIRMINO</th><th>Kontrahent</th><th class="k">Wartość</th><th>U księgowej bez pary · ten sam dostawca</th><th class="s g" title="✓ wyjaśnione · dymek — uwagi">Uwagi</th></tr></thead><tbody>' +
+    return '<table class="tab b"><thead><tr><th>Data</th><th>Numer w FIRMINO</th><th>Kontrahent</th><th class="k">Wartość</th><th>Plik</th><th>U księgowej bez pary · ten sam dostawca</th><th class="s g" title="✓ wyjaśnione · dymek — uwagi">Uwagi</th></tr></thead><tbody>' +
       lista.map(function (b) {
         var pod = R.najblizsze(b, 'A', bezPary, 1)[0];
         return '<tr tabindex="0" data-a="pokaz-b" data-id="' + b.id + '"' + (bWyjasniony(b) ? ' class="wyjasniony"' : '') + '><td>' + dataPelna(b.data) + '</td><td><b>' + esc(b.numer) + '</b></td>' +
-          '<td><span class="kontr" style="color:var(--tekst);font-weight:600">' + esc(b.kontrahent) + '</span></td><td class="k"><b>' + zl(b.wartosc) + '</b></td>' +
+          '<td><span class="kontr" style="color:var(--tekst);font-weight:600">' + esc(b.kontrahent) + '</span></td><td class="k"><b>' + zl(b.wartosc) + '</b>' + (b.waluta && b.waluta !== 'PLN' ? ' <small>' + esc(b.waluta) + '</small>' : '') + '</td>' +
+          '<td>' + lit(KAT[b.kat] || 'B1', 'mini') + (b.grupa ? ' <small class="grupa" title="' + esc(b.grupa) + (b.opis ? ' · ' + esc(b.opis) : '') + '">' + esc(b.grupa) + '</small>' : '') + '</td>' +
           '<td class="podp">' + (pod ? esc(pod.a.dokKs + ' · ' + pod.a.numer + ' · ' + zl(pod.a.brutto) + ' zł') : '') + '</td>' +
           '<td class="s g">' + komorkaWyj(R.kluczB(b), true) + '</td></tr>';
       }).join('') + '</tbody></table>';
   }
 
-  /* ───────────── okna: szczegóły dokumentu (z wyjaśnieniami), zapis plików, wersje ───────────── */
+  /* ───────────── okna: szczegóły dokumentu (z wyjaśnieniami), zapis plików, wersje, historia ───────────── */
   function renderOkno() {
     var el = document.getElementById('warstwa');
     if (!S.okno || S.etap !== 'app') { if (el) el.remove(); return; }
@@ -2429,7 +2949,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     S.oknoCzeka = false;
     if (!el) { el = document.createElement('div'); el.id = 'warstwa'; el.className = 'warstwa'; el.setAttribute('data-a', 'zamknij-tlo'); document.body.appendChild(el); }
     var t = S.okno.typ;
-    el.innerHTML = t === 'a' ? oknoA(S.okno.id) : t === 'b' ? oknoB(S.okno.id) : t === 'zapis' ? oknoZapis() : t === 'wersje' ? oknoWersje(S.okno.strona) : '';
+    el.innerHTML = t === 'a' ? oknoA(S.okno.id) : t === 'b' ? oknoB(S.okno.id) : t === 'zapis' ? oknoZapis() : t === 'wersje' ? oknoWersje(S.okno.strona) : t === 'historia' ? oknoHistoria() : '';
     if (!el.innerHTML) { S.okno = null; el.remove(); }
   }
   function wiersz(et, a, b, inne, kl) {
@@ -2437,30 +2957,37 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
   var POWOD_NUMERU = { ten: 'ten sam numer', zapis: 'ten sam numer, inny zapis', literowka: 'literówka w numerze', literowka2: 'literówka w numerze', czesc: 'inny numer (wspólna część)', inny: 'inny numer', brak: 'brak numeru' };
   var PEWNOSC = { 3: ['pewne', 'ok'], 2: ['prawdopodobne', 'ok'], 1: ['możliwe — sprawdź', 'uw'] };
+  function plikB(b) { return b ? lit(KAT[b.kat] || 'B1', 'mini') + ' ' + (b.kat === 'koszty' ? 'koszty' : 'towary') : '—'; }
+  function kwotaB(b) { return '<b>' + zl(b.wartosc) + ' ' + (b.waluta && b.waluta !== 'PLN' ? esc(b.waluta) : 'zł') + '</b>'; }
   function oknoA(id) {
     var w = S.wynik && S.wynik.wiersze.filter(function (x) { return x.a.id === id; })[0];
     if (!w) return '';
-    var a = w.a, p = w.para, b = p && p.b;
+    var a = w.a, p = w.para, b = p && p.b, f = w.flagi || {};
     var h = '<div class="okno szerokie" role="dialog" aria-modal="true" aria-label="Dokument ' + esc(a.dokKs) + '"><div class="okno-g"><h2>' + esc(a.dokKs || a.numer) + '</h2>' +
       stanPill(w) + '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t">';
     h += '<div class="porown"><div class="et"></div><div class="gl">Księgowa</div><div class="gl">FIRMINO</div>' +
       wiersz('Numer', esc(a.numer || '—'), b ? esc(b.numer) : '—', b && p.numer !== 'ten') +
       wiersz('Kontrahent', esc(a.nazwa || '—'), b ? esc(b.kontrahent) : '—', b && p.nazwa < R.PROG_NAZWY) +
       wiersz('Data', 'wyst. ' + dataPelna(a.dataWyst) + (a.dataOtrz && a.dataOtrz !== a.dataWyst ? '<br>otrz. ' + dataPelna(a.dataOtrz) : ''), b ? dataPelna(b.data) : '—', b && p.dni) +
-      wiersz('Brutto', '<b>' + zl(a.brutto) + ' zł</b>', b ? '<b>' + zl(b.wartosc) + ' zł</b>' + (p.ad >= 0.005 ? ' (' + zl(p.roznica, true) + ')' : '') : '—', b && w.zgodny === 'nie', 'k') +
-      wiersz('Netto · VAT', zl(a.netto) + ' · ' + zl(a.vat), b ? (b.typ ? 'typ ' + esc(b.typ) : '') + (b.waluta ? ' · ' + esc(b.waluta) : '') : '', false, 'k') +
-      wiersz('Skąd', esc(a.linie.map(function (l) { return l.arkusz + ', w.\u00a0' + l.wiersz; }).join('; ')) + (a.nip ? '<br>NIP ' + esc(a.nip) : ''), b ? esc(b.arkusz + ', w.\u00a0' + b.wiersz) : '', false) +
+      wiersz('Brutto', '<b>' + zl(a.brutto) + ' zł</b>', b ? kwotaB(b) + (p.ad >= 0.005 && !f.waluta ? ' (' + zl(p.roznica, true) + ')' : '') : '—', b && (w.zgodny === 'nie' || !!f.waluta), 'k') +
+      wiersz('Netto · VAT', zl(a.netto) + ' · ' + zl(a.vat), b ? (b.netto != null ? zl(b.netto) + ' netto' : b.typ ? 'typ ' + esc(b.typ) : '') : '', false, 'k') +
+      wiersz('Plik', 'rejestr ' + esc(a.rejestr || '—'), plikB(b) + (b && b.grupa ? '<br><small>' + esc(b.grupa) + (b.opis ? ' · ' + esc(b.opis) : '') + '</small>' : ''), !!f.kat) +
+      wiersz('Skąd', esc(a.linie.map(function (l) { return l.arkusz + ', w. ' + l.wiersz; }).join('; ')) + (a.nip ? '<br>NIP ' + esc(a.nip) : ''), b ? esc(b.arkusz + ', w. ' + b.wiersz) : '', false) +
       '</div>';
     if (p) {
       var pw = PEWNOSC[p.pewnosc];
       h += '<div class="dlaczego"><span class="pill ' + pw[1] + '">' + pw[0] + '</span><span class="pill">' + POWOD_NUMERU[p.numer] + '</span>' +
         '<span class="pill">' + (p.nazwa >= R.PROG_NAZWY ? 'ten sam kontrahent' : 'inna nazwa kontrahenta') + '</span>' +
-        '<span class="pill">' + (p.ad < 0.005 ? 'kwota równa' : 'różnica ' + zl(p.roznica, true) + ' zł' + (w.zgodny === 'tak' ? ' — w tolerancji' : '')) + '</span>' +
-        '<span class="pill">' + (p.dni ? 'data ' + (p.dni > 0 ? '+' : '−') + Math.abs(p.dni) + ' ' + odm(Math.abs(p.dni), 'dzień', 'dni', 'dni') : 'ta sama data') + '</span></div>';
-      if (p.ad >= 1 && Math.abs(p.roznica - Math.round(p.roznica)) < 0.005 && p.roznica > 0) h += '<p class="pod">' + T('Różnica w pełnych złotych na plus w FIRMINO — często kaucja za opakowania, której nie ma w rejestrze VAT.') + '</p>';
+        '<span class="pill' + (f.waluta || f.polowa ? ' uw' : '') + '">' + (f.waluta ? 'kwota w ' + esc(f.waluta) : f.polowa ? 'FIRMINO = 2 × rejestr' : p.ad < 0.005 ? 'kwota równa' : 'różnica ' + zl(p.roznica, true) + ' zł' + (w.zgodny === 'tak' ? ' — w tolerancji' : '')) + '</span>' +
+        '<span class="pill">' + (p.dni ? 'data ' + (p.dni > 0 ? '+' : '−') + Math.abs(p.dni) + ' ' + odm(Math.abs(p.dni), 'dzień', 'dni', 'dni') : 'ta sama data') + '</span>' +
+        (f.kat ? '<span class="pill uw">w pliku ' + (f.kat === 'koszty' ? 'kosztów' : 'towarów') + '</span>' : '') + '</div>';
+      if (f.waluta) h += '<p class="pod">' + T('Dokument w FIRMINO jest w ' + f.waluta + ', rejestr księgowej w złotych — kwot nie porównujemy. Sprawdź przeliczenie po kursie z faktury.') + '</p>';
+      else if (f.polowa) h += '<p class="pod">' + T('W FIRMINO kwota jest dokładnie dwa razy większa niż w rejestrze — tak wygląda koszt samochodu ujęty w rejestrze w połowie (paliwo, leasing, naprawa). Do potwierdzenia u księgowej.') + '</p>';
+      else if (p.ad >= 1 && Math.abs(p.roznica - Math.round(p.roznica)) < 0.005 && p.roznica > 0) h += '<p class="pod">' + T('Różnica w pełnych złotych na plus w FIRMINO — często kaucja za opakowania, której nie ma w rejestrze VAT.') + '</p>';
+      if (f.kat) h += '<p class="pod">' + T('Rejestr ' + (a.rejestr || '—') + ' wskazuje plik ' + (a.rejestr === 'T' ? 'towarów' : 'kosztów') + ', a para jest w pliku ' + (f.kat === 'koszty' ? 'kosztów' : 'towarów') + ' FIRMINO — do sprawdzenia, gdzie dokument powinien być.') + '</p>';
     } else {
       var pod = R.najblizsze(a, 'B', S.wynik.tylkoB, 3);
-      h += '<p class="pod">' + T('Brak pary w FIRMINO. Jeśli towar przyszedł — dokument do wprowadzenia w FIRMINO.') + '</p>';
+      h += '<p class="pod">' + T('Brak pary w FIRMINO. Jeśli towar albo usługa przyszły — dokument do wprowadzenia w FIRMINO (' + (a.rejestr === 'T' ? 'zakupy towarów' : 'koszty') + ').') + '</p>';
       if (pod.length) h += '<div class="etykieta">W FIRMINO bez pary — ten sam dostawca</div><div class="lista-pod">' + pod.map(function (q) {
         return '<div><span>' + dataPelna(q.b.data) + '</span><span>' + esc(q.b.numer + ' · ' + q.b.kontrahent) + '</span><b>' + zl(q.b.wartosc) + '</b></div>';
       }).join('') + '</div>';
@@ -2471,6 +2998,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   function stanPill(w) {
     var t = w.firmino === 'nie' ? '<span class="pill bl">brak w FIRMINO</span>' : w.firmino === 'tak?' ? '<span class="pill uw">w FIRMINO?</span>' : '<span class="pill ok">w FIRMINO</span>';
     if (w.zgodny === 'tak') t += '<span class="pill ok">zgodny</span>'; else if (w.zgodny === 'nie') t += '<span class="pill uw">różnica kwoty</span>';
+    else if (w.flagi && w.flagi.waluta) t += '<span class="pill uw">' + esc(w.flagi.waluta) + '</span>';
     if (wyjasniony(w)) t += '<span class="pill ok">wyjaśnione</span>';
     return t;
   }
@@ -2484,7 +3012,9 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t">' +
       '<div class="porown"><div class="et"></div><div class="gl">Księgowa</div><div class="gl">FIRMINO</div>' +
       wiersz('Numer', '—', esc(b.numer)) + wiersz('Kontrahent', '—', esc(b.kontrahent)) + wiersz('Data', '—', dataPelna(b.data)) +
-      wiersz('Wartość', '—', '<b>' + zl(b.wartosc) + ' zł</b>', false, 'k') + wiersz('Skąd', '', esc(b.arkusz + ', w.\u00a0' + b.wiersz)) + '</div>' +
+      wiersz('Wartość', '—', kwotaB(b) + (b.netto != null ? '<br><small>' + zl(b.netto) + ' netto</small>' : ''), false, 'k') +
+      wiersz('Plik', '—', plikB(b) + (b.grupa ? '<br><small>' + esc(b.grupa) + (b.opis ? ' · ' + esc(b.opis) : '') + '</small>' : '') + (b.status ? '<br><small>' + esc(b.status) + '</small>' : '')) +
+      wiersz('Skąd', '', esc(b.arkusz + ', w. ' + b.wiersz)) + '</div>' +
       '<p class="pod">' + T('Tego dokumentu nie ma w rejestrze księgowej. Do dosłania księgowej — albo do sprawdzenia, czy to nie pomyłka w FIRMINO.') + '</p>';
     if (pod.length) h += '<div class="etykieta">U księgowej bez pary — ten sam dostawca</div><div class="lista-pod">' + pod.map(function (q) {
       return '<div><span>' + esc(q.a.dokKs) + '</span><span>' + esc(q.a.numer + ' · ' + dataPelna(q.a.dataWyst)) + '</span><b>' + zl(q.a.brutto) + '</b></div>';
@@ -2535,15 +3065,17 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var h = '<div class="okno" role="dialog" aria-modal="true" aria-label="Zapis pliku"><div class="okno-g"><h2>' + (z.pliki.length > 1 ? 'Zapisać pliki w bazie?' : 'Zapisać plik w bazie?') + '</h2>' +
       '<button class="zamknij" data-a="zamknij" aria-label="Zamknij"' + (S.wysyla ? ' disabled' : '') + '>' + ik('x') + '</button></div><div class="okno-t">';
     z.pliki.forEach(function (p) {
-      var d = p.dane, suma = 0; d.dokumenty.forEach(function (x) { suma += p.typ === 'A' ? x.brutto : x.wartosc; });
-      var okres = p.typ === 'A' ? (d.okres ? d.okres.tekst : '—') : (d.okres ? dataPelna(d.okres.od) + ' – ' + dataPelna(d.okres.do) : '—');
-      var bylo = obecne[p.typ];
-      h += '<div class="zapis-p"><div class="plik-g"><span class="plik-lit bebas" style="--kol:' + (p.typ === 'A' ? 'var(--mKsi)' : 'var(--mMag)') + '">' + p.typ + '</span>' +
-        '<span class="plik-tyt"><b>' + (p.typ === 'A' ? 'KSIĘGOWA' : 'FIRMINO') + '</b><span>' + esc(p.nazwa) + '</span></span><span></span></div>' +
-        '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b><span>' + (p.typ === 'A' ? 'Brutto' : 'Wartość') + '</span><b>' + zl(suma) + ' zł</b>' +
+      var d = p.dane, suma = 0; d.dokumenty.forEach(function (x) { suma += p.strona === 'A' ? x.brutto : x.wartosc; });
+      var okres = p.strona === 'A' ? (d.okres ? d.okres.tekst : '—') : (d.okres ? dataPelna(d.okres.od) + ' – ' + dataPelna(d.okres.do) : '—');
+      var bylo = obecne[p.strona];
+      h += '<div class="zapis-p"><div class="plik-g">' + lit(p.strona) +
+        '<span class="plik-tyt"><b>' + OPIS[p.strona].tyt + '</b><span>' + esc(p.nazwa) + '</span></span><span></span></div>' +
+        '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b><span>' + OPIS[p.strona].kwota + '</span><b>' + zl(suma) + ' zł</b>' +
         '<span>Okres</span><b>' + esc(okres) + '</b></div>' +
+        (p.inna ? '<p class="podp uw-t">' + T('Rozpoznany jako ' + OPIS[p.strona].co + ' — trafi do karty ' + p.strona + '.') + '</p>' : '') +
         (bylo ? '<p class="podp">' + (bylo.skrot === p.skrot ? T('Ten sam plik jest już zapisany w tym miesiącu — nic się nie zmieni.')
-          : T('Zastąpi plik wgrany ' + kiedy(bylo.kiedy) + ' (' + (bylo.kto_imie || '—') + ') — poprzedni zostaje w historii miesiąca.')) + '</p>' : '') + '</div>';
+          : T('Zastąpi plik wgrany ' + kiedy(bylo.kiedy) + ' (' + (bylo.kto_imie || '—') + ')' + (bylo.zatwierdzono ? ', już zatwierdzony — nowy trzeba zatwierdzić ponownie, a miesiąc uzgodnić jeszcze raz' : '') + '. Poprzedni zostaje w historii miesiąca.')) + '</p>'
+          : '<p class="podp">' + T('Po zapisaniu plik czeka na ZATWIERDŹ w swojej karcie.') + '</p>') + '</div>';
     });
     if (z.zle && z.zle.length) h += '<div class="info uw"><span>' + esc(z.zle.join(' ')) + '</span></div>';
     h += '<label class="pole"><span class="maly">Miesiąc w bazie</span><select id="zapis-miesiac"' + (S.wysyla ? ' disabled' : '') + '>' + Object.keys(opcje).sort().reverse().map(function (m) {
@@ -2556,14 +3088,37 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   function oknoWersje(strona) {
     var l = S.wersje.filter(function (v) { return !strona || v.strona === strona; });
     if (!l.length) return '';
-    var obow = {}; ['A', 'B'].forEach(function (k) { var x = S.wersje.filter(function (v) { return v.strona === k; })[0]; if (x) obow[x.id] = 1; });
+    var obow = {}; STRONY.forEach(function (k) { var x = S.wersje.filter(function (v) { return v.strona === k; })[0]; if (x) obow[x.id] = 1; });
+    var uzg = {}; if (S.uzg) [S.uzg.plik_a, S.uzg.plik_b1, S.uzg.plik_b2].forEach(function (i) { uzg[i] = 1; });
     return '<div class="okno" role="dialog" aria-modal="true" aria-label="Wersje plików"><div class="okno-g"><h2>Wersje · ' + esc(nazwaM(S.miesiac)) + '</h2>' +
       '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t"><div class="lista-wers">' +
       l.map(function (v) {
-        return '<div><span class="plik-lit bebas mala" style="--kol:' + (v.strona === 'A' ? 'var(--mKsi)' : 'var(--mMag)') + '">' + v.strona + '</span>' +
-          '<span class="wers-n"><b>' + esc(v.nazwa) + '</b><small>' + v.dokumentow + ' ' + odm(v.dokumentow, 'dokument', 'dokumenty', 'dokumentów') + ' · ' + esc(kiedy(v.kiedy)) + ' · ' + esc(v.kto_imie || '—') + '</small></span>' +
-          (obow[v.id] ? '<span class="pill ok">obowiązuje</span>' : '<span class="pill cicha">archiwum</span>') + '</div>';
-      }).join('') + '</div><p class="podp">' + T('Porównanie liczy się zawsze z obowiązujących plików. Starsze wersje zostają w bazie jako ślad.') + '</p></div>' +
+        return '<div>' + lit(v.strona, 'mala') +
+          '<span class="wers-n"><b>' + esc(v.nazwa) + '</b><small>' + v.dokumentow + ' ' + odm(v.dokumentow, 'dokument', 'dokumenty', 'dokumentów') + ' · ' + esc(kiedy(v.kiedy)) + ' · ' + esc(v.kto_imie || '—') +
+          (v.zatwierdzono ? ' · zatwierdził(a) ' + esc(v.zatwierdzil_imie || '—') : '') + '</small></span>' +
+          '<span class="wers-p">' + (obow[v.id] ? '<span class="pill ok">obowiązuje</span>' : '<span class="pill cicha">archiwum</span>') + (uzg[v.id] ? '<span class="pill moc">uzgodniona</span>' : '') + '</span></div>';
+      }).join('') + '</div><p class="podp">' + T('Wynik liczy się z wersji wskazanych w ostatnim uzgodnieniu. Starsze wersje zostają w bazie jako ślad.') + '</p></div>' +
+      '<div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
+  }
+  function opisZdarzenia(d) {
+    var kto = d.kto_imie || '—', k = d.strona ? OPIS[d.strona] : null;
+    switch (d.rodzaj) {
+      case 'wgranie': return kto + ': wgrany ' + (k ? k.co + ' (' + d.strona + ')' : 'plik') + ' — ' + d.opis;
+      case 'zatwierdzenie': return kto + ': zatwierdzony ' + (k ? k.co + ' (' + d.strona + ')' : 'plik');
+      case 'cofniecie': return kto + ': cofnięte zatwierdzenie — ' + (k ? k.co + ' (' + d.strona + ')' : 'plik');
+      case 'uzgodnienie': return kto + ': UZGODNIJ — wynik miesiąca zapisany';
+      default: return kto + ': ' + d.rodzaj;
+    }
+  }
+  function oknoHistoria() {
+    if (!S.dziennik.length) return '';
+    var IKR = { wgranie: 'wgraj', zatwierdzenie: 'ok', cofniecie: 'odswiez', uzgodnienie: 'uzgodnij' };
+    return '<div class="okno" role="dialog" aria-modal="true" aria-label="Historia miesiąca"><div class="okno-g"><h2>Historia · ' + esc(nazwaM(S.miesiac)) + '</h2>' +
+      '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t"><div class="lista-hist">' +
+      S.dziennik.map(function (d) {
+        return '<div class="hist ' + d.rodzaj + '"><span class="hist-i">' + ik(IKR[d.rodzaj] || 'plik', 'mala') + '</span><span class="hist-t"><b>' + T(opisZdarzenia(d)) + '</b><small>' + esc(kiedy(d.kiedy)) + '</small></span>' +
+          (d.strona ? lit(d.strona, 'mala') : '<span></span>') + '</div>';
+      }).join('') + '</div><p class="podp">' + T('Historia tylko się dopisuje: wgrania, zatwierdzenia, cofnięcia i uzgodnienia — kto i kiedy.') + '</p></div>' +
       '<div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
   }
 
@@ -2573,10 +3128,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (!S.menu || S.etap !== 'app' || !S.ja) { if (m) m.remove(); return; }
     if (!m) { m = document.createElement('div'); m.id = 'menu'; m.className = 'menu'; m.setAttribute('role', 'menu'); document.body.appendChild(m); }
     var o = S.ja;
-    m.innerHTML = '<div class="m-k">' + awatar('') + '<span><b>' + esc((o.imie || '') + ' ' + (o.nazwisko || '')) + '</b><small>' + (o.architekt ? '<span class="arch-t">architekt</span>' : 'księgowa') + ' · ' + esc(o.login || '') + '</small></span></div>' +
+    m.innerHTML = '<div class="m-k">' + awatar('') + '<span><b>' + esc((o.imie || '') + ' ' + (o.nazwisko || '')) + '</b><small>' + (o.architekt ? '<span class="arch-t">architekt</span>' : esc((ROLE[o.rola] || '').toLowerCase())) + ' · ' + esc(o.login || '') + '</small></span></div>' +
       (o.architekt ? '<div class="m-motyw"><span class="arch">' + ik('architekt', 'mala') + 'Architekt</span></div>' : '') +
       '<div class="m-motyw"><div class="seg" role="group" aria-label="Wygląd"><button data-a="motyw" data-v="ciemny" aria-pressed="' + (S.motyw === 'ciemny') + '" aria-label="Ciemny">' + ik('ksiezyc') + '</button>' +
       '<button data-a="motyw" data-v="jasny" aria-pressed="' + (S.motyw === 'jasny') + '" aria-label="Jasny">' + ik('slonce') + '</button></div></div>' +
+      (S.dziennik.length ? '<button class="m-p" data-a="historia">' + ik('historia') + ' Historia · ' + esc(nazwaM(S.miesiac)) + '</button>' : '') +
       (S.wersje.length ? '<button class="m-p" data-a="wersje" data-v="">' + ik('plik') + ' Wersje plików · ' + esc(nazwaM(S.miesiac)) + '</button>' : '') +
       '<button class="m-p" data-a="wyloguj">' + ik('wyloguj') + ' Wyloguj</button>' +
       '<span class="m-wersja">wersja ' + esc(WERSJA) + '</span>';
@@ -2588,17 +3144,18 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     t.innerHTML = '<div class="toast-w">' + zdz('oczko') + '<div class="dymek ogon-lewo">' + T(tekst) + '</div></div>';
     t.className = 'widac';
     clearTimeout(toastT);
-    toastT = setTimeout(function () { t.className = ''; }, 4600);
+    toastT = setTimeout(function () { t.className = ''; }, 5200);
   }
 
   function kopiujWidok() {
     var wid = wierszeWidoku();
-    var l = [['Dokument księgowy', 'Numer dokumentu', 'Nazwa podmiotu', 'Netto', 'VAT d.o.', 'Brutto', 'FIRMINO', 'ZGODNY', 'Różnica', 'Numer w FIRMINO', 'Data w FIRMINO', 'Kontrahent w FIRMINO', 'Wyjaśnienie', 'Ostatnia uwaga'].join('\t')];
+    var l = [['Dokument księgowy', 'Numer dokumentu', 'Nazwa podmiotu', 'Netto', 'VAT d.o.', 'Brutto', 'FIRMINO', 'ZGODNY', 'Różnica', 'Numer w FIRMINO', 'Data w FIRMINO', 'Kontrahent w FIRMINO', 'Plik FIRMINO', 'Znaczniki', 'Wyjaśnienie', 'Ostatnia uwaga'].join('\t')];
     var liczbaArk = function (x) { return x == null ? '' : R.r2(x).toFixed(2).replace('.', ','); };
     wid.forEach(function (w) {
       var a = w.a, p = w.para, f = w.flagi || {}, x = wyj(R.kluczA(a)), uw = x.lista.filter(function (q) { return q.tekst; });
+      var zn = [f.kat ? 'w ' + (f.kat === 'koszty' ? 'kosztach' : 'towarach') : '', f.polowa ? '2×' : '', f.waluta || ''].filter(Boolean).join(', ');
       l.push([a.dokKs, a.numer, (a.nazwa || '').trim(), liczbaArk(a.netto), liczbaArk(a.vat), liczbaArk(a.brutto), w.firmino, w.zgodny || '',
-        liczbaArk(w.roznica), p && f.numer ? p.b.numer : '', p ? dataPelna(p.b.data) : '', f.kontrahent || '',
+        liczbaArk(w.roznica), p && f.numer ? p.b.numer : '', p ? dataPelna(p.b.data) : '', f.kontrahent || '', p ? p.b.kat || '' : '', zn,
         x.stan === 'wyjasnione' ? 'wyjaśnione' : x.stan === 'otwarte' ? 'otwarte' : '', uw.length ? uw[uw.length - 1].tekst : '']
         .map(function (v) { return String(v).replace(/[\t\n]/g, ' '); }).join('\t'));
     });
@@ -2624,12 +3181,17 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       case 'filtr': S.filtr = v; odswiezWynik(); break;
       case 'rejestr': S.rejestr = v; S.filtr = 'wszystkie'; odswiezWynik(); break;
       case 'arkusz': przelaczArkusz(v); break;
+      case 'zatwierdz': zatwierdz(v, true); break;
+      case 'cofnij': zatwierdz(v, false); break;
+      case 'uzgodnij': uzgodnijMiesiac(); break;
+      case 'pliki-pokaz': S.plikiOtwarte = !S.plikiOtwarte; odswiezWynik(); break;
       case 'tolerancja': S.opcje.tolerancja = +v; S.zasadyOtwarte = true; przelicz(); odswiezWynik(); break;
       case 'okno-dni': S.opcje.oknoDni = +v; S.zasadyOtwarte = true; przelicz(); odswiezWynik(); break;
       case 'kopiuj': kopiujWidok(); break;
       case 'pokaz-a': S.okno = { typ: 'a', id: el.getAttribute('data-id') }; renderOkno(); break;
       case 'pokaz-b': S.okno = { typ: 'b', id: el.getAttribute('data-id') }; renderOkno(); break;
       case 'wersje': S.menu = false; renderMenu(); S.okno = { typ: 'wersje', strona: v || '' }; renderOkno(); break;
+      case 'historia': S.menu = false; renderMenu(); S.okno = { typ: 'historia' }; renderOkno(); break;
       case 'zapisz-pliki': zapiszPliki(); break;
       case 'wpis-dopisz': wpisz(null); break;
       case 'wpis-wyjasnione': wpisz('wyjasnione'); break;
@@ -2639,10 +3201,10 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         e.preventDefault();
         var z = document.getElementById('zasady');
         if (z) { z.open = true; S.zasadyOtwarte = true; z.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        else toast('Wgraj rejestr księgowej i eksport z FIRMINO — porównam je dokument po dokumencie, a zasady łączenia pokażę pod wynikiem.');
+        else toast('Rejestr księgowej (A), zakupy towarów (B1) i koszty (B2) z FIRMINO: każdy plik wgrywa i zatwierdza jego strona, a po UZGODNIJ porównam je dokument po dokumencie. Zasady łączenia pokażę pod wynikiem.');
         break;
       }
-      case 'wkrotce': toast('Tu dojdą kolejne funkcje dla księgowej. Zaczynamy od uzgodnienia faktur.'); break;
+      case 'wkrotce': toast('Tu dojdą kolejne funkcje: koszty zespołu, transportu i wydatki pozaksięgowe — razem realny obraz finansów firmy.'); break;
     }
   });
   document.addEventListener('keydown', function (e) {
@@ -2651,7 +3213,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   });
   document.addEventListener('change', function (e) {
     var inp = e.target.closest && e.target.closest('input[data-plik]');
-    if (inp && inp.files && inp.files.length) { wczytajPliki(Array.prototype.slice.call(inp.files)); inp.value = ''; return; }
+    if (inp && inp.files && inp.files.length) { wczytajPliki(Array.prototype.slice.call(inp.files), inp.getAttribute('data-plik')); inp.value = ''; return; }
     if (e.target.id === 'miesiac' && e.target.value && e.target.value !== S.miesiac) { S.szukaj = ''; wczytajMiesiac(e.target.value, false); return; }
     if (e.target.id === 'zapis-miesiac' && S.zapis) { S.zapis.miesiac = e.target.value; renderOkno(); }
   });
@@ -2675,7 +3237,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var z = e.target.closest && e.target.closest('[data-upusc]');
     if (!z) return;
     e.preventDefault(); z.classList.remove('nad');
-    if (e.dataTransfer && e.dataTransfer.files.length) wczytajPliki(Array.prototype.slice.call(e.dataTransfer.files));
+    if (e.dataTransfer && e.dataTransfer.files.length) wczytajPliki(Array.prototype.slice.call(e.dataTransfer.files), z.getAttribute('data-upusc'));
   });
 
   function odswiezWynik() {                   // przerysuj stronę, zostaw miejsce przewinięcia i fokus szukania
@@ -2687,7 +3249,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
 
   /* ───────────── start ───────────── */
-  window.Ksiegowa = { S: S, przelicz: przelicz, sprawdzZmiany: sprawdzZmiany };   // dla testów
+  window.Ksiegowa = { S: S, przelicz: przelicz, sprawdzZmiany: sprawdzZmiany, stanUzg: stanUzg };   // dla testów
   zastosujMotyw();
   render();
   if (baza.sesja()) start(false); else okno.pokaz();
