@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Księgowa">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-12 21:09 · 79f6fbf">
+<meta name="ksiegowa-wersja" content="2026-11-12 21:30 · 8159804">
 <title>Księgowa</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -685,8 +685,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .nawig-w .karta-n.brak{opacity:.3;cursor:default}
 .h1-lit{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;padding:3px 8px 0;margin-right:12px;border-radius:12px;border:2px solid var(--mKsi);color:var(--mKsi);font-size:27px;font-weight:400;vertical-align:-5px;letter-spacing:.03em}
 .wp-tab{border:1px solid var(--ramka);background:var(--pow);border-radius:16px;overflow:hidden}
-.wp-w{display:grid;grid-template-columns:minmax(0,1fr) 136px 118px 138px 318px;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--linia);min-width:0}
-.wp-w.is{grid-template-columns:minmax(0,1fr) 136px 112px 132px 172px 318px}
+.wp-w{display:grid;grid-template-columns:minmax(0,1fr) 144px 116px 138px 300px;gap:10px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--linia);min-width:0}
+.wp-w.is{grid-template-columns:minmax(0,1fr) 144px 116px 132px 172px 300px}
+/* jedna linia tekstu w kolumnie: nagłówek, wpisy, stopka i tekst w polu (pole: 1 px ramki + 12 px wnętrza) */
+.wp-w > .c-nazwa,.wp-w > .c-data,.wp-w > .c-okres,.wp-w > .c-kto{padding-left:13px}
+.wp-w > .c-kwota{padding-right:13px}
+.wp-w.nowy > *,.wp-w.edycja > *{padding-left:0;padding-right:0}
 .wp-g{background:var(--pow2);padding-top:9px;padding-bottom:9px}
 .wp-w.wp-g > span{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tekst3)}
 .wp-g .c-kwota,.wp-g .c-akcje{text-align:right}
@@ -698,7 +702,6 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .wp-w .c-kwota{text-align:right;font-variant-numeric:tabular-nums;font-weight:800;font-size:15px;white-space:nowrap}
 .wp-w .c-kwota.minus{color:var(--blTekst)}
 .wp-w .c-kto{min-width:0}
-.wp-w.is .c-kto{padding-left:8px}
 .wp-w .c-kto > b{display:block;font-size:14px}
 .wp-w .c-kto > small{display:block;font-size:12px;color:var(--tekst3)}
 .wp-w .c-akcje{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
@@ -709,15 +712,17 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .wp-w.edycja{box-shadow:inset 0 0 0 2px var(--moc)}
 .wp-w.nowy .c-akcje .glowny.maly,.wp-w.edycja .c-akcje .glowny.maly,.wp-w.edycja .c-akcje .drugi.maly{min-height:44px;padding:0 14px}
 .wp-w label{display:flex;flex-direction:column;min-width:0}
-.wp-w input{width:100%;min-width:0;min-height:44px;height:auto;flex:none;padding:0 12px;border-radius:11px;border:1px solid var(--ramka2);background:var(--pow);font-size:16px;color:var(--tekst)}
+.wp-w label.c-data{overflow:hidden}
+.wp-w input{display:block;width:100%;min-width:0;max-width:100%;height:44px;min-height:44px;margin:0;flex:none;padding:0 12px;border-radius:11px;border:1px solid var(--ramka2);background:var(--pow);font-family:inherit;font-size:16px;line-height:20px;color:var(--tekst);-webkit-appearance:none;appearance:none}
 .wp-w input:focus{border-color:var(--moc);outline:none}
-.wp-w input[type="date"]{padding:0 8px}
+.wp-w input[type="date"]{padding:11px 12px;text-align:left}                    /* iPad (Safari): ta sama wysokość i szerokość co inne pola */
+.wp-w input[type="date"]::-webkit-date-and-time-value{text-align:left;margin:0}
 .wp-w .c-kwota input{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
 .wp-w .c-kwota .wp-et{text-align:left}
 .wp-et{display:none;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tekst3);margin-bottom:4px}
 .wp-w.nowy .c-kto,.wp-w.edycja .c-kto{display:flex;flex-direction:column;gap:4px}
 .seg-is{flex-wrap:nowrap}
-.seg-is button{min-height:30px;min-width:0;padding:0 9px;font-size:12.5px;flex:1 1 0}
+.seg-is button{min-height:36px;min-width:0;padding:0 9px;font-size:12.5px;flex:1 1 0}   /* 36 + 2×3 + 2×1 = 44 px, jak pola */
 .wp-stopka{background:var(--pow2);border-bottom:0}
 .wp-stopka .c-nazwa,.wp-stopka .c-kwota{font-weight:800}
 .wp-stopka .c-akcje{font-size:13px;color:var(--tekst2);font-weight:700}
@@ -733,11 +738,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   .wp-w.nowy{grid-template-areas:"nazwa nazwa" "data okres" "kwota akcje"}
   .wp-w.nowy.is{grid-template-areas:"nazwa nazwa" "data okres" "kto kto" "kwota akcje"}
   .wp-w.edycja.is{grid-template-areas:"nazwa nazwa" "data okres" "kto kto" "kwota kwota" "akcje akcje"}
-  .wp-w.is .c-kto{padding-left:0}
+  .wp-w > .c-nazwa,.wp-w > .c-data,.wp-w > .c-okres,.wp-w > .c-kto,.wp-w > .c-kwota{padding-left:0;padding-right:0}
   .wp-w.nowy .c-data,.wp-w.edycja .c-data{display:flex;grid-area:data}
   .wp-w.nowy .c-okres,.wp-w.edycja .c-okres{display:flex;grid-area:okres}
   .wp-w.nowy .c-kto,.wp-w.edycja .c-kto{display:flex;flex-direction:row;flex-wrap:wrap;grid-area:kto}
-  .wp-w.nowy .c-kto .seg,.wp-w.edycja .c-kto .seg{flex:1 1 160px}
+  .wp-w.nowy .c-kto .seg,.wp-w.edycja .c-kto .seg{flex:1 1 140px}
   .wp-w.nowy .c-akcje,.wp-w.edycja .c-akcje{justify-content:flex-end}
   .wp-et{display:block}
   .wp-stopka{grid-template-areas:"nazwa kwota" "akcje akcje"}
