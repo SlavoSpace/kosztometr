@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Księgowa">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-12 21:30 · 8159804">
+<meta name="ksiegowa-wersja" content="2026-11-12 21:38 · d0bab73">
 <title>Księgowa</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -702,8 +702,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .wp-w .c-kwota{text-align:right;font-variant-numeric:tabular-nums;font-weight:800;font-size:15px;white-space:nowrap}
 .wp-w .c-kwota.minus{color:var(--blTekst)}
 .wp-w .c-kto{min-width:0}
-.wp-w .c-kto > b{display:block;font-size:14px}
-.wp-w .c-kto > small{display:block;font-size:12px;color:var(--tekst3)}
+.wp-w[data-id] > .c-kto{font-size:14px;color:var(--tekst2);overflow-wrap:anywhere}
 .wp-w .c-akcje{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
 .wp-w .c-akcje .drugi.maly,.wp-w .c-akcje .glowny.maly{min-height:36px;padding:0 11px;font-size:13px;letter-spacing:.03em}
 .wp-w .c-akcje .pill{min-height:36px;padding:0 11px;border-radius:10px;font-size:13px}
@@ -746,6 +745,15 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   .wp-w.nowy .c-akcje,.wp-w.edycja .c-akcje{justify-content:flex-end}
   .wp-et{display:block}
   .wp-stopka{grid-template-areas:"nazwa kwota" "akcje akcje"}
+}
+/* IS na szerokim ekranie: przelew / gotówka i obok Ida / Sławek w jednym rzędzie z polami (172 + 8 + 172 = 352 px);
+   suma szerokości kolumn ta sama co w wierszach wpisów, więc nazwa, data, okres i kwota stoją pod nagłówkami */
+@media (min-width:1001px){
+  .wp-w.nowy.is{grid-template-columns:minmax(0,1fr) 144px 116px 132px 352px 120px}
+  .wp-w.edycja.is{grid-template-columns:minmax(0,1fr) 144px 116px 132px 482px}
+  .wp-w.edycja.is > .c-akcje{grid-column:1 / -1}
+  .wp-w.nowy.is .c-kto,.wp-w.edycja.is .c-kto{flex-direction:row;gap:8px}
+  .wp-w.nowy.is .c-kto .seg,.wp-w.edycja.is .c-kto .seg{flex:0 0 172px}
 }
 @media (max-width:640px){
   .liczby.wp-l{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -3401,7 +3409,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<label class="c-data"><span class="wp-et">Data</span><input id="' + pref + '-data" type="date" value="' + esc(s.data) + '"></label>' +
       '<label class="c-okres"><span class="wp-et">Okres</span><input id="' + pref + '-okres" list="kw-okresy" maxlength="60" autocomplete="off" placeholder="nieobow." value="' + esc(s.okres) + '"></label>' +
       '<label class="c-kwota"><span class="wp-et">Kwota</span><input id="' + pref + '-kwota" inputmode="decimal" autocomplete="off" placeholder="0,00" value="' + esc(s.kwota) + '"></label>' +
-      (is ? '<div class="c-kto">' + segIS('Kto', OSOBY_IS, s.osoba, pref + '-osoba') + segIS('Forma', FORMY_IS, s.forma, pref + '-forma') + '</div>' : '') +
+      (is ? '<div class="c-kto">' + segIS('Forma', FORMY_IS, s.forma, pref + '-forma') + segIS('Kto', OSOBY_IS, s.osoba, pref + '-osoba') + '</div>' : '') +
       '<div class="c-akcje">' + przycisk + '</div></div>';
   }
   var PRZYKLADY = { P: 'VAT za październik', A: 'opłata skarbowa', OD: 'rata kredytu', M: 'reklama Meta', D: 'Supabase Pro', E: 'naprawa drzwi', IS: 'wynagrodzenie' };
@@ -3412,13 +3420,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     }
     var kto = esc(w.kto_imie || '—') + ' ' + esc(kiedy(w.kiedy)) + (w.wersja > 1 ? ' · korekta ' + (w.wersja - 1) : '') +
       (w.stan === 'zatwierdzony' ? ' · ✓ ' + esc(w.zatwierdzil_imie || '—') + ' ' + esc(kiedy(w.zatwierdzono)) : '');
-    var meta = [dataPelna(w.data), w.okres ? 'okres ' + w.okres : '', is ? OSOBY_IS[w.osoba] + ' · ' + FORMY_IS[w.forma] : ''].filter(Boolean).join(' · ');
+    var meta = [dataPelna(w.data), w.okres ? 'okres ' + w.okres : '', is ? FORMY_IS[w.forma] + ' · ' + OSOBY_IS[w.osoba] : ''].filter(Boolean).join(' · ');
     var dis = S.wysyla ? ' disabled' : '';
     return '<div class="wp-w' + (w.stan === 'zatwierdzony' ? ' wp-ok' : '') + (is ? ' is' : '') + '" data-id="' + w.id + '">' +
       '<div class="c-nazwa"><b>' + esc(w.nazwa) + '</b><small>' + kto + '</small><small class="c-meta">' + esc(meta) + '</small></div>' +
       '<div class="c-data">' + dataPelna(w.data) + '</div><div class="c-okres">' + esc(w.okres || '—') + '</div>' +
       '<div class="c-kwota' + (Number(w.kwota) < 0 ? ' minus' : '') + '">' + zl(Number(w.kwota)) + '</div>' +
-      (is ? '<div class="c-kto"><b>' + OSOBY_IS[w.osoba] + '</b><small>' + FORMY_IS[w.forma] + '</small></div>' : '') +
+      (is ? '<div class="c-kto">' + FORMY_IS[w.forma] + ' · ' + OSOBY_IS[w.osoba] + '</div>' : '') +
       '<div class="c-akcje">' +
         (w.stan === 'zatwierdzony' ? '<span class="pill ok">' + ik('ok', 'mala') + ' Zatwierdzony</span>'
           : '<button class="glowny maly zatwierdz" data-a="kw-zatwierdz" data-v="' + w.id + '"' + dis + '>' + ik('ok', 'mala') + ' ZATWIERDŹ</button>') +
@@ -3464,7 +3472,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<datalist id="kw-okresy">' + okresy().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist>';
     h += '<section class="wp-tab' + (is ? ' is' : '') + '" aria-label="Wpisy">' +
       '<div class="wp-w wp-g' + (is ? ' is' : '') + '"><span class="c-nazwa">Nazwa</span><span class="c-data">Data</span><span class="c-okres">Okres</span><span class="c-kwota">Kwota</span>' +
-        (is ? '<span class="c-kto">Kto · forma</span>' : '') + '<span class="c-akcje">Stan i akcje</span></div>' +
+        (is ? '<span class="c-kto">Forma · kto</span>' : '') + '<span class="c-akcje">Stan i akcje</span></div>' +
       L.map(function (w) { return wierszWpisu(w, is); }).join('') +
       poleWpisu('kw', s, is, '<button class="glowny maly" data-a="kw-dodaj"' + (S.wysyla ? ' disabled' : '') + '>' + ik('plus', 'mala') + ' Dodaj</button>') +
       (S.kwBlad ? '<div class="wp-blad" role="alert">' + esc(S.kwBlad) + '</div>' : '') +
@@ -3477,12 +3485,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         H.map(function (w) {
           var opis = w.stan === 'usuniety' ? 'usunięty — ' + (w.usunal_imie || '—') + ' ' + kiedy(w.usunieto) : 'wersja ' + w.wersja + ' — zastąpiona korektą';
           return '<div class="hist ' + (w.stan === 'usuniety' ? 'cofniecie' : 'wgranie') + '"><span class="hist-i">' + ik(w.stan === 'usuniety' ? 'x' : 'odswiez', 'mala') + '</span>' +
-            '<span class="hist-t"><b>' + esc(w.nazwa) + ' · ' + zl(Number(w.kwota)) + ' zł · ' + dataPelna(w.data) + (w.okres ? ' · ' + esc(w.okres) : '') + (is ? ' · ' + OSOBY_IS[w.osoba] + ', ' + FORMY_IS[w.forma] : '') + '</b>' +
+            '<span class="hist-t"><b>' + esc(w.nazwa) + ' · ' + zl(Number(w.kwota)) + ' zł · ' + dataPelna(w.data) + (w.okres ? ' · ' + esc(w.okres) : '') + (is ? ' · ' + FORMY_IS[w.forma] + ', ' + OSOBY_IS[w.osoba] : '') + '</b>' +
             '<small>' + esc(opis) + ' · wpisał(a) ' + esc(w.kto_imie || '—') + ' ' + esc(kiedy(w.kiedy)) + '</small></span><span></span></div>';
         }).join('') + '</div></details></section>';
     }
     h += '<section class="sekcja"><details class="zasady"' + (S.zasadyOtwarte ? ' open' : '') + ' id="zasady"><summary>Jak działa karta ' + esc(k.id) + ' ' + ik('dalej') + '</summary><div class="zasady-t"><ol>' +
-      '<li><b>Wpis</b>: nazwa, data zapłaty, okres (nieobowiązkowo — np. ' + esc(okresy()[0]) + ' albo ' + esc(okresy()[2]) + ') i kwota' + (is ? ', do tego <b>Ida / Sławek</b> i <b>przelew / gotówka</b>' : '') + '. Wpis trafia do wybranego miesiąca.</li>' +
+      '<li><b>Wpis</b>: nazwa, data zapłaty, okres (nieobowiązkowo — np. ' + esc(okresy()[0]) + ' albo ' + esc(okresy()[2]) + ') i kwota' + (is ? ', do tego <b>przelew / gotówka</b> i <b>Ida / Sławek</b>' : '') + '. Wpis trafia do wybranego miesiąca.</li>' +
       '<li><b>ZATWIERDŹ</b> potwierdza wpis — w podsumowaniu liczy się osobno zatwierdzone i czekające.</li>' +
       '<li><b>KOREKTA</b> tworzy nową wersję wpisu (czeka na ponowne ZATWIERDŹ); poprzednia zostaje w historii.</li>' +
       '<li><b>USUŃ</b> zdejmuje wpis z podsumowania; w historii widać, kto i kiedy go usunął.</li>' +
@@ -3496,8 +3504,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (!nazwa) return { blad: 'Wpisz nazwę.', pole: pref + '-nazwa' };
     if (!/^\d{4}-\d{2}-\d{2}$/.test(s.data || '')) return { blad: 'Podaj datę.', pole: pref + '-data' };
     if (kwota == null || R.r2(kwota) === 0) return { blad: 'Podaj kwotę (np. 1 234,56).', pole: pref + '-kwota' };
-    if (is && !s.osoba) return { blad: 'Wybierz: Ida czy Sławek.' };
     if (is && !s.forma) return { blad: 'Wybierz: przelew czy gotówka.' };
+    if (is && !s.osoba) return { blad: 'Wybierz: Ida czy Sławek.' };
     return { nazwa: nazwa, data: s.data, okres: String(s.okres || '').trim(), kwota: R.r2(kwota), osoba: is ? s.osoba : null, forma: is ? s.forma : null };
   }
   function bladWpisu(e) {
@@ -3562,7 +3570,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<button class="zamknij" data-a="zamknij" aria-label="Zamknij"' + (S.wysyla ? ' disabled' : '') + '>' + ik('x') + '</button></div><div class="okno-t">' +
       '<div class="zapis-p"><div class="licz-w"><span>Nazwa</span><b>' + esc(w.nazwa) + '</b><span>Kwota</span><b>' + zl(Number(w.kwota)) + ' zł</b>' +
         '<span>Data</span><b>' + dataPelna(w.data) + '</b>' + (w.okres ? '<span>Okres</span><b>' + esc(w.okres) + '</b>' : '') +
-        (k.osoba_forma ? '<span>Kto · forma</span><b>' + OSOBY_IS[w.osoba] + ' · ' + FORMY_IS[w.forma] + '</b>' : '') +
+        (k.osoba_forma ? '<span>Forma · kto</span><b>' + FORMY_IS[w.forma] + ' · ' + OSOBY_IS[w.osoba] + '</b>' : '') +
         '<span>Stan</span><b>' + (w.stan === 'zatwierdzony' ? 'zatwierdzony' : 'do zatwierdzenia') + '</b></div></div>' +
       '<p class="podp">' + T('Wpis zniknie z podsumowania ' + nazwaM(S.miesiac) + '. W historii karty zostanie ślad: kto i kiedy go usunął.') + '</p></div>' +
       '<div class="okno-d"><button class="drugi" data-a="zamknij"' + (S.wysyla ? ' disabled' : '') + '>Anuluj</button>' +
