@@ -1,4 +1,4 @@
-# ksiegowa.dysza.app — Księgowa
+# kosztometr.dysza.app — Kosztometr
 
 Moduł Dysza.App dla Pracowni Sushi. Karty w kolejności **F, P, A, OD, M, D, E, IS**:
 
@@ -10,10 +10,10 @@ Moduł Dysza.App dla Pracowni Sushi. Karty w kolejności **F, P, A, OD, M, D, E,
   **E** ekstra opłaty, **IS** wynagrodzenia właścicieli — wpis wiersz po wierszu (nazwa, data, okres, kwota),
   ZATWIERDŹ, KOREKTA (nowa wersja, poprzednia w historii), USUŃ; podsumowanie miesiąca w nagłówku karty.
 
-Każdy widzi wszystkie kafle; karty bez dostępu są szare. Dostęp wynika z roli w module Księgowa (manager.dysza.app).
+Każdy widzi wszystkie kafle; karty bez dostępu są szare. Dostęp wynika z roli w module Kosztometr (manager.dysza.app).
 
 Strona nie zawiera żadnych danych. Po zalogowaniu (login z karty i PIN z manager.dysza.app) dane przychodzą z funkcji bazy
 `ksiegowa_*`, które same pilnują dostępu i ról nadanych w managerze.
 Pliki czyta przeglądarka; do bazy trafiają kolumny potrzebne do uzgodnienia, a dokumenty FIRMINO także wierszami.
 
-Wersja 2026-11-12 21:38 · d0bab73
+Wersja 2026-11-13 07:51 · 0b01b74
