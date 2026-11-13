@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Kosztometr">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-13 18:21 · 71c095a">
+<meta name="ksiegowa-wersja" content="2026-11-13 19:02 · 1471c30">
 <title>Kosztometr</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -765,43 +765,40 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   .liczby.wp-l .wal{display:none}
 }
 @media (max-width:640px){.h1-lit{min-width:36px;height:36px;font-size:23px;margin-right:9px;vertical-align:-4px}.nawig-w .karta-n{min-width:36px;padding:2px 7px 0;font-size:19px}}
-/* ───────── faktury pracowników (okno z paska UZGODNIJ): osoby, nowa osoba, zmiana — pola 44 px jak w kartach wpisów ───────── */
+/* ───────── faktury pracowników (okno z pola zatwierdzania B2): osoba · kwota brutto · ZATWIERDŹ / KOREKTA; pola 44 px ───────── */
 .okno.pr{width:min(760px,100%)}
 .pr-opis{margin:0;line-height:1.5}
 .pr-suma{padding:12px 14px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2);font-size:14px;line-height:1.45;color:var(--tekst2)}
 .pr-suma b{color:var(--tekst);font-variant-numeric:tabular-nums}
-.pr-lista,.pr-podp{display:grid;gap:8px}
-.pr-w{display:grid;grid-template-columns:minmax(0,1fr) 116px 172px;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2)}
-.pr-w.poza{opacity:.6}
+.pr-lista{display:grid;gap:8px}
+.pr-w{display:grid;grid-template-columns:minmax(0,1fr) 176px 236px;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2)}
+.pr-w.ok{border-color:var(--okRamka)}
+.pr-w.edycja{box-shadow:inset 0 0 0 2px var(--moc)}
 .pr-n{min-width:0}
 .pr-n b{display:block;font-size:15px}
-.pr-n small{display:block;font-size:12.5px;color:var(--tekst3);margin-top:2px;overflow-wrap:anywhere}
-.pr-ile{text-align:right;font-size:13.5px;font-weight:800;color:var(--tekst3);font-variant-numeric:tabular-nums;white-space:nowrap}
-.pr-ile.ok{color:var(--tekst)}
-.pr-ile small{display:block;font-size:12px;font-weight:700;color:var(--tekst2);margin-top:2px}
-.pr-a{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
-.pr-a .drugi.maly,.pr-a .glowny.maly{min-height:36px;padding:0 11px;font-size:13px}
-.pr-pyt{flex:1 0 100%;text-align:right;font-size:13px;font-weight:800;color:var(--blTekst)}
-.pr-w.nowy,.pr-w.edycja{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"nazwa inna" "od do" "akcje akcje";align-items:end;gap:10px 12px}
+.pr-n small{display:block;font-size:12.5px;color:var(--tekst3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr-n small.ok{color:var(--okTekst)}
+.pr-n small .ikona{display:inline-block;width:13px;height:13px;vertical-align:-2px;margin-right:4px}
+.pr-k{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0}
+.pr-k input,.pr-stala,.pr-w.nowy input{display:block;width:100%;min-width:0;height:44px;margin:0;padding:0 12px;border-radius:11px;border:1px solid var(--ramka2);background:var(--pow);font-family:inherit;font-size:16px;line-height:42px;color:var(--tekst);-webkit-appearance:none;appearance:none}
+.pr-k input,.pr-stala{text-align:right;font-variant-numeric:tabular-nums}
+.pr-stala{border-color:transparent;background:transparent;font-weight:800;white-space:nowrap;overflow:hidden}
+.pr-k input:focus,.pr-w.nowy input:focus{border-color:var(--moc);outline:none}
+.pr-zl{font-size:14px;font-weight:700;color:var(--tekst2)}
+.pr-a{display:flex;gap:6px;justify-content:flex-end;align-items:center}
+.pr-a .glowny.maly,.pr-a .drugi.maly{min-height:44px;padding:0 14px}
+.pr-a .zatwierdz{letter-spacing:.04em;white-space:nowrap}
+.pr-a .zatwierdz,.pr-a [data-a="pr-korekta"]{width:150px;justify-content:center}
 .pr-w.nowy{border-style:dashed}
-.pr-w.edycja{box-shadow:inset 0 0 0 2px var(--moc)}
-.pr-w label{display:flex;flex-direction:column;min-width:0}
-.pr-w .wp-et{display:block}
-.pr-c-nazwa{grid-area:nazwa}.pr-c-inna{grid-area:inna}.pr-c-od{grid-area:od}.pr-c-do{grid-area:do}
-.pr-c-akcje{grid-area:akcje;display:flex;gap:8px;justify-content:flex-end}
-.pr-c-akcje .glowny.maly,.pr-c-akcje .drugi.maly{min-height:44px;padding:0 16px}
-.pr-w input,.pr-w select{display:block;width:100%;max-width:100%;min-width:0;height:44px;min-height:44px;margin:0;padding:0 12px;border-radius:11px;border:1px solid var(--ramka2);background-color:var(--pow);font-family:inherit;font-size:16px;line-height:20px;color:var(--tekst);-webkit-appearance:none;appearance:none}
-.pr-w select{padding-right:34px;background-position:calc(100% - 18px) 19px,calc(100% - 12px) 19px}
-.pr-w input:focus,.pr-w select:focus{border-color:var(--moc);outline:none}
-.pr-podp h3{margin:4px 0 0;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tekst3)}
-.pr-pd{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 12px;border:1px dashed var(--ramka2);border-radius:12px}
-.pr-pd b{display:block;font-size:14.5px;overflow-wrap:anywhere}
-.pr-pd small{display:block;font-size:12.5px;color:var(--tekst3);margin-top:2px}
-.pr-pd .drugi.maly{min-height:36px;padding:0 11px;font-size:13px}
+.pr-w.nowy .pr-a2{grid-column:3}
+.pr-plus{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:1.5px dashed var(--ramka2);border-radius:12px;background:transparent;color:var(--mocTekst);font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer}
+.pr-plus .ikona{width:16px;height:16px}
 @media (max-width:600px){
-  .pr-w{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n ile" "a a";row-gap:8px}
-  .pr-n{grid-area:n}.pr-ile{grid-area:ile}.pr-a{grid-area:a}
-  .pr-w.nowy,.pr-w.edycja{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"nazwa nazwa" "inna inna" "od do" "akcje akcje"}
+  .pr-w{grid-template-columns:minmax(0,1fr) 150px;grid-template-areas:"n n" "k a";row-gap:8px}
+  .pr-n{grid-area:n}.pr-k{grid-area:k}.pr-a{grid-area:a}
+  .pr-w.edycja{grid-template-areas:"n n" "k k" "a a"}
+  .pr-w.nowy{grid-template-columns:minmax(0,1fr);grid-template-areas:"n" "a"}
+  .pr-w.nowy .pr-a2{grid-column:auto}
 }
 /* B2: „Faktury pracowników” w polu zatwierdzania (Zarządzająca, Architekt) — trzeci wiersz; w A i B1 to samo miejsce puste,
    więc trzy pola zatwierdzania mają te same wiersze i wysokość; w jednej kolumnie (iPad pionowo, telefon) puste miejsce znika */
@@ -2402,7 +2399,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     filtr: 'wszystkie', rejestr: 'T', szukaj: '', plikiOtwarte: false,
     opcje: { tolerancja: R.DOMYSLNE.tolerancja, oknoDni: R.DOMYSLNE.oknoDni }, okno: null, zasadyOtwarte: false,
     zapis: null, blad: '', szkic: {}, wysyla: false,
-    prac: null, pracSzkic: {}, pracEdycja: null, pracEdycjaSzkic: {}, pracUsun: null, pracBlad: ''
+    prac: null, pracKw: {}, pracKorekta: null, pracNowy: false, pracNazwa: '', pracBlad: ''
   };
 
   /* ───────────── pomocnicze ───────────── */
@@ -2622,7 +2619,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var nr = ++zadanieM;
     var inny = m !== S.fMiesiac;
     S.miesiac = m; S.fMiesiac = m; pisz(KL.miesiac, m);
-    S.laduje = true; if (inny) { S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; S.plikiOtwarte = false; S.prac = null; S.pracEdycja = null; S.pracUsun = null; S.pracSzkic = {}; } render();
+    S.laduje = true; if (inny) { S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; S.plikiOtwarte = false; S.prac = null; S.pracKw = {}; S.pracKorekta = null; S.pracNowy = false; S.pracNazwa = ''; } render();
     var d;
     try { d = await baza.rpc('ksiegowa_miesiac', { p_miesiac: m }); }
     catch (e) { if (nr !== zadanieM) return; S.laduje = false; return obsluzBlad(e); }
@@ -2973,7 +2970,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         (wersji > 1 ? ' <button class="link wers" data-a="wersje" data-v="' + k + '">' + wersji + ' ' + odm(wersji, 'wersja', 'wersje', 'wersji') + '</button>' : '') + '</b></div></div>';
     var zp = mozeListe() && !!S.pliki.B2, zpKl = zp ? (k === 'B2' ? ' z-prac' : ' z-prac pusty-prac') : '';
     var zpEl = !zp ? '' : k === 'B2'
-      ? '<button class="link zatw-prac" data-a="pracownicy">' + ik('osoby', 'mala') + ' Faktury pracowników' + (S.prac && S.prac.razem && S.prac.razem.faktur ? ' · ' + S.prac.razem.faktur : '') + '</button>'
+      ? '<button class="link zatw-prac" data-a="pracownicy">' + ik('osoby', 'mala') + ' Faktury pracowników' + (sumaPrac() ? ' · ' + zl(sumaPrac()) + ' zł' : '') + '</button>'
       : '<span class="zatw-prac" aria-hidden="true"></span>';
     if (p.zatwierdzono) {
       h += '<div class="zatw ok' + zpKl + '"><span class="pill ok">' + ik('ok', 'mala') + ' Zatwierdzony</span><span class="zatw-k">' + esc(kiedy(p.zatwierdzono)) + ' · ' + esc(p.zatwierdzil_imie || '—') + '</span>' +
@@ -3376,18 +3373,17 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
 
   /* ───────────── faktury pracowników (FIRMINO · KOSZTY) ─────────────
-     Lista osób, których praca jest już w Załodze (team.dysza.app) albo w Transporcie, a które wystawiają faktury.
-     w.dysza.app nie liczy ich faktur w „Dokumentach kosztowych” (w miesiącach od–do). Widzą i zmieniają: Zarządzająca, Architekt.
-     Wejście: pole zatwierdzania pliku B2 (FIRMINO · KOSZTY — Aneta odpowiada za ten plik i za załogę) oraz menu. */
+     Okno z pola zatwierdzania pliku B2 (i z menu): imiona i nazwiska alfabetycznie po nazwisku (drugie słowo), przy każdej
+     osobie kwota brutto miesiąca, ZATWIERDŹ i KOREKTA, na końcu „+ Dodaj kolejnego”. Suma zatwierdzonych kwot w w.dysza.app
+     pomniejsza koszty Załogi. Kwoty wpisuje Aneta (Zarządzająca, HR) przed zatwierdzeniem pliku kosztów; widzą i zmieniają:
+     Zarządzająca i Architekt. */
   function mozeListe() { return !POKAZ && !!S.ja && (S.ja.rola === 'architekt' || S.ja.rola === 'zarzadzajaca'); }
   var BLEDY_PRAC = {
     'ZLA_WARTOSC:nazwa': 'Wpisz imię i nazwisko — co najmniej dwa słowa.',
-    'ZLA_WARTOSC:nazwy': 'Inna nazwa na fakturze: co najmniej dwa słowa (np. imię i nazwisko z nazwą firmy); kilka nazw rozdziel średnikiem — najwyżej 5.',
-    'ZLA_WARTOSC:od': 'Wybierz miesiąc „od”.',
-    'ZLA_WARTOSC:do': 'Miesiąc „do” nie może być przed „od”.',
-    'JUZ_JEST:osoba': 'Ta osoba już jest na liście w tych miesiącach — zmień jej wiersz.',
+    'ZLA_WARTOSC:kwota': 'Podaj kwotę brutto (np. 1 234,56).',
+    'JUZ_JEST:osoba': 'Ta osoba już jest na liście.',
     'NIE_MA:osoba': 'Tej osoby nie ma już na liście — pokazuję aktualną listę.',
-    'BRAK_PRAWA:lista': 'Listę faktur pracowników zmieniają Zarządzająca i Architekt.'
+    'BRAK_PRAWA:lista': 'Faktury pracowników wpisują Zarządzająca i Architekt.'
   };
   function bladPrac(e) { return BLEDY_PRAC[String(e && e.message)] || tekstBledu(e); }
   var zadanieP = 0;
@@ -3405,74 +3401,49 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     S.prac = d;
     if (S.etap === 'app' && S.karta === 'F') odswiezWynik(); else if (S.okno && S.okno.typ === 'pracownicy') renderOkno();
   }
-  function miesiaceListy(extra) {                 // od września 2026 (pierwszy miesiąc Wyniku) do pół roku naprzód
-    var l = [], m = '2026-09', kon = sasiednie(biezacyMiesiac(), 6);
-    while (m <= kon) { l.push(m); m = sasiednie(m, 1); }
-    (extra || []).forEach(function (x) { if (x && l.indexOf(x) < 0) l.push(x); });
-    return l.sort();
+  function kluczNazwiska(n) { var w = String(n || '').trim().split(/\s+/); return [w[1] || w[0] || '', w[0] || '']; }
+  function listaPrac() {                          // alfabetycznie po nazwisku (drugie słowo), potem po imieniu
+    return ((S.prac && S.prac.lista) || []).slice().sort(function (a, b) {
+      var x = kluczNazwiska(a.nazwa), y = kluczNazwiska(b.nazwa);
+      return x[0].localeCompare(y[0], 'pl', { sensitivity: 'base' }) || x[1].localeCompare(y[1], 'pl', { sensitivity: 'base' }) || a.id - b.id;
+    });
   }
-  function poleMiesiaca(id, wart, nadal) {
-    return '<select id="' + id + '">' + (nadal ? '<option value=""' + (wart ? '' : ' selected') + '>nadal</option>' : '') +
-      miesiaceListy([wart]).map(function (m) { return '<option value="' + m + '"' + (m === wart ? ' selected' : '') + '>' + esc(nazwaM(m)) + '</option>'; }).join('') + '</select>';
-  }
-  function szkicPrac() { if (!S.pracSzkic.od) S.pracSzkic.od = S.miesiac; return S.pracSzkic; }
-  function polaPrac(pref, s, przyciski) {
-    return '<div class="pr-w ' + (pref === 'pr' ? 'nowy' : 'edycja') + '">' +
-      '<label class="pr-c-nazwa"><span class="wp-et">Imię i nazwisko</span><input id="' + pref + '-nazwa" maxlength="120" autocomplete="off" autocapitalize="words" placeholder="Imię i nazwisko" value="' + esc(s.nazwa || '') + '"></label>' +
-      '<label class="pr-c-inna"><span class="wp-et">Inna nazwa na fakturze</span><input id="' + pref + '-nazwy" maxlength="600" autocomplete="off" placeholder="nieobow. — np. z nazwą firmy" value="' + esc(s.nazwy || '') + '"></label>' +
-      '<label class="pr-c-od"><span class="wp-et">Od</span>' + poleMiesiaca(pref + '-od', s.od || S.miesiac, false) + '</label>' +
-      '<label class="pr-c-do"><span class="wp-et">Do</span>' + poleMiesiaca(pref + '-do', s.do || '', true) + '</label>' +
-      '<div class="pr-c-akcje">' + przyciski + '</div></div>';
-  }
+  function sumaPrac() { return S.prac && S.prac.razem ? Number(S.prac.razem.kwota) || 0 : 0; }
   function wierszPrac(o) {
-    var dis = S.wysyla ? ' disabled' : '';
-    if (S.pracEdycja === o.id) {
-      return polaPrac('pre', S.pracEdycjaSzkic, '<button class="drugi maly" data-a="pr-anuluj"' + dis + '>Anuluj</button><button class="glowny maly" data-a="pr-zapisz"' + dis + '>Zapisz</button>');
-    }
-    var okres = nazwaM(o.od) + ' – ' + (o.do ? nazwaM(o.do) : 'nadal');
-    var meta = [o.nazwy && o.nazwy.length ? 'na fakturze: ' + o.nazwy.join('; ') : '', okres].filter(Boolean).join(' · ');
-    var kto = o.zmienil_imie ? 'zmiana: ' + o.zmienil_imie + ' ' + kiedy(o.zmieniono) : 'dopisał(a): ' + (o.kto_imie || '—') + ' ' + kiedy(o.kiedy);
-    var ile = !o.w_miesiacu ? 'poza okresem' : o.faktur ? o.faktur + ' ' + odm(o.faktur, 'faktura', 'faktury', 'faktur') : 'bez faktur';
-    var akcje = S.pracUsun === o.id
-      ? '<span class="pr-pyt">Usunąć z listy?</span><button class="drugi maly" data-a="pr-usun-nie"' + dis + '>Anuluj</button><button class="glowny maly czerwony" data-a="pr-usun-tak" data-v="' + o.id + '"' + dis + '>Usuń</button>'
-      : '<button class="drugi maly" data-a="pr-zmien" data-v="' + o.id + '"' + dis + '>Zmień</button><button class="drugi maly czerwony" data-a="pr-usun" data-v="' + o.id + '"' + dis + '>Usuń</button>';
-    return '<div class="pr-w' + (o.w_miesiacu ? '' : ' poza') + '" data-id="' + o.id + '"><div class="pr-n"><b>' + esc(o.nazwa) + '</b><small>' + esc(meta) + '</small><small>' + esc(kto) + '</small></div>' +
-      '<div class="pr-ile' + (o.w_miesiacu && o.faktur ? ' ok' : '') + '">' + esc(ile) + (o.w_miesiacu && o.faktur && Number(o.kwota) ? '<small>' + zl(Number(o.kwota)) + ' zł</small>' : '') + '</div>' +
+    var dis = S.wysyla ? ' disabled' : '', ma = o.kwota != null, edycja = !ma || S.pracKorekta === o.id;
+    var stan = ma ? (o.kto_imie || '—') + ' · ' + kiedy(o.kiedy) + (o.wersja > 1 ? ' · korekta ' + (o.wersja - 1) : '') : 'bez kwoty';
+    var wart = S.pracKw[o.id] != null ? S.pracKw[o.id] : ma ? zl(Number(o.kwota)) : '';
+    var pole = edycja
+      ? '<input id="pr-kw-' + o.id + '" inputmode="decimal" autocomplete="off" placeholder="0,00" aria-label="Kwota brutto — ' + esc(o.nazwa) + '" value="' + esc(wart) + '"' + dis + '>'
+      : '<span class="pr-stala">' + zl(Number(o.kwota)) + '</span>';
+    var akcje = edycja
+      ? (ma ? '<button class="drugi maly" data-a="pr-anuluj"' + dis + '>Anuluj</button>' : '') +
+        '<button class="glowny maly zatwierdz" data-a="pr-zatwierdz" data-v="' + o.id + '"' + dis + '>' + ik('ok', 'mala') + ' ZATWIERDŹ</button>'
+      : '<button class="drugi maly" data-a="pr-korekta" data-v="' + o.id + '"' + dis + '>KOREKTA</button>';
+    return '<div class="pr-w' + (ma && !edycja ? ' ok' : '') + (S.pracKorekta === o.id ? ' edycja' : '') + '" data-id="' + o.id + '">' +
+      '<div class="pr-n"><b>' + esc(o.nazwa) + '</b><small' + (ma ? ' class="ok" title="Zatwierdzone"' : '') + '>' + (ma ? ik('ok', 'mala') : '') + esc(stan) + '</small></div>' +
+      '<div class="pr-k">' + pole + '<span class="pr-zl">zł</span></div>' +
       '<div class="pr-a">' + akcje + '</div></div>';
   }
   function oknoPracownicy() {
     var P = S.prac, m = S.miesiac, dis = S.wysyla ? ' disabled' : '';
     var h = '<div class="okno pr" role="dialog" aria-modal="true" aria-label="Faktury pracowników"><div class="okno-g"><h2>Faktury pracowników · ' + esc(nazwaM(m)) + '</h2>' +
       '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t">' +
-      '<p class="podp pr-opis">' + T('Faktury osób z listy (plik FIRMINO · KOSZTY) nie wchodzą do „Dokumentów kosztowych” w w.dysza.app — ich praca jest już w Załodze (team.dysza.app) albo w Transporcie. Faktura należy do osoby, gdy w nazwie kontrahenta jest jej imię i nazwisko albo inna nazwa z listy.') + '</p>';
+      '<p class="podp pr-opis">' + T('Kwota brutto z faktury każdej osoby za ten miesiąc. Suma zatwierdzonych kwot w w.dysza.app pomniejsza koszty Załogi — praca tych osób jest już w Załodze, a ich faktury w Dokumentach kosztowych.') + '</p>';
     if (S.pracBlad) h += '<div class="wp-blad" role="alert">' + esc(S.pracBlad) + '</div>';
     if (!P) return h + '<div class="pr-suma">' + T('Wczytuję listę…') + '</div></div><div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
-    var r = P.razem || { faktur: 0, osob: 0, kwota: 0, obce: 0 };
-    h += '<div class="pr-suma">' + (!P.plik ? T('Plik kosztów ' + wMiesiacu(m) + ' jeszcze nie jest wgrany.')
-      : r.faktur ? '<b>' + r.faktur + ' ' + odm(r.faktur, 'faktura', 'faktury', 'faktur') + ' · ' + r.osob + ' ' + odm(r.osob, 'osoba', 'osoby', 'osób') + ' · ' + zl(Number(r.kwota)) + ' zł</b>' +
-          T(' — ' + wMiesiacu(m) + ' poza „Dokumentami kosztowymi”' + (r.obce ? ' (w tym ' + r.obce + ' w obcej walucie)' : '') + '.')
-      : T('W pliku kosztów ' + wMiesiacu(m) + ' nie ma faktur osób z listy.')) + '</div>';
-    h += '<div class="pr-lista">' + (P.lista || []).map(wierszPrac).join('') +
-      polaPrac('pr', szkicPrac(), '<button class="glowny maly" data-a="pr-dodaj"' + dis + '>' + ik('plus', 'mala') + ' Dodaj osobę</button>') + '</div>';
-    if (P.podpowiedzi && P.podpowiedzi.length) {
-      h += '<div class="pr-podp"><h3>' + T('Opis „STAŁE B2B”, a nie ma ich na liście') + '</h3>' + P.podpowiedzi.map(function (x) {
-        return '<div class="pr-pd"><span><b>' + esc(x.kontrahent) + '</b><small>' + x.faktur + ' ' + odm(x.faktur, 'faktura', 'faktury', 'faktur') + ' ' + esc(wMiesiacu(m)) + '</small></span>' +
-          '<button class="drugi maly" data-a="pr-wstaw" data-v="' + esc(x.kontrahent) + '"' + dis + '>' + ik('plus', 'mala') + ' Dopisz</button></div>';
-      }).join('') + '</div>';
-    }
+    var r = P.razem || { kwota: 0, osob: 0 };
+    h += '<div class="pr-suma">' + (Number(r.osob)
+      ? '<b>Zatwierdzone: ' + zl(Number(r.kwota)) + ' zł · ' + r.osob + ' ' + odm(Number(r.osob), 'osoba', 'osoby', 'osób') + '</b>' + T(' — w w.dysza.app minus z kosztów Załogi.')
+      : T('Brak zatwierdzonych kwot ' + wMiesiacu(m) + '.')) + '</div>';
+    h += '<div class="pr-lista">' + listaPrac().map(wierszPrac).join('') +
+      (S.pracNowy
+        ? '<div class="pr-w nowy"><div class="pr-n"><input id="pr-nazwa" maxlength="120" autocomplete="off" autocapitalize="words" placeholder="Imię i nazwisko" aria-label="Imię i nazwisko" value="' + esc(S.pracNazwa) + '"' + dis + '></div>' +
+          '<div class="pr-a pr-a2"><button class="drugi maly" data-a="pr-nowy-anuluj"' + dis + '>Anuluj</button><button class="glowny maly" data-a="pr-dodaj"' + dis + '>Dodaj</button></div></div>'
+        : '<button class="pr-plus" data-a="pr-nowy"' + dis + '>' + ik('plus', 'mala') + ' Dodaj kolejnego</button>') + '</div>';
     return h + '</div><div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
   }
-  function wartosciPrac(s) {
-    var nazwa = String(s.nazwa || '').trim().replace(/\s+/g, ' ');
-    var nazwy = String(s.nazwy || '').split(';').map(function (x) { return x.trim().replace(/\s+/g, ' '); }).filter(Boolean);
-    var slowa = nazwa.split(' ').filter(function (w) { return w.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 2; });
-    if (slowa.length < 2) return { blad: BLEDY_PRAC['ZLA_WARTOSC:nazwa'] };
-    if (nazwy.length > 5) return { blad: BLEDY_PRAC['ZLA_WARTOSC:nazwy'] };
-    var od = s.od || S.miesiac, dok = s.do || '';
-    if (dok && dok < od) return { blad: BLEDY_PRAC['ZLA_WARTOSC:do'] };
-    return { nazwa: nazwa, nazwy: nazwy, od: od, do: dok || null };
-  }
-  async function akcjaPrac(fn, ok) {
+  async function akcjaPrac(fn, ok, po) {
     if (S.wysyla) return;
     S.wysyla = true; S.pracBlad = ''; renderOkno();
     try { await fn(); }
@@ -3480,42 +3451,40 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       S.wysyla = false;
       if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { S.okno = null; obsluzBlad(e); return; }
       S.pracBlad = bladPrac(e); renderOkno();
-      if (/^NIE_MA/.test(String(e && e.message))) { S.pracEdycja = null; S.pracUsun = null; wczytajPracownikow(); }
+      if (/^NIE_MA/.test(String(e && e.message))) { S.pracKorekta = null; wczytajPracownikow(); }
       return;
     }
     S.wysyla = false;
     if (ok) ok();
     await wczytajPracownikow();
+    if (po) po();
+  }
+  function zatwierdzPrac(id) {
+    var o = listaPrac().filter(function (x) { return String(x.id) === String(id); })[0];
+    if (!o) return;
+    var tekst = S.pracKw[o.id] != null ? S.pracKw[o.id] : o.kwota != null ? String(o.kwota) : '';
+    var x = R.liczba(String(tekst).replace('−', '-'));
+    if (x == null || x < 0) { S.pracBlad = BLEDY_PRAC['ZLA_WARTOSC:kwota']; renderOkno(); var f = document.getElementById('pr-kw-' + o.id); if (f) f.focus(); return; }
+    var kw = R.r2(x), nast = null, l = listaPrac(), i = l.indexOf(o);
+    for (var j = i + 1; j < l.length && nast == null; j++) if (l[j].kwota == null && S.pracKw[l[j].id] == null) nast = l[j].id;
+    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_kwota', { p_pracownik: o.id, p_miesiac: S.miesiac, p_kwota: kw }); },
+      function () { delete S.pracKw[o.id]; S.pracKorekta = null; toast('Zatwierdzone: ' + o.nazwa + ' · ' + zl(kw) + ' zł.'); },
+      function () { var f = nast != null && document.getElementById('pr-kw-' + nast); if (f) f.focus(); });
+  }
+  function korektaPrac(id) {
+    var o = listaPrac().filter(function (x) { return String(x.id) === String(id); })[0];
+    if (!o) return;
+    S.pracKorekta = o.id; S.pracBlad = ''; S.pracKw[o.id] = o.kwota != null ? zl(Number(o.kwota)) : '';
+    renderOkno();
+    var f = document.getElementById('pr-kw-' + o.id); if (f) { f.focus(); try { f.select(); } catch (e) { /* bez zaznaczenia */ } }
   }
   function dodajPrac() {
-    var v = wartosciPrac(szkicPrac());
-    if (v.blad) { S.pracBlad = v.blad; renderOkno(); return; }
-    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_zapisz', { p_id: null, p_nazwa: v.nazwa, p_nazwy: v.nazwy, p_od: v.od, p_do: v.do }); },
-      function () { S.pracSzkic = {}; toast('Dopisane do listy: ' + v.nazwa + '.'); });
-  }
-  function zmienPrac(id) {
-    var o = S.prac && (S.prac.lista || []).filter(function (x) { return String(x.id) === String(id); })[0];
-    if (!o) return;
-    S.pracEdycja = o.id; S.pracUsun = null; S.pracBlad = '';
-    S.pracEdycjaSzkic = { nazwa: o.nazwa, nazwy: (o.nazwy || []).join('; '), od: o.od, do: o.do || '' };
-    renderOkno();
-    var p = document.getElementById('pre-nazwa'); if (p) p.focus();
-  }
-  function zapiszPrac() {
-    var id = S.pracEdycja, v = wartosciPrac(S.pracEdycjaSzkic);
-    if (v.blad) { S.pracBlad = v.blad; renderOkno(); return; }
-    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_zapisz', { p_id: id, p_nazwa: v.nazwa, p_nazwy: v.nazwy, p_od: v.od, p_do: v.do }); },
-      function () { S.pracEdycja = null; S.pracEdycjaSzkic = {}; });
-  }
-  function usunPrac(id) {
-    var o = S.prac && (S.prac.lista || []).filter(function (x) { return String(x.id) === String(id); })[0];
-    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_usun', { p_id: Number(id) }); },
-      function () { S.pracUsun = null; toast('Usunięte z listy' + (o ? ': ' + o.nazwa : '') + ' — zostaje w historii bazy.'); });
-  }
-  function wstawPrac(kontrahent) {           // podpowiedź „STAŁE B2B” → nazwa w polu nowej osoby (do poprawienia przed „Dodaj osobę”)
-    var n = String(kontrahent || '').trim().toLocaleLowerCase('pl-PL').replace(/(^|[\s-])(\S)/g, function (x, a, b) { return a + b.toLocaleUpperCase('pl-PL'); });
-    szkicPrac().nazwa = n; S.pracBlad = ''; renderOkno();
-    var p = document.getElementById('pr-nazwa'); if (p) { p.focus(); try { p.setSelectionRange(n.length, n.length); } catch (e) { /* bez zaznaczenia */ } }
+    var nazwa = String(S.pracNazwa || '').replace(/\s+/g, ' ').trim();
+    if (nazwa.split(' ').filter(function (w) { return w.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 2; }).length < 2) {
+      S.pracBlad = BLEDY_PRAC['ZLA_WARTOSC:nazwa']; renderOkno(); var f = document.getElementById('pr-nazwa'); if (f) f.focus(); return;
+    }
+    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_dodaj', { p_nazwa: nazwa }); },
+      function () { S.pracNowy = false; S.pracNazwa = ''; toast('Dodane: ' + nazwa + '.'); });
   }
 
   /* ───────────── karty wpisów: P, A, OD, M, D, E, IS (wpis wiersz po wierszu, ZATWIERDŹ / KOREKTA / USUŃ) ───────────── */
@@ -3864,15 +3833,13 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       case 'pokaz-b': S.okno = { typ: 'b', id: el.getAttribute('data-id') }; renderOkno(); break;
       case 'wersje': S.menu = false; renderMenu(); S.okno = { typ: 'wersje', strona: v || '' }; renderOkno(); break;
       case 'historia': S.menu = false; renderMenu(); S.okno = { typ: 'historia' }; renderOkno(); break;
-      case 'pracownicy': S.menu = false; renderMenu(); S.okno = { typ: 'pracownicy' }; S.pracBlad = ''; S.pracEdycja = null; S.pracUsun = null; renderOkno(); wczytajPracownikow(); break;
+      case 'pracownicy': S.menu = false; renderMenu(); S.okno = { typ: 'pracownicy' }; S.pracBlad = ''; S.pracKorekta = null; S.pracNowy = false; renderOkno(); wczytajPracownikow(); break;
+      case 'pr-zatwierdz': zatwierdzPrac(v); break;
+      case 'pr-korekta': korektaPrac(v); break;
+      case 'pr-anuluj': if (S.pracKorekta != null) delete S.pracKw[S.pracKorekta]; S.pracKorekta = null; S.pracBlad = ''; renderOkno(); break;
+      case 'pr-nowy': S.pracNowy = true; S.pracBlad = ''; renderOkno(); (function () { var f = document.getElementById('pr-nazwa'); if (f) f.focus(); })(); break;
+      case 'pr-nowy-anuluj': S.pracNowy = false; S.pracNazwa = ''; S.pracBlad = ''; renderOkno(); break;
       case 'pr-dodaj': dodajPrac(); break;
-      case 'pr-zmien': zmienPrac(v); break;
-      case 'pr-zapisz': zapiszPrac(); break;
-      case 'pr-anuluj': S.pracEdycja = null; S.pracEdycjaSzkic = {}; S.pracBlad = ''; renderOkno(); break;
-      case 'pr-usun': S.pracUsun = Number(v); S.pracEdycja = null; S.pracBlad = ''; renderOkno(); break;
-      case 'pr-usun-nie': S.pracUsun = null; renderOkno(); break;
-      case 'pr-usun-tak': usunPrac(v); break;
-      case 'pr-wstaw': wstawPrac(v); break;
       case 'zapisz-pliki': zapiszPliki(); break;
       case 'wpis-dopisz': wpisz(null); break;
       case 'wpis-wyjasnione': wpisz('wyjasnione'); break;
@@ -3901,8 +3868,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     }
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && e.target.id && /^pre?-(nazwa|nazwy)$/.test(e.target.id)) { e.preventDefault(); if (/^pre-/.test(e.target.id)) zapiszPrac(); else dodajPrac(); return; }
-    if (e.key === 'Escape' && S.okno && S.okno.typ === 'pracownicy' && (S.pracEdycja || S.pracUsun) && !S.wysyla) { S.pracEdycja = null; S.pracUsun = null; S.pracBlad = ''; renderOkno(); return; }
+    if (e.key === 'Enter' && e.target.id && /^pr-kw-\d+$/.test(e.target.id)) { e.preventDefault(); zatwierdzPrac(e.target.id.slice(6)); return; }
+    if (e.key === 'Enter' && e.target.id === 'pr-nazwa') { e.preventDefault(); dodajPrac(); return; }
+    if (e.key === 'Escape' && S.okno && S.okno.typ === 'pracownicy' && (S.pracKorekta != null || S.pracNowy) && !S.wysyla) {
+      if (S.pracKorekta != null) delete S.pracKw[S.pracKorekta]; S.pracKorekta = null; S.pracNowy = false; S.pracNazwa = ''; S.pracBlad = ''; renderOkno(); return;
+    }
     if (e.key === 'Enter' && e.target.id && /^kwe?-(nazwa|data|okres|kwota)$/.test(e.target.id)) { e.preventDefault(); if (/^kwe-/.test(e.target.id)) korektaZapisz(); else dodajWpis(); return; }
     if (e.key === 'Escape' && S.kwEdycja && !S.okno && !S.wysyla) { S.kwEdycja = null; S.kwBlad = ''; odswiezWynik(); return; }
     if (e.key === 'Escape' && S.okno && !S.wysyla) { S.okno = null; S.zapis = null; renderOkno(); }
@@ -3930,10 +3900,9 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (mk) { (mk[1] === 'kw' ? szkicKarty() : S.kwEdycjaSzkic)[mk[2]] = e.target.value; if (S.kwBlad) { S.kwBlad = ''; var b = $('.wp-blad'); if (b) b.remove(); } }
     poleListy(e.target);
   });
-  function poleListy(t) {                     // pola listy faktur pracowników → szkic (nowa osoba albo zmiana)
-    var mp = /^(pre?)-(nazwa|nazwy|od|do)$/.exec((t && t.id) || '');
-    if (!mp) return;
-    (mp[1] === 'pr' ? szkicPrac() : S.pracEdycjaSzkic)[mp[2]] = t.value;
+  function poleListy(t) {                     // pola okna faktur pracowników → szkic (kwota osoby albo nowa osoba)
+    var id = (t && t.id) || '', mk = /^pr-kw-(\d+)$/.exec(id);
+    if (mk) S.pracKw[mk[1]] = t.value; else if (id === 'pr-nazwa') S.pracNazwa = t.value; else return;
     if (S.pracBlad) { S.pracBlad = ''; var b = document.querySelector('#warstwa .wp-blad'); if (b) b.remove(); }
   }
   document.addEventListener('focusout', function (e) {
