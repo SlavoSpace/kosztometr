@@ -12,8 +12,11 @@ Moduł Dysza.App dla Pracowni Sushi. Karty w kolejności **F, P, A, OD, M, D, E,
 
 Każdy widzi wszystkie kafle; karty bez dostępu są szare. Dostęp wynika z roli w module Kosztometr (manager.dysza.app).
 
+Logo (wersja A, 13.11.2026): termometr kosztów — rurka jak ekrany ZDZISŁAWA, moneta zamiast zbiorniczka, rosnący słupek
+(zieleń → bursztyn → koral). Przy nazwie w oknie logowania (obok ZDZISŁAWA), w nagłówku i w ikonach aplikacji.
+
 Strona nie zawiera żadnych danych. Po zalogowaniu (login z karty i PIN z manager.dysza.app) dane przychodzą z funkcji bazy
 `ksiegowa_*`, które same pilnują dostępu i ról nadanych w managerze.
 Pliki czyta przeglądarka; do bazy trafiają kolumny potrzebne do uzgodnienia, a dokumenty FIRMINO także wierszami.
 
-Wersja 2026-11-13 07:51 · 0b01b74
+Wersja 2026-11-13 08:36 · 7cd962e
