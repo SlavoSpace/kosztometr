@@ -19,4 +19,4 @@ Strona nie zawiera żadnych danych. Po zalogowaniu (login z karty i PIN z manage
 `ksiegowa_*`, które same pilnują dostępu i ról nadanych w managerze.
 Pliki czyta przeglądarka; do bazy trafiają kolumny potrzebne do uzgodnienia, a dokumenty FIRMINO także wierszami.
 
-Wersja 2026-11-13 08:36 · 7cd962e
+Wersja 2026-11-13 14:34 · 65aebc1

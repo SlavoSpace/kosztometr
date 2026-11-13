@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Kosztometr">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-13 08:36 · 7cd962e">
+<meta name="ksiegowa-wersja" content="2026-11-13 14:34 · 65aebc1">
 <title>Kosztometr</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -765,6 +765,44 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   .liczby.wp-l .wal{display:none}
 }
 @media (max-width:640px){.h1-lit{min-width:36px;height:36px;font-size:23px;margin-right:9px;vertical-align:-4px}.nawig-w .karta-n{min-width:36px;padding:2px 7px 0;font-size:19px}}
+/* ───────── faktury pracowników (okno z paska UZGODNIJ): osoby, nowa osoba, zmiana — pola 44 px jak w kartach wpisów ───────── */
+.okno.pr{width:min(760px,100%)}
+.pr-opis{margin:0;line-height:1.5}
+.pr-suma{padding:12px 14px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2);font-size:14px;line-height:1.45;color:var(--tekst2)}
+.pr-suma b{color:var(--tekst);font-variant-numeric:tabular-nums}
+.pr-lista,.pr-podp{display:grid;gap:8px}
+.pr-w{display:grid;grid-template-columns:minmax(0,1fr) 116px 172px;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--linia);border-radius:12px;background:var(--pow2)}
+.pr-w.poza{opacity:.6}
+.pr-n{min-width:0}
+.pr-n b{display:block;font-size:15px}
+.pr-n small{display:block;font-size:12.5px;color:var(--tekst3);margin-top:2px;overflow-wrap:anywhere}
+.pr-ile{text-align:right;font-size:13.5px;font-weight:800;color:var(--tekst3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pr-ile.ok{color:var(--tekst)}
+.pr-ile small{display:block;font-size:12px;font-weight:700;color:var(--tekst2);margin-top:2px}
+.pr-a{display:flex;gap:6px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
+.pr-a .drugi.maly,.pr-a .glowny.maly{min-height:36px;padding:0 11px;font-size:13px}
+.pr-pyt{flex:1 0 100%;text-align:right;font-size:13px;font-weight:800;color:var(--blTekst)}
+.pr-w.nowy,.pr-w.edycja{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"nazwa inna" "od do" "akcje akcje";align-items:end;gap:10px 12px}
+.pr-w.nowy{border-style:dashed}
+.pr-w.edycja{box-shadow:inset 0 0 0 2px var(--moc)}
+.pr-w label{display:flex;flex-direction:column;min-width:0}
+.pr-w .wp-et{display:block}
+.pr-c-nazwa{grid-area:nazwa}.pr-c-inna{grid-area:inna}.pr-c-od{grid-area:od}.pr-c-do{grid-area:do}
+.pr-c-akcje{grid-area:akcje;display:flex;gap:8px;justify-content:flex-end}
+.pr-c-akcje .glowny.maly,.pr-c-akcje .drugi.maly{min-height:44px;padding:0 16px}
+.pr-w input,.pr-w select{display:block;width:100%;max-width:100%;min-width:0;height:44px;min-height:44px;margin:0;padding:0 12px;border-radius:11px;border:1px solid var(--ramka2);background-color:var(--pow);font-family:inherit;font-size:16px;line-height:20px;color:var(--tekst);-webkit-appearance:none;appearance:none}
+.pr-w select{padding-right:34px;background-position:calc(100% - 18px) 19px,calc(100% - 12px) 19px}
+.pr-w input:focus,.pr-w select:focus{border-color:var(--moc);outline:none}
+.pr-podp h3{margin:4px 0 0;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--tekst3)}
+.pr-pd{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 12px;border:1px dashed var(--ramka2);border-radius:12px}
+.pr-pd b{display:block;font-size:14.5px;overflow-wrap:anywhere}
+.pr-pd small{display:block;font-size:12.5px;color:var(--tekst3);margin-top:2px}
+.pr-pd .drugi.maly{min-height:36px;padding:0 11px;font-size:13px}
+@media (max-width:600px){
+  .pr-w{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n ile" "a a";row-gap:8px}
+  .pr-n{grid-area:n}.pr-ile{grid-area:ile}.pr-a{grid-area:a}
+  .pr-w.nowy,.pr-w.edycja{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"nazwa nazwa" "inna inna" "od do" "akcje akcje"}
+}
 
 /* logo Kosztometru (A): przy nazwie w oknie logowania (ZDZISŁAW zostaje) i w nagłówku */
 .dw-gora>div:first-child{position:relative;padding-left:50px}.dw-gora>div:first-child::before{content:"";position:absolute;left:0;top:0;bottom:0;width:34px;background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjI2IDExIDEwOCAyODYiPjxwYXRoIGQ9Ik00MiAxOTNIMjhNMTE4IDE5M0gxMzJNNDIgMTY5SDM0TTExOCAxNjlIMTI2TTQyIDE0NUgyOE0xMTggMTQ1SDEzMk00MiAxMjFIMzRNMTE4IDEyMUgxMjZNNDIgOTdIMjhNMTE4IDk3SDEzMk00MiA3M0gzNE0xMTggNzNIMTI2TTQyIDQ5SDI4TTExOCA0OUgxMzIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzhBOUE5NSIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNNTAgMjMyVjQ0QTMwIDMwIDAgMCAxIDExMCA0NFYyMzJaIiBmaWxsPSIjRDlERkREIiBzdHJva2U9IiMwRTEzMTIiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Ik02MiAyMzJWNDRBMTggMTggMCAwIDEgOTggNDRWMjMyWiIgZmlsbD0iIzFCMjMyMSIvPjxyZWN0IHg9IjY4IiB5PSIxODQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiM2M0QyOTYiLz48cmVjdCB4PSI2OCIgeT0iMTYwIiB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHJ4PSI1IiBmaWxsPSIjNjNEMjk2Ii8+PHJlY3QgeD0iNjgiIHk9IjEzNiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiByeD0iNSIgZmlsbD0iI0YxQjQ0QyIvPjxyZWN0IHg9IjY4IiB5PSIxMTIiIHdpZHRoPSIyNCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiNGMUI0NEMiLz48cmVjdCB4PSI2OCIgeT0iODgiIHdpZHRoPSIyNCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiNFODY2NUYiLz48cmVjdCB4PSI2OSIgeT0iNjUiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxNiIgcng9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNFNEQ0OSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNjkiIHk9IjQxIiB3aWR0aD0iMjIiIGhlaWdodD0iMTYiIHJ4PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzRTRENDkiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjgwIiBjeT0iMjUyIiByPSI0MiIgZmlsbD0iI0U2Qjg0NyIgc3Ryb2tlPSIjMEUxMzEyIiBzdHJva2Utd2lkdGg9IjYiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjI1MiIgcj0iMzEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0I4ODkyQSIgc3Ryb2tlLXdpZHRoPSI0Ii8+PHBhdGggZD0iTTQ4LjggMjM0QTM2IDM2IDAgMCAxIDY0LjggMjE5LjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRjRDRiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=") left center/contain no-repeat}.nag-znak{flex:0 0 auto;width:14px;height:42px;background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjM1IDExIDkwIDI4NiI+PHBhdGggZD0iTTUwIDIzMlY0NEEzMCAzMCAwIDAgMSAxMTAgNDRWMjMyWiIgZmlsbD0iI0Q5REZERCIgc3Ryb2tlPSIjMEUxMzEyIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNNjIgMjMyVjQ0QTE4IDE4IDAgMCAxIDk4IDQ0VjIzMloiIGZpbGw9IiMxQjIzMjEiLz48cmVjdCB4PSI2OCIgeT0iMTg0IiB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHJ4PSI1IiBmaWxsPSIjNjNEMjk2Ii8+PHJlY3QgeD0iNjgiIHk9IjE2MCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiByeD0iNSIgZmlsbD0iIzYzRDI5NiIvPjxyZWN0IHg9IjY4IiB5PSIxMzYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIxOCIgcng9IjUiIGZpbGw9IiNGMUI0NEMiLz48cmVjdCB4PSI2OCIgeT0iMTEyIiB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHJ4PSI1IiBmaWxsPSIjRjFCNDRDIi8+PHJlY3QgeD0iNjgiIHk9Ijg4IiB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHJ4PSI1IiBmaWxsPSIjRTg2NjVGIi8+PHJlY3QgeD0iNjkiIHk9IjY1IiB3aWR0aD0iMjIiIGhlaWdodD0iMTYiIHJ4PSI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMzRTRENDkiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjY5IiB5PSI0MSIgd2lkdGg9IjIyIiBoZWlnaHQ9IjE2IiByeD0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM0U0RDQ5IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSI4MCIgY3k9IjI1MiIgcj0iNDIiIGZpbGw9IiNFNkI4NDciIHN0cm9rZT0iIzBFMTMxMiIgc3Ryb2tlLXdpZHRoPSI2Ii8+PGNpcmNsZSBjeD0iODAiIGN5PSIyNTIiIHI9IjMxIiBmaWxsPSJub25lIiBzdHJva2U9IiNCODg5MkEiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Ik00OC44IDIzNEEzNiAzNiAwIDAgMSA2NC44IDIxOS40IiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkY0Q0YiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+") center/contain no-repeat}@media (max-width:600px){.dw-gora>div:first-child{padding-left:42px}.dw-gora>div:first-child::before{width:28px}.nag-znak{height:36px;width:12px}}
@@ -2355,7 +2393,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     karty: [], karta: czytaj(KL.karta, 'F') || 'F', kw: null, kwLaduje: false, kwSzkic: {}, kwEdycja: null, kwEdycjaSzkic: {}, kwBlad: '', kwHistoria: false,
     filtr: 'wszystkie', rejestr: 'T', szukaj: '', plikiOtwarte: false,
     opcje: { tolerancja: R.DOMYSLNE.tolerancja, oknoDni: R.DOMYSLNE.oknoDni }, okno: null, zasadyOtwarte: false,
-    zapis: null, blad: '', szkic: {}, wysyla: false
+    zapis: null, blad: '', szkic: {}, wysyla: false,
+    prac: null, pracSzkic: {}, pracEdycja: null, pracEdycjaSzkic: {}, pracUsun: null, pracBlad: ''
   };
 
   /* ───────────── pomocnicze ───────────── */
@@ -2394,7 +2433,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     zegar: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
     historia: '<path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v4h4M12 8v4l3 2"/>',
     uzgodnij: '<path d="M4 7h11M11 3l4 4-4 4"/><path d="M20 17H9M13 13l-4 4 4 4"/>',
-    plus: '<path d="M12 5v14M5 12h14"/>'
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    osoby: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.6 14.1c2.3.3 4 1.9 4.6 4.9"/>'
   };
   var ik = function (n, kl) { return '<svg class="ikona ' + (kl || '') + '" viewBox="0 0 24 24" aria-hidden="true">' + (IK[n] || '') + '</svg>'; };
   function zdz(poza, kl) { return '<span class="zdz ' + (kl || '') + '"><img alt="" src="' + POZY[poza] + '"></span>'; }
@@ -2574,7 +2614,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     var nr = ++zadanieM;
     var inny = m !== S.fMiesiac;
     S.miesiac = m; S.fMiesiac = m; pisz(KL.miesiac, m);
-    S.laduje = true; if (inny) { S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; S.plikiOtwarte = false; } render();
+    S.laduje = true; if (inny) { S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.wynik = null; S.plikiOtwarte = false; S.prac = null; S.pracEdycja = null; S.pracUsun = null; S.pracSzkic = {}; } render();
     var d;
     try { d = await baza.rpc('ksiegowa_miesiac', { p_miesiac: m }); }
     catch (e) { if (nr !== zadanieM) return; S.laduje = false; return obsluzBlad(e); }
@@ -2600,6 +2640,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     przelicz();
     if (inny) { var tr = document.getElementById('tresc'); if (tr) tr.scrollTop = 0; }
     odswiezWynik();
+    wczytajPracownikow();
   }
   function przelicz() {
     var P = S.plikiUzg;
@@ -2953,6 +2994,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     return '<section class="uzg" aria-label="Uzgodnienie miesiąca"><div class="uzg-kroki">' + kroki + '</div><div class="uzg-p">' + prawa + '</div>' +
       '<div class="uzg-o"><p>' + opis + '</p><span class="uzg-l">' +
         (st.aktualne ? '<button class="link" data-a="pliki-pokaz">' + (zwin ? 'Pokaż pliki' : 'Zwiń pliki') + '</button>' : '') +
+        (mozeListe() ? '<button class="link" data-a="pracownicy">' + ik('osoby', 'mala') + ' Faktury pracowników' + (S.prac && S.prac.razem && S.prac.razem.faktur ? ' · ' + S.prac.razem.faktur : '') + '</button>' : '') +
         (S.dziennik.length ? '<button class="link" data-a="historia">' + ik('historia', 'mala') + ' Historia miesiąca</button>' : '') + '</span></div></section>';
   }
 
@@ -3146,9 +3188,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (pole) { S.oknoCzeka = true; return; }   // nie przerywamy pisania uwagi — okno odświeży się po wyjściu z pola
     S.oknoCzeka = false;
     if (!el) { el = document.createElement('div'); el.id = 'warstwa'; el.className = 'warstwa'; el.setAttribute('data-a', 'zamknij-tlo'); document.body.appendChild(el); }
-    var t = S.okno.typ;
-    el.innerHTML = t === 'a' ? oknoA(S.okno.id) : t === 'b' ? oknoB(S.okno.id) : t === 'zapis' ? oknoZapis() : t === 'wersje' ? oknoWersje(S.okno.strona) : t === 'historia' ? oknoHistoria() : t === 'usun' ? oknoUsun(S.okno.id) : '';
-    if (!el.innerHTML) { S.okno = null; el.remove(); }
+    var t = S.okno.typ, a = document.activeElement, fok = null;
+    if (t === 'pracownicy' && a && a.id && el.contains(a)) { fok = { id: a.id, z: null }; try { if (a.selectionStart != null) fok.z = [a.selectionStart, a.selectionEnd]; } catch (e) { fok.z = null; } }
+    el.innerHTML = t === 'pracownicy' ? oknoPracownicy() : t === 'a' ? oknoA(S.okno.id) : t === 'b' ? oknoB(S.okno.id) : t === 'zapis' ? oknoZapis() : t === 'wersje' ? oknoWersje(S.okno.strona) : t === 'historia' ? oknoHistoria() : t === 'usun' ? oknoUsun(S.okno.id) : '';
+    if (!el.innerHTML) { S.okno = null; el.remove(); return; }
+    if (fok) { var f = document.getElementById(fok.id); if (f && !f.disabled) { f.focus(); try { if (fok.z) f.setSelectionRange(fok.z[0], fok.z[1]); } catch (e) { /* lista wyboru */ } } }
   }
   function wiersz(et, a, b, inne, kl) {
     return '<div class="et">' + et + '</div><div class="' + (kl || '') + (inne ? ' inne' : '') + '">' + a + '</div><div class="' + (kl || '') + (inne ? ' inne' : '') + '">' + b + '</div>';
@@ -3318,6 +3362,148 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
           (d.strona ? lit(d.strona, 'mala') : '<span></span>') + '</div>';
       }).join('') + '</div><p class="podp">' + T('Historia tylko się dopisuje: wgrania, zatwierdzenia, cofnięcia i uzgodnienia — kto i kiedy.') + '</p></div>' +
       '<div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
+  }
+
+  /* ───────────── faktury pracowników (FIRMINO · KOSZTY) ─────────────
+     Lista osób, których praca jest już w Załodze (team.dysza.app) albo w Transporcie, a które wystawiają faktury.
+     w.dysza.app nie liczy ich faktur w „Dokumentach kosztowych” (w miesiącach od–do). Widzą i zmieniają: Zarządzająca, Architekt. */
+  function mozeListe() { return !POKAZ && !!S.ja && (S.ja.rola === 'architekt' || S.ja.rola === 'zarzadzajaca'); }
+  var BLEDY_PRAC = {
+    'ZLA_WARTOSC:nazwa': 'Wpisz imię i nazwisko — co najmniej dwa słowa.',
+    'ZLA_WARTOSC:nazwy': 'Inna nazwa na fakturze: co najmniej dwa słowa (np. imię i nazwisko z nazwą firmy); kilka nazw rozdziel średnikiem — najwyżej 5.',
+    'ZLA_WARTOSC:od': 'Wybierz miesiąc „od”.',
+    'ZLA_WARTOSC:do': 'Miesiąc „do” nie może być przed „od”.',
+    'JUZ_JEST:osoba': 'Ta osoba już jest na liście w tych miesiącach — zmień jej wiersz.',
+    'NIE_MA:osoba': 'Tej osoby nie ma już na liście — pokazuję aktualną listę.',
+    'BRAK_PRAWA:lista': 'Listę faktur pracowników zmieniają Zarządzająca i Architekt.'
+  };
+  function bladPrac(e) { return BLEDY_PRAC[String(e && e.message)] || tekstBledu(e); }
+  var zadanieP = 0;
+  async function wczytajPracownikow() {
+    if (!mozeListe() || !S.miesiac) { S.prac = null; return; }
+    var nr = ++zadanieP, m = S.miesiac, d;
+    try { d = await baza.rpc('ksiegowa_pracownicy', { p_miesiac: m }); }
+    catch (e) {
+      if (nr !== zadanieP) return;
+      if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { obsluzBlad(e); return; }
+      S.pracBlad = bladPrac(e); if (S.okno && S.okno.typ === 'pracownicy') renderOkno();
+      return;
+    }
+    if (nr !== zadanieP || m !== S.miesiac) return;
+    S.prac = d;
+    if (S.etap === 'app' && S.karta === 'F') odswiezWynik(); else if (S.okno && S.okno.typ === 'pracownicy') renderOkno();
+  }
+  function miesiaceListy(extra) {                 // od września 2026 (pierwszy miesiąc Wyniku) do pół roku naprzód
+    var l = [], m = '2026-09', kon = sasiednie(biezacyMiesiac(), 6);
+    while (m <= kon) { l.push(m); m = sasiednie(m, 1); }
+    (extra || []).forEach(function (x) { if (x && l.indexOf(x) < 0) l.push(x); });
+    return l.sort();
+  }
+  function poleMiesiaca(id, wart, nadal) {
+    return '<select id="' + id + '">' + (nadal ? '<option value=""' + (wart ? '' : ' selected') + '>nadal</option>' : '') +
+      miesiaceListy([wart]).map(function (m) { return '<option value="' + m + '"' + (m === wart ? ' selected' : '') + '>' + esc(nazwaM(m)) + '</option>'; }).join('') + '</select>';
+  }
+  function szkicPrac() { if (!S.pracSzkic.od) S.pracSzkic.od = S.miesiac; return S.pracSzkic; }
+  function polaPrac(pref, s, przyciski) {
+    return '<div class="pr-w ' + (pref === 'pr' ? 'nowy' : 'edycja') + '">' +
+      '<label class="pr-c-nazwa"><span class="wp-et">Imię i nazwisko</span><input id="' + pref + '-nazwa" maxlength="120" autocomplete="off" autocapitalize="words" placeholder="Imię i nazwisko" value="' + esc(s.nazwa || '') + '"></label>' +
+      '<label class="pr-c-inna"><span class="wp-et">Inna nazwa na fakturze</span><input id="' + pref + '-nazwy" maxlength="600" autocomplete="off" placeholder="nieobow. — np. z nazwą firmy" value="' + esc(s.nazwy || '') + '"></label>' +
+      '<label class="pr-c-od"><span class="wp-et">Od</span>' + poleMiesiaca(pref + '-od', s.od || S.miesiac, false) + '</label>' +
+      '<label class="pr-c-do"><span class="wp-et">Do</span>' + poleMiesiaca(pref + '-do', s.do || '', true) + '</label>' +
+      '<div class="pr-c-akcje">' + przyciski + '</div></div>';
+  }
+  function wierszPrac(o) {
+    var dis = S.wysyla ? ' disabled' : '';
+    if (S.pracEdycja === o.id) {
+      return polaPrac('pre', S.pracEdycjaSzkic, '<button class="drugi maly" data-a="pr-anuluj"' + dis + '>Anuluj</button><button class="glowny maly" data-a="pr-zapisz"' + dis + '>Zapisz</button>');
+    }
+    var okres = nazwaM(o.od) + ' – ' + (o.do ? nazwaM(o.do) : 'nadal');
+    var meta = [o.nazwy && o.nazwy.length ? 'na fakturze: ' + o.nazwy.join('; ') : '', okres].filter(Boolean).join(' · ');
+    var kto = o.zmienil_imie ? 'zmiana: ' + o.zmienil_imie + ' ' + kiedy(o.zmieniono) : 'dopisał(a): ' + (o.kto_imie || '—') + ' ' + kiedy(o.kiedy);
+    var ile = !o.w_miesiacu ? 'poza okresem' : o.faktur ? o.faktur + ' ' + odm(o.faktur, 'faktura', 'faktury', 'faktur') : 'bez faktur';
+    var akcje = S.pracUsun === o.id
+      ? '<span class="pr-pyt">Usunąć z listy?</span><button class="drugi maly" data-a="pr-usun-nie"' + dis + '>Anuluj</button><button class="glowny maly czerwony" data-a="pr-usun-tak" data-v="' + o.id + '"' + dis + '>Usuń</button>'
+      : '<button class="drugi maly" data-a="pr-zmien" data-v="' + o.id + '"' + dis + '>Zmień</button><button class="drugi maly czerwony" data-a="pr-usun" data-v="' + o.id + '"' + dis + '>Usuń</button>';
+    return '<div class="pr-w' + (o.w_miesiacu ? '' : ' poza') + '" data-id="' + o.id + '"><div class="pr-n"><b>' + esc(o.nazwa) + '</b><small>' + esc(meta) + '</small><small>' + esc(kto) + '</small></div>' +
+      '<div class="pr-ile' + (o.w_miesiacu && o.faktur ? ' ok' : '') + '">' + esc(ile) + (o.w_miesiacu && o.faktur && Number(o.kwota) ? '<small>' + zl(Number(o.kwota)) + ' zł</small>' : '') + '</div>' +
+      '<div class="pr-a">' + akcje + '</div></div>';
+  }
+  function oknoPracownicy() {
+    var P = S.prac, m = S.miesiac, dis = S.wysyla ? ' disabled' : '';
+    var h = '<div class="okno pr" role="dialog" aria-modal="true" aria-label="Faktury pracowników"><div class="okno-g"><h2>Faktury pracowników · ' + esc(nazwaM(m)) + '</h2>' +
+      '<button class="zamknij" data-a="zamknij" aria-label="Zamknij">' + ik('x') + '</button></div><div class="okno-t">' +
+      '<p class="podp pr-opis">' + T('Faktury osób z listy (plik FIRMINO · KOSZTY) nie wchodzą do „Dokumentów kosztowych” w w.dysza.app — ich praca jest już w Załodze (team.dysza.app) albo w Transporcie. Faktura należy do osoby, gdy w nazwie kontrahenta jest jej imię i nazwisko albo inna nazwa z listy.') + '</p>';
+    if (S.pracBlad) h += '<div class="wp-blad" role="alert">' + esc(S.pracBlad) + '</div>';
+    if (!P) return h + '<div class="pr-suma">' + T('Wczytuję listę…') + '</div></div><div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
+    var r = P.razem || { faktur: 0, osob: 0, kwota: 0, obce: 0 };
+    h += '<div class="pr-suma">' + (!P.plik ? T('Plik kosztów ' + wMiesiacu(m) + ' jeszcze nie jest wgrany.')
+      : r.faktur ? '<b>' + r.faktur + ' ' + odm(r.faktur, 'faktura', 'faktury', 'faktur') + ' · ' + r.osob + ' ' + odm(r.osob, 'osoba', 'osoby', 'osób') + ' · ' + zl(Number(r.kwota)) + ' zł</b>' +
+          T(' — ' + wMiesiacu(m) + ' poza „Dokumentami kosztowymi”' + (r.obce ? ' (w tym ' + r.obce + ' w obcej walucie)' : '') + '.')
+      : T('W pliku kosztów ' + wMiesiacu(m) + ' nie ma faktur osób z listy.')) + '</div>';
+    h += '<div class="pr-lista">' + (P.lista || []).map(wierszPrac).join('') +
+      polaPrac('pr', szkicPrac(), '<button class="glowny maly" data-a="pr-dodaj"' + dis + '>' + ik('plus', 'mala') + ' Dodaj osobę</button>') + '</div>';
+    if (P.podpowiedzi && P.podpowiedzi.length) {
+      h += '<div class="pr-podp"><h3>' + T('Opis „STAŁE B2B”, a nie ma ich na liście') + '</h3>' + P.podpowiedzi.map(function (x) {
+        return '<div class="pr-pd"><span><b>' + esc(x.kontrahent) + '</b><small>' + x.faktur + ' ' + odm(x.faktur, 'faktura', 'faktury', 'faktur') + ' ' + esc(wMiesiacu(m)) + '</small></span>' +
+          '<button class="drugi maly" data-a="pr-wstaw" data-v="' + esc(x.kontrahent) + '"' + dis + '>' + ik('plus', 'mala') + ' Dopisz</button></div>';
+      }).join('') + '</div>';
+    }
+    return h + '</div><div class="okno-d"><button class="drugi" data-a="zamknij">Zamknij</button></div></div>';
+  }
+  function wartosciPrac(s) {
+    var nazwa = String(s.nazwa || '').trim().replace(/\s+/g, ' ');
+    var nazwy = String(s.nazwy || '').split(';').map(function (x) { return x.trim().replace(/\s+/g, ' '); }).filter(Boolean);
+    var slowa = nazwa.split(' ').filter(function (w) { return w.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 2; });
+    if (slowa.length < 2) return { blad: BLEDY_PRAC['ZLA_WARTOSC:nazwa'] };
+    if (nazwy.length > 5) return { blad: BLEDY_PRAC['ZLA_WARTOSC:nazwy'] };
+    var od = s.od || S.miesiac, dok = s.do || '';
+    if (dok && dok < od) return { blad: BLEDY_PRAC['ZLA_WARTOSC:do'] };
+    return { nazwa: nazwa, nazwy: nazwy, od: od, do: dok || null };
+  }
+  async function akcjaPrac(fn, ok) {
+    if (S.wysyla) return;
+    S.wysyla = true; S.pracBlad = ''; renderOkno();
+    try { await fn(); }
+    catch (e) {
+      S.wysyla = false;
+      if (e && (e.sesja || String(e.message) === 'BRAK_DOSTEPU')) { S.okno = null; obsluzBlad(e); return; }
+      S.pracBlad = bladPrac(e); renderOkno();
+      if (/^NIE_MA/.test(String(e && e.message))) { S.pracEdycja = null; S.pracUsun = null; wczytajPracownikow(); }
+      return;
+    }
+    S.wysyla = false;
+    if (ok) ok();
+    await wczytajPracownikow();
+  }
+  function dodajPrac() {
+    var v = wartosciPrac(szkicPrac());
+    if (v.blad) { S.pracBlad = v.blad; renderOkno(); return; }
+    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_zapisz', { p_id: null, p_nazwa: v.nazwa, p_nazwy: v.nazwy, p_od: v.od, p_do: v.do }); },
+      function () { S.pracSzkic = {}; toast('Dopisane do listy: ' + v.nazwa + '.'); });
+  }
+  function zmienPrac(id) {
+    var o = S.prac && (S.prac.lista || []).filter(function (x) { return String(x.id) === String(id); })[0];
+    if (!o) return;
+    S.pracEdycja = o.id; S.pracUsun = null; S.pracBlad = '';
+    S.pracEdycjaSzkic = { nazwa: o.nazwa, nazwy: (o.nazwy || []).join('; '), od: o.od, do: o.do || '' };
+    renderOkno();
+    var p = document.getElementById('pre-nazwa'); if (p) p.focus();
+  }
+  function zapiszPrac() {
+    var id = S.pracEdycja, v = wartosciPrac(S.pracEdycjaSzkic);
+    if (v.blad) { S.pracBlad = v.blad; renderOkno(); return; }
+    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_zapisz', { p_id: id, p_nazwa: v.nazwa, p_nazwy: v.nazwy, p_od: v.od, p_do: v.do }); },
+      function () { S.pracEdycja = null; S.pracEdycjaSzkic = {}; });
+  }
+  function usunPrac(id) {
+    var o = S.prac && (S.prac.lista || []).filter(function (x) { return String(x.id) === String(id); })[0];
+    akcjaPrac(function () { return baza.rpc('ksiegowa_pracownik_usun', { p_id: Number(id) }); },
+      function () { S.pracUsun = null; toast('Usunięte z listy' + (o ? ': ' + o.nazwa : '') + ' — zostaje w historii bazy.'); });
+  }
+  function wstawPrac(kontrahent) {           // podpowiedź „STAŁE B2B” → nazwa w polu nowej osoby (do poprawienia przed „Dodaj osobę”)
+    var n = String(kontrahent || '').trim().toLocaleLowerCase('pl-PL').replace(/(^|[\s-])(\S)/g, function (x, a, b) { return a + b.toLocaleUpperCase('pl-PL'); });
+    szkicPrac().nazwa = n; S.pracBlad = ''; renderOkno();
+    var p = document.getElementById('pr-nazwa'); if (p) { p.focus(); try { p.setSelectionRange(n.length, n.length); } catch (e) { /* bez zaznaczenia */ } }
   }
 
   /* ───────────── karty wpisów: P, A, OD, M, D, E, IS (wpis wiersz po wierszu, ZATWIERDŹ / KOREKTA / USUŃ) ───────────── */
@@ -3607,6 +3793,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       '<button data-a="motyw" data-v="jasny" aria-pressed="' + (S.motyw === 'jasny') + '" aria-label="Jasny">' + ik('slonce') + '</button></div></div>' +
       (S.karta === 'F' && S.dziennik.length ? '<button class="m-p" data-a="historia">' + ik('historia') + ' Historia · ' + esc(nazwaM(S.miesiac)) + '</button>' : '') +
       (S.karta === 'F' && S.wersje.length ? '<button class="m-p" data-a="wersje" data-v="">' + ik('plik') + ' Wersje plików · ' + esc(nazwaM(S.miesiac)) + '</button>' : '') +
+      (S.karta === 'F' && S.miesiac && mozeListe() ? '<button class="m-p" data-a="pracownicy">' + ik('osoby') + ' Faktury pracowników · ' + esc(nazwaM(S.miesiac)) + '</button>' : '') +
       '<button class="m-p" data-a="wyloguj">' + ik('wyloguj') + ' Wyloguj</button>' +
       '<span class="m-wersja">wersja ' + esc(WERSJA) + '</span>';
   }
@@ -3665,6 +3852,15 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       case 'pokaz-b': S.okno = { typ: 'b', id: el.getAttribute('data-id') }; renderOkno(); break;
       case 'wersje': S.menu = false; renderMenu(); S.okno = { typ: 'wersje', strona: v || '' }; renderOkno(); break;
       case 'historia': S.menu = false; renderMenu(); S.okno = { typ: 'historia' }; renderOkno(); break;
+      case 'pracownicy': S.menu = false; renderMenu(); S.okno = { typ: 'pracownicy' }; S.pracBlad = ''; S.pracEdycja = null; S.pracUsun = null; renderOkno(); wczytajPracownikow(); break;
+      case 'pr-dodaj': dodajPrac(); break;
+      case 'pr-zmien': zmienPrac(v); break;
+      case 'pr-zapisz': zapiszPrac(); break;
+      case 'pr-anuluj': S.pracEdycja = null; S.pracEdycjaSzkic = {}; S.pracBlad = ''; renderOkno(); break;
+      case 'pr-usun': S.pracUsun = Number(v); S.pracEdycja = null; S.pracBlad = ''; renderOkno(); break;
+      case 'pr-usun-nie': S.pracUsun = null; renderOkno(); break;
+      case 'pr-usun-tak': usunPrac(v); break;
+      case 'pr-wstaw': wstawPrac(v); break;
       case 'zapisz-pliki': zapiszPliki(); break;
       case 'wpis-dopisz': wpisz(null); break;
       case 'wpis-wyjasnione': wpisz('wyjasnione'); break;
@@ -3693,6 +3889,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     }
   });
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.id && /^pre?-(nazwa|nazwy)$/.test(e.target.id)) { e.preventDefault(); if (/^pre-/.test(e.target.id)) zapiszPrac(); else dodajPrac(); return; }
+    if (e.key === 'Escape' && S.okno && S.okno.typ === 'pracownicy' && (S.pracEdycja || S.pracUsun) && !S.wysyla) { S.pracEdycja = null; S.pracUsun = null; S.pracBlad = ''; renderOkno(); return; }
     if (e.key === 'Enter' && e.target.id && /^kwe?-(nazwa|data|okres|kwota)$/.test(e.target.id)) { e.preventDefault(); if (/^kwe-/.test(e.target.id)) korektaZapisz(); else dodajWpis(); return; }
     if (e.key === 'Escape' && S.kwEdycja && !S.okno && !S.wysyla) { S.kwEdycja = null; S.kwBlad = ''; odswiezWynik(); return; }
     if (e.key === 'Escape' && S.okno && !S.wysyla) { S.okno = null; S.zapis = null; renderOkno(); }
@@ -3707,6 +3905,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       return;
     }
     if (e.target.id === 'zapis-miesiac' && S.zapis) { S.zapis.miesiac = e.target.value; renderOkno(); }
+    poleListy(e.target);
   });
   document.addEventListener('input', function (e) {
     if (e.target.id === 'szukaj') {
@@ -3717,7 +3916,14 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (e.target.id === 'wyj-tekst') { var w = e.target.closest('.wyj'); if (w) S.szkic[w.getAttribute('data-klucz')] = e.target.value; }
     var mk = /^(kwe?)-(nazwa|data|okres|kwota)$/.exec(e.target.id || '');
     if (mk) { (mk[1] === 'kw' ? szkicKarty() : S.kwEdycjaSzkic)[mk[2]] = e.target.value; if (S.kwBlad) { S.kwBlad = ''; var b = $('.wp-blad'); if (b) b.remove(); } }
+    poleListy(e.target);
   });
+  function poleListy(t) {                     // pola listy faktur pracowników → szkic (nowa osoba albo zmiana)
+    var mp = /^(pre?)-(nazwa|nazwy|od|do)$/.exec((t && t.id) || '');
+    if (!mp) return;
+    (mp[1] === 'pr' ? szkicPrac() : S.pracEdycjaSzkic)[mp[2]] = t.value;
+    if (S.pracBlad) { S.pracBlad = ''; var b = document.querySelector('#warstwa .wp-blad'); if (b) b.remove(); }
+  }
   document.addEventListener('focusout', function (e) {
     if (e.target.id === 'wyj-tekst') setTimeout(function () { if (S.oknoCzeka && !(document.activeElement && document.activeElement.id === 'wyj-tekst')) renderOkno(); }, 300);
   });
