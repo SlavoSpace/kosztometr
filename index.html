@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Kosztometr">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-13 19:02 · 1471c30">
+<meta name="ksiegowa-wersja" content="2026-11-14 15:41 · 66af9ed">
 <title>Kosztometr</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -727,6 +727,19 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
 .wp-stopka .c-akcje{font-size:13px;color:var(--tekst2);font-weight:700}
 .wp-blad{padding:10px 14px;background:var(--blTlo);color:var(--blTekst);font-weight:700;font-size:13.5px;border-bottom:1px solid var(--blRamka)}
 .glowny.maly.czerwony{background:var(--zaduzo);color:#fff}
+/* stałe pozycje (1.5): wiersz pozycji bez wpisu w miesiącu — nazwa stała (tekst w linii z nagłówkiem), pola i Dodaj 44 px
+   jak w nowym wpisie; wpis pozycji — zwykły wiersz z nazwą pozycji; korekta wpisu pozycji — nazwa stała, bez pola */
+.wp-w.stala > .c-data,.wp-w.stala > .c-okres,.wp-w.stala > .c-kwota{padding-left:0;padding-right:0}
+.wp-w.stala .c-akcje .drugi.maly{min-height:44px;padding:0 14px}
+.wp-w.edycja.st{align-items:center}
+.wp-w.edycja.st > .c-nazwa{padding-left:13px}
+@media (max-width:1000px){
+  .wp-w.stala{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"nazwa nazwa" "data okres" "kwota akcje";align-items:end}
+  .wp-w.stala .c-data{display:flex;grid-area:data}
+  .wp-w.stala .c-okres{display:flex;grid-area:okres}
+  .wp-w.stala .c-akcje{justify-content:flex-end}
+  .wp-w.edycja.st > .c-nazwa{padding-left:0}
+}
 @media (max-width:1000px){
   .wp-g{display:none}
   .wp-w,.wp-w.is{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"nazwa kwota" "akcje akcje";row-gap:8px}
@@ -2095,12 +2108,12 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   /* ───────────── pokaz: te same funkcje bazy w pamięci strony (role, ZATWIERDŹ, UZGODNIJ, historia) ───────────── */
   function pokaz(ust) {
     var KL = ust.KL, osoby = ust.osoby || [], pliki = [], wpisy = [], dziennik = [], uzg = [], fw = [], nr = { p: 0, w: 0, d: 0, u: 0, f: 0 };
-    var KARTY = [                               // jak public.ksiegowa_karty (migracja 003)
+    var KARTY = [                               // jak public.ksiegowa_karty (migracje 003 i 006 — stałe pozycje)
       { id: 'F', nazwa: 'Faktury', opis: 'Uzgodnienie faktur: rejestr księgowej ↔ FIRMINO (towary i koszty)', role: ['ksiegowa', 'magazynier', 'zarzadzajaca'] },
-      { id: 'P', nazwa: 'Podatki', opis: 'Zapłacone podatki', role: ['ksiegowa', 'zarzadzajaca'] },
-      { id: 'A', nazwa: 'Koszty administracyjne', opis: 'Opłaty administracyjne', role: ['ksiegowa', 'zarzadzajaca'] },
-      { id: 'OD', nazwa: 'Obsługa długów', opis: 'Spłaty długów i kredytów', role: ['zarzadzajaca'] },
-      { id: 'M', nazwa: 'Marketing', opis: 'Koszty reklam w mediach społecznościowych', role: ['ksiegowa', 'zarzadzajaca'] },
+      { id: 'P', nazwa: 'Podatki i Ubezpieczenia', opis: 'Zapłacone podatki i składki ZUS', role: ['ksiegowa', 'zarzadzajaca'], pozycje: ['CIT', 'VAT', 'PIT 4', 'PIT 8A', 'ZUS'] },
+      { id: 'A', nazwa: 'Koszty Administracji i Banku', opis: 'Opłaty administracyjne i bankowe', role: ['ksiegowa', 'zarzadzajaca'], pozycje: ['Podatki od Nieruchomości', 'Koszt Rachunków i Transakcji'] },
+      { id: 'OD', nazwa: 'Obsługa długów', opis: 'Spłaty długów i kredytów', role: ['zarzadzajaca'], pozycje: ['Kredyt Inwestycyjny', 'Kredyt Obrotowy', 'Układ Ratalny ZUS', 'Układ Ratalny UM Warszawa'] },
+      { id: 'M', nazwa: 'Marketing', opis: 'Koszty reklam w mediach społecznościowych', role: ['ksiegowa', 'zarzadzajaca'], pozycje: ['META', 'Google Ads'] },
       { id: 'D', nazwa: 'Dysza.App', opis: 'Koszty utrzymania Dysza.App: Claude, Windsor, Supabase i inne', role: ['ksiegowa', 'zarzadzajaca'] },
       { id: 'E', nazwa: 'Ekstra opłaty', opis: 'Inne opłaty, które nie pasują do pozostałych kart', role: ['ksiegowa', 'magazynier', 'zarzadzajaca'] },
       { id: 'IS', nazwa: 'Wynagrodzenia właścicieli', opis: 'Ida i Sławek — przelew albo gotówka', role: ['zarzadzajaca'], osoba_forma: true }];
@@ -2167,7 +2180,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
           var widza = osoby.filter(function (x) { return x.rola === 'architekt' || k.role.indexOf(x.rola) >= 0; })
             .sort(function (a, b) { return ((a.rola === 'architekt') - (b.rola === 'architekt')) || ((KOL[a.rola] || 99) - (KOL[b.rola] || 99)); })
             .map(function (x) { return x.kafelek || x.imie; });
-          return { id: k.id, nazwa: k.nazwa, opis: k.opis, kolejnosc: i + 1, osoba_forma: !!k.osoba_forma, dostep: kartaMoze(o, k.id), widza: widza };
+          return { id: k.id, nazwa: k.nazwa, opis: k.opis, kolejnosc: i + 1, osoba_forma: !!k.osoba_forma, pozycje: (k.pozycje || []).map(function (n) { return { nazwa: n }; }), dostep: kartaMoze(o, k.id), widza: widza };
         });
       },
       ksiegowa_wpisy: function (a) {
@@ -2395,7 +2408,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     etap: 'logowanie', ja: null, motyw: czytaj(KL.motyw, 'ciemny') === 'jasny' ? 'jasny' : 'ciemny', menu: false,
     miesiace: [], miesiac: null, laduje: false, wersje: [], wpisy: [], ostatniWpis: 0, dziennik: [], odpowiedzialni: [], stan: '',
     pliki: { A: null, B1: null, B2: null }, uzg: null, plikiUzg: null, B: null, wynik: null, fMiesiac: null,
-    karty: [], karta: czytaj(KL.karta, 'F') || 'F', kw: null, kwLaduje: false, kwSzkic: {}, kwEdycja: null, kwEdycjaSzkic: {}, kwBlad: '', kwHistoria: false,
+    karty: [], karta: czytaj(KL.karta, 'F') || 'F', kw: null, kwLaduje: false, kwSzkic: {}, kwStale: {}, kwEdycja: null, kwEdycjaSzkic: {}, kwBlad: '', kwBladW: '', kwHistoria: false,
     filtr: 'wszystkie', rejestr: 'T', szukaj: '', plikiOtwarte: false,
     opcje: { tolerancja: R.DOMYSLNE.tolerancja, oknoDni: R.DOMYSLNE.oknoDni }, okno: null, zasadyOtwarte: false,
     zapis: null, blad: '', szkic: {}, wysyla: false,
@@ -2550,7 +2563,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   function wyczysc() {
     S.miesiace = []; S.miesiac = null; S.pliki = { A: null, B1: null, B2: null }; S.uzg = null; S.plikiUzg = null; S.B = null; S.wynik = null;
     S.wpisy = []; S.wersje = []; S.dziennik = []; S.odpowiedzialni = []; S.stan = ''; S.szkic = {}; S.zapis = null;
-    S.fMiesiac = null; S.karty = []; S.kw = null; S.kwSzkic = {}; S.kwEdycja = null; S.kwBlad = '';
+    S.fMiesiac = null; S.karty = []; S.kw = null; S.kwSzkic = {}; S.kwStale = {}; S.kwEdycja = null; S.kwBlad = ''; S.kwBladW = '';
   }
   async function wyloguj() {
     await baza.wyloguj();
@@ -3554,6 +3567,25 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (S.kwEdycja && !S.kw.lista.some(function (w) { return w.id === S.kwEdycja && (w.stan === 'roboczy' || w.stan === 'zatwierdzony'); })) S.kwEdycja = null;
     odswiezWynik();
   }
+  /* stałe pozycje karty (ksiegowa_karty.pozycje): wpis należy do pozycji, gdy jego nazwa = nazwa pozycji albo jedna z „takze”
+     (bez wielkości liter i zbędnych odstępów — jak w bazie) */
+  function normNazwa(n) { return String(n == null ? '' : n).replace(/\s+/g, ' ').trim().toLowerCase(); }
+  function stalePozycje(k) {
+    k = k || kartaDef(S.karta);
+    return k && Array.isArray(k.pozycje) && !k.osoba_forma ? k.pozycje.filter(function (p) { return p && typeof p.nazwa === 'string' && p.nazwa.trim(); }) : [];
+  }
+  function indeksStalej(nazwa, P) {
+    var n = normNazwa(nazwa);
+    for (var i = 0; i < P.length; i++) {
+      if (normNazwa(P[i].nazwa) === n || (Array.isArray(P[i].takze) && P[i].takze.some(function (x) { return normNazwa(x) === n; }))) return i;
+    }
+    return -1;
+  }
+  function szkicStalej(i) {
+    var kl = S.karta + '|' + i, s = S.kwStale[kl];
+    if (!s) s = S.kwStale[kl] = { data: dzisIso(), okres: '', kwota: '' };
+    return s;
+  }
   function aktualneWpisy() { return S.kw ? S.kw.lista.filter(function (w) { return w.stan === 'roboczy' || w.stan === 'zatwierdzony'; }) : []; }
   function historiaWpisow() { return S.kw ? S.kw.lista.filter(function (w) { return w.stan === 'zastapiony' || w.stan === 'usuniety'; }) : []; }
   function suma(l) { return R.r2(l.reduce(function (x, w) { return x + Number(w.kwota); }, 0)); }
@@ -3572,27 +3604,38 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       return '<button type="button" data-a="' + id + '" data-v="' + k + '" aria-pressed="' + (wybrana === k) + '">' + wartosci[k] + '</button>';
     }).join('') + '</div>';
   }
-  function poleWpisu(pref, s, is, przycisk) { // wiersz z polami: nowy wpis (kw) albo korekta (kwe)
-    return '<div class="wp-w ' + (pref === 'kw' ? 'nowy' : 'edycja') + (is ? ' is' : '') + '">' +
-      '<label class="c-nazwa"><span class="wp-et">Nazwa</span><input id="' + pref + '-nazwa" list="kw-podp" maxlength="200" autocomplete="off" placeholder="' + (pref === 'kw' ? 'np. ' + esc(PRZYKLADY[S.karta] || 'nazwa') : 'Nazwa') + '" value="' + esc(s.nazwa) + '"></label>' +
+  function poleWpisu(pref, s, is, przycisk, stala) { // wiersz z polami: nowy wpis (kw) albo korekta (kwe); stala — korekta wpisu stałej pozycji
+    return '<div class="wp-w ' + (pref === 'kw' ? 'nowy' : 'edycja') + (is ? ' is' : '') + (stala ? ' st' : '') + '">' +
+      (stala ? '<div class="c-nazwa"><b>' + esc(stala) + '</b><small>' + (normNazwa(s.nazwa) !== normNazwa(stala) ? esc(s.nazwa) + ' · ' : '') + 'stała pozycja — nazwa bez zmian</small></div>'
+        : '<label class="c-nazwa"><span class="wp-et">Nazwa</span><input id="' + pref + '-nazwa" list="kw-podp" maxlength="200" autocomplete="off" placeholder="' + (pref === 'kw' ? 'np. ' + esc(PRZYKLADY[S.karta] || 'nazwa') : 'Nazwa') + '" value="' + esc(s.nazwa) + '"></label>') +
       '<label class="c-data"><span class="wp-et">Data</span><input id="' + pref + '-data" type="date" value="' + esc(s.data) + '"></label>' +
       '<label class="c-okres"><span class="wp-et">Okres</span><input id="' + pref + '-okres" list="kw-okresy" maxlength="60" autocomplete="off" placeholder="nieobow." value="' + esc(s.okres) + '"></label>' +
       '<label class="c-kwota"><span class="wp-et">Kwota</span><input id="' + pref + '-kwota" inputmode="decimal" autocomplete="off" placeholder="0,00" value="' + esc(s.kwota) + '"></label>' +
       (is ? '<div class="c-kto">' + segIS('Forma', FORMY_IS, s.forma, pref + '-forma') + segIS('Kto', OSOBY_IS, s.osoba, pref + '-osoba') + '</div>' : '') +
       '<div class="c-akcje">' + przycisk + '</div></div>';
   }
-  var PRZYKLADY = { P: 'VAT za październik', A: 'opłata skarbowa', OD: 'rata kredytu', M: 'reklama Meta', D: 'Supabase Pro', E: 'naprawa drzwi', IS: 'wynagrodzenie' };
-  function wierszWpisu(w, is) {
+  var PRZYKLADY = { P: 'PFRON', A: 'opłata skarbowa', OD: 'rata pożyczki', M: 'ulotki', D: 'Supabase Pro', E: 'naprawa drzwi', IS: 'wynagrodzenie' };
+  function wierszStalej(p, i) {
+    var s = szkicStalej(i), id = 'ks-' + i;
+    return '<div class="wp-w stala" data-stala="' + i + '">' +
+      '<div class="c-nazwa"><b>' + esc(p.nazwa) + '</b><small>stała pozycja</small></div>' +
+      '<label class="c-data"><span class="wp-et">Data</span><input id="' + id + '-data" type="date" value="' + esc(s.data) + '"></label>' +
+      '<label class="c-okres"><span class="wp-et">Okres</span><input id="' + id + '-okres" list="kw-okresy" maxlength="60" autocomplete="off" placeholder="nieobow." value="' + esc(s.okres) + '"></label>' +
+      '<label class="c-kwota"><span class="wp-et">Kwota</span><input id="' + id + '-kwota" inputmode="decimal" autocomplete="off" placeholder="0,00" value="' + esc(s.kwota) + '"></label>' +
+      '<div class="c-akcje"><button class="drugi maly" data-a="kw-stala" data-v="' + i + '"' + (S.wysyla ? ' disabled' : '') + '>' + ik('plus', 'mala') + ' Dodaj</button></div></div>' +
+      (S.kwBlad && S.kwBladW === id ? '<div class="wp-blad" role="alert">' + esc(S.kwBlad) + '</div>' : '');
+  }
+  function wierszWpisu(w, is, stala) {
     if (S.kwEdycja === w.id) {
       return poleWpisu('kwe', S.kwEdycjaSzkic, is,
-        '<button class="glowny maly" data-a="kw-korekta-zapisz"' + (S.wysyla ? ' disabled' : '') + '>Zapisz korektę</button><button class="drugi maly" data-a="kw-korekta-anuluj"' + (S.wysyla ? ' disabled' : '') + '>Anuluj</button>');
+        '<button class="glowny maly" data-a="kw-korekta-zapisz"' + (S.wysyla ? ' disabled' : '') + '>Zapisz korektę</button><button class="drugi maly" data-a="kw-korekta-anuluj"' + (S.wysyla ? ' disabled' : '') + '>Anuluj</button>', stala);
     }
-    var kto = esc(w.kto_imie || '—') + ' ' + esc(kiedy(w.kiedy)) + (w.wersja > 1 ? ' · korekta ' + (w.wersja - 1) : '') +
+    var kto = (stala && normNazwa(w.nazwa) !== normNazwa(stala) ? esc(w.nazwa) + ' · ' : '') + esc(w.kto_imie || '—') + ' ' + esc(kiedy(w.kiedy)) + (w.wersja > 1 ? ' · korekta ' + (w.wersja - 1) : '') +
       (w.stan === 'zatwierdzony' ? ' · ✓ ' + esc(w.zatwierdzil_imie || '—') + ' ' + esc(kiedy(w.zatwierdzono)) : '');
     var meta = [dataPelna(w.data), w.okres ? 'okres ' + w.okres : '', is ? FORMY_IS[w.forma] + ' · ' + OSOBY_IS[w.osoba] : ''].filter(Boolean).join(' · ');
     var dis = S.wysyla ? ' disabled' : '';
-    return '<div class="wp-w' + (w.stan === 'zatwierdzony' ? ' wp-ok' : '') + (is ? ' is' : '') + '" data-id="' + w.id + '">' +
-      '<div class="c-nazwa"><b>' + esc(w.nazwa) + '</b><small>' + kto + '</small><small class="c-meta">' + esc(meta) + '</small></div>' +
+    return '<div class="wp-w' + (w.stan === 'zatwierdzony' ? ' wp-ok' : '') + (is ? ' is' : '') + (stala ? ' st' : '') + '" data-id="' + w.id + '"' + (stala ? ' data-poz="' + esc(stala) + '"' : '') + '>' +
+      '<div class="c-nazwa"><b>' + esc(stala || w.nazwa) + '</b><small>' + kto + '</small><small class="c-meta">' + esc(meta) + '</small></div>' +
       '<div class="c-data">' + dataPelna(w.data) + '</div><div class="c-okres">' + esc(w.okres || '—') + '</div>' +
       '<div class="c-kwota' + (Number(w.kwota) < 0 ? ' minus' : '') + '">' + zl(Number(w.kwota)) + '</div>' +
       (is ? '<div class="c-kto">' + FORMY_IS[w.forma] + ' · ' + OSOBY_IS[w.osoba] + '</div>' : '') +
@@ -3636,15 +3679,20 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       is ? [['Zatwierdzone', lp(Z)], ['Do zatwierdzenia', lp(D), D.length ? 'uw' : ''], ['Razem', zl(suma(L)) + ' zł']]
         : [['Pozycje', String(L.length)], ['Suma', zl(suma(L)) + ' zł'], ['Usunięte', String(usuniete)]]);
     h += '</section>';
-    var s = szkicKarty();
-    h += '<datalist id="kw-podp">' + S.kw.podpowiedzi.map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist>' +
+    var s = szkicKarty(), P = stalePozycje(k), poP = P.map(function () { return []; }), wolne = [];
+    L.forEach(function (w) { var i = indeksStalej(w.nazwa, P); if (i >= 0) poP[i].push(w); else wolne.push(w); });
+    var wiersze = P.map(function (p, i) {
+      return poP[i].length ? poP[i].map(function (w) { return wierszWpisu(w, is, p.nazwa); }).join('') : wierszStalej(p, i);
+    }).join('') + wolne.map(function (w) { return wierszWpisu(w, is); }).join('');
+    var podp = S.kw.podpowiedzi.filter(function (n) { return indeksStalej(n, P) < 0; });   // stałe pozycje mają swoje wiersze
+    h += '<datalist id="kw-podp">' + podp.map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist>' +
       '<datalist id="kw-okresy">' + okresy().map(function (n) { return '<option value="' + esc(n) + '">'; }).join('') + '</datalist>';
     h += '<section class="wp-tab' + (is ? ' is' : '') + '" aria-label="Wpisy">' +
       '<div class="wp-w wp-g' + (is ? ' is' : '') + '"><span class="c-nazwa">Nazwa</span><span class="c-data">Data</span><span class="c-okres">Okres</span><span class="c-kwota">Kwota</span>' +
         (is ? '<span class="c-kto">Forma · kto</span>' : '') + '<span class="c-akcje">Stan i akcje</span></div>' +
-      L.map(function (w) { return wierszWpisu(w, is); }).join('') +
+      wiersze +
       poleWpisu('kw', s, is, '<button class="glowny maly" data-a="kw-dodaj"' + (S.wysyla ? ' disabled' : '') + '>' + ik('plus', 'mala') + ' Dodaj</button>') +
-      (S.kwBlad ? '<div class="wp-blad" role="alert">' + esc(S.kwBlad) + '</div>' : '') +
+      (S.kwBlad && !/^ks-/.test(S.kwBladW || '') ? '<div class="wp-blad" role="alert">' + esc(S.kwBlad) + '</div>' : '') +
       '<div class="wp-w wp-stopka' + (is ? ' is' : '') + '"><span class="c-nazwa">Razem · ' + L.length + ' ' + odm(L.length, 'pozycja', 'pozycje', 'pozycji') + '</span><span class="c-data"></span><span class="c-okres"></span>' +
         '<span class="c-kwota">' + zl(suma(L)) + '</span>' + (is ? '<span class="c-kto"></span>' : '') + '<span class="c-akcje">' + (D.length ? D.length + ' do zatwierdzenia' : L.length ? 'wszystkie zatwierdzone' : '') + '</span></div>' +
       '</section>';
@@ -3659,6 +3707,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
         }).join('') + '</div></details></section>';
     }
     h += '<section class="sekcja"><details class="zasady"' + (S.zasadyOtwarte ? ' open' : '') + ' id="zasady"><summary>Jak działa karta ' + esc(k.id) + ' ' + ik('dalej') + '</summary><div class="zasady-t"><ol>' +
+      (P.length ? '<li><b>Stałe pozycje</b> — ' + esc(P.map(function (p) { return p.nazwa; }).join(', ')) + ' — stoją na górze karty w każdym miesiącu: wpisz datę, kwotę i naciśnij Dodaj (albo Enter), potem ZATWIERDŹ. Inny wydatek — w ostatnim wierszu.</li>' : '') +
       '<li><b>Wpis</b>: nazwa, data zapłaty, okres (nieobowiązkowo — np. ' + esc(okresy()[0]) + ' albo ' + esc(okresy()[2]) + ') i kwota' + (is ? ', do tego <b>przelew / gotówka</b> i <b>Ida / Sławek</b>' : '') + '. Wpis trafia do wybranego miesiąca.</li>' +
       '<li><b>ZATWIERDŹ</b> potwierdza wpis — w podsumowaniu liczy się osobno zatwierdzone i czekające.</li>' +
       '<li><b>KOREKTA</b> tworzy nową wersję wpisu (czeka na ponowne ZATWIERDŹ); poprzednia zostaje w historii.</li>' +
@@ -3677,15 +3726,23 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (is && !s.osoba) return { blad: 'Wybierz: Ida czy Sławek.' };
     return { nazwa: nazwa, data: s.data, okres: String(s.okres || '').trim(), kwota: R.r2(kwota), osoba: is ? s.osoba : null, forma: is ? s.forma : null };
   }
+  function wartosciStalej(i) {               // wiersz stałej pozycji → wartości do bazy albo komunikat
+    var p = stalePozycje()[i], s = szkicStalej(i), id = 'ks-' + i;
+    if (!p) return { blad: 'Tej stałej pozycji już nie ma — strona pokazuje aktualny stan.' };
+    var kwota = R.liczba(String(s.kwota || '').replace('−', '-'));
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s.data || '')) return { blad: 'Podaj datę.', pole: id + '-data' };
+    if (kwota == null || R.r2(kwota) === 0) return { blad: 'Podaj kwotę (np. 1 234,56).', pole: id + '-kwota' };
+    return { nazwa: p.nazwa, data: s.data, okres: String(s.okres || '').trim(), kwota: R.r2(kwota) };
+  }
   function bladWpisu(e) {
     var m = String((e && e.message) || e || '');
     if (BLEDY_WPISU[m]) return BLEDY_WPISU[m];
     if (/^BRAK_PRAWA:/.test(m)) return 'Brak dostępu do karty ' + m.split(':')[1] + '.';
     return tekstBledu(e);
   }
-  async function akcjaWpisu(fn, sukces) {     // wspólne: blokada przycisków, błąd w karcie, odświeżenie listy
+  async function akcjaWpisu(fn, sukces, gdzie) { // wspólne: blokada przycisków, błąd w karcie (pod wierszem gdzie albo pod nowym wpisem), odświeżenie listy
     if (S.wysyla) return;
-    S.wysyla = true; S.kwBlad = ''; odswiezWynik();
+    S.wysyla = true; S.kwBlad = ''; S.kwBladW = gdzie || ''; odswiezWynik();
     var r;
     try { r = await fn(); }
     catch (e) {
@@ -3702,7 +3759,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
   function dodajWpis() {
     var v = wartosciPol('kw');
-    if (v.blad) { S.kwBlad = v.blad; odswiezWynik(); if (v.pole) { var el = document.getElementById(v.pole); if (el) el.focus(); } return; }
+    if (!v.blad) { var P = stalePozycje(), i = indeksStalej(v.nazwa, P); if (i >= 0 && normNazwa(v.nazwa) === normNazwa(P[i].nazwa)) v.nazwa = P[i].nazwa; }  // „vat” → „VAT”
+    if (v.blad) { S.kwBlad = v.blad; S.kwBladW = ''; odswiezWynik(); if (v.pole) { var el = document.getElementById(v.pole); if (el) el.focus(); } return; }
     akcjaWpisu(function () {
       return baza.rpc('ksiegowa_wpis_dodaj', { p_karta: S.karta, p_miesiac: S.miesiac, p_nazwa: v.nazwa, p_data: v.data, p_okres: v.okres, p_kwota: v.kwota, p_osoba: v.osoba, p_forma: v.forma });
     }, function (w) {
@@ -3711,6 +3769,19 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       var el = document.getElementById('kw-nazwa'); if (el) el.focus();
       toast('Dodane: „' + w.nazwa + '” · ' + zl(Number(w.kwota)) + ' zł — czeka na ZATWIERDŹ.');
     });
+  }
+  function dodajStala(i) {
+    i = Number(i);
+    var v = wartosciStalej(i), id = 'ks-' + i;
+    if (v.blad) { S.kwBlad = v.blad; S.kwBladW = id; odswiezWynik(); if (v.pole) { var el = document.getElementById(v.pole); if (el) el.focus(); } return; }
+    akcjaWpisu(function () {
+      return baza.rpc('ksiegowa_wpis_dodaj', { p_karta: S.karta, p_miesiac: S.miesiac, p_nazwa: v.nazwa, p_data: v.data, p_okres: v.okres, p_kwota: v.kwota, p_osoba: null, p_forma: null });
+    }, function (w) {
+      var s = szkicStalej(i); s.kwota = ''; s.okres = '';
+      odswiezWynik();
+      var nast = document.querySelector('.wp-w.stala input[id$="-kwota"]'); if (nast) nast.focus();   // następna pusta stała pozycja
+      toast('Dodane: „' + w.nazwa + '” · ' + zl(Number(w.kwota)) + ' zł — czeka na ZATWIERDŹ.');
+    }, id);
   }
   function wpisId(id) { return S.kw && S.kw.lista.filter(function (w) { return String(w.id) === String(id); })[0]; }
   function zatwierdzWpis(id) {
@@ -3723,11 +3794,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     S.kwEdycja = w.id; S.kwBlad = '';
     S.kwEdycjaSzkic = { nazwa: w.nazwa, data: String(w.data).slice(0, 10), okres: w.okres || '', kwota: zl(Number(w.kwota)).replace('−', '-'), osoba: w.osoba || '', forma: w.forma || '' };
     odswiezWynik();
-    var el = document.getElementById('kwe-nazwa'); if (el) el.focus();
+    var el = document.getElementById('kwe-nazwa') || document.getElementById('kwe-kwota'); if (el) el.focus();   // stała pozycja: bez pola nazwy
   }
   function korektaZapisz() {
     var v = wartosciPol('kwe'), id = S.kwEdycja;
-    if (v.blad) { S.kwBlad = v.blad; odswiezWynik(); return; }
+    if (v.blad) { S.kwBlad = v.blad; S.kwBladW = ''; odswiezWynik(); return; }
     akcjaWpisu(function () {
       return baza.rpc('ksiegowa_wpis_koryguj', { p_id: id, p_nazwa: v.nazwa, p_data: v.data, p_okres: v.okres, p_kwota: v.kwota, p_osoba: v.osoba, p_forma: v.forma });
     }, function () { S.kwEdycja = null; odswiezWynik(); toast('Korekta zapisana — nowa wersja czeka na ZATWIERDŹ, poprzednia jest w historii.'); });
@@ -3855,6 +3926,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       }
       case 'karta': przelaczKarte(v); break;
       case 'kw-dodaj': dodajWpis(); break;
+      case 'kw-stala': dodajStala(v); break;
       case 'kw-zatwierdz': zatwierdzWpis(v); break;
       case 'kw-korekta': korektaStart(v); break;
       case 'kw-korekta-zapisz': korektaZapisz(); break;
@@ -3873,6 +3945,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (e.key === 'Escape' && S.okno && S.okno.typ === 'pracownicy' && (S.pracKorekta != null || S.pracNowy) && !S.wysyla) {
       if (S.pracKorekta != null) delete S.pracKw[S.pracKorekta]; S.pracKorekta = null; S.pracNowy = false; S.pracNazwa = ''; S.pracBlad = ''; renderOkno(); return;
     }
+    if (e.key === 'Enter' && e.target.id && /^ks-\d+-(data|okres|kwota)$/.test(e.target.id)) { e.preventDefault(); dodajStala(e.target.id.split('-')[1]); return; }
     if (e.key === 'Enter' && e.target.id && /^kwe?-(nazwa|data|okres|kwota)$/.test(e.target.id)) { e.preventDefault(); if (/^kwe-/.test(e.target.id)) korektaZapisz(); else dodajWpis(); return; }
     if (e.key === 'Escape' && S.kwEdycja && !S.okno && !S.wysyla) { S.kwEdycja = null; S.kwBlad = ''; odswiezWynik(); return; }
     if (e.key === 'Escape' && S.okno && !S.wysyla) { S.okno = null; S.zapis = null; renderOkno(); }
@@ -3898,6 +3971,8 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     if (e.target.id === 'wyj-tekst') { var w = e.target.closest('.wyj'); if (w) S.szkic[w.getAttribute('data-klucz')] = e.target.value; }
     var mk = /^(kwe?)-(nazwa|data|okres|kwota)$/.exec(e.target.id || '');
     if (mk) { (mk[1] === 'kw' ? szkicKarty() : S.kwEdycjaSzkic)[mk[2]] = e.target.value; if (S.kwBlad) { S.kwBlad = ''; var b = $('.wp-blad'); if (b) b.remove(); } }
+    var ms = /^ks-(\d+)-(data|okres|kwota)$/.exec(e.target.id || '');
+    if (ms) { szkicStalej(ms[1])[ms[2]] = e.target.value; if (S.kwBlad) { S.kwBlad = ''; var bs = $('.wp-blad'); if (bs) bs.remove(); } }
     poleListy(e.target);
   });
   function poleListy(t) {                     // pola okna faktur pracowników → szkic (kwota osoby albo nowa osoba)
