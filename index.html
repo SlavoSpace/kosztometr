@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Kosztometr">
 <meta name="robots" content="noindex, nofollow">
-<meta name="ksiegowa-wersja" content="2026-11-14 15:41 · 66af9ed">
+<meta name="ksiegowa-wersja" content="2026-11-16 10:33 · 63290c3">
 <title>Kosztometr</title>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -494,6 +494,7 @@ p.przyklad{max-width:760px;margin:10px auto 0}
 .licz-w b{font-size:17px;font-weight:800;color:var(--tekst);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .licz-w b.ok{color:var(--okTekst)} .licz-w b.uw{color:var(--uwTekst)} .licz-w b.bl{color:var(--blTekst)}
 .licz-w small{font-size:13px;font-weight:800}
+.licz-w b.pom,.plik-ok .licz-w b.pom{font-size:14px;font-weight:700;color:var(--tekst2)}
 
 /* sterowanie: filtr | rejestr, szukaj | kopiuj — na węższym: filtr; rejestr | kopiuj; szukaj */
 .ster{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"filtr rej" "szuk kop";gap:10px 14px;align-items:center;margin:6px 0 12px}
@@ -1745,18 +1746,30 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
   }
 
   /* ───────────── B: FIRMINO ───────────── */
+  // FIRMINO · towary (16.11.2026): do sumy i uzgodnienia liczą się tylko faktury zakupu FAZ. PZ (przyjęcia towaru do magazynu)
+  // i inne typy zostają w surowym pliku, a tu trafiają do „pominiete” (typ, liczba, suma) — strona pokazuje je osobno.
+  // Plik bez kolumny Typ (albo plik kosztów) — wszystkie wiersze jak dotąd.
+  var TYP_LICZONY = 'FAZ';
   function czytajB(arkusze) {
-    var dokumenty = [], opis = [];
+    var dokumenty = [], opis = [], pom = {};
     arkusze.forEach(function (ark) {
       var k = ark.kol, ile = 0;
+      var tylkoFaz = k.typ != null && k.grupa == null && k.opis == null && k.netto == null;
       for (var i = ark.naglowek + 1; i < ark.wiersze.length; i++) {
         var w = ark.wiersze[i];
         if (!w || !w.some(function (v) { return v != null && v !== ''; })) continue;
         var numer = numerTekst(komorka(w, k.numer)), kontrahent = txt(komorka(w, k.kontrahent)), wartosc = liczba(komorka(w, k.wartosc));
         if (!numer && !kontrahent) continue;
         if (wartosc == null) continue;
+        var typ = txt(komorka(w, k.typ));
+        if (tylkoFaz && duze(typ) !== TYP_LICZONY) {
+          var t = duze(typ);
+          if (!pom[t]) pom[t] = { typ: t, dokumentow: 0, gr: 0 };
+          pom[t].dokumentow++; pom[t].gr += Math.round(wartosc * 100);
+          continue;
+        }
         ile++;
-        dokumenty.push({ id: 'b' + dokumenty.length, arkusz: ark.nazwa, wiersz: nrWiersza(ark, i), data: wartoscDaty(komorka(w, k.data)), typ: txt(komorka(w, k.typ)),
+        dokumenty.push({ id: 'b' + dokumenty.length, arkusz: ark.nazwa, wiersz: nrWiersza(ark, i), data: wartoscDaty(komorka(w, k.data)), typ: typ,
           numer: numer, kontrahent: kontrahent, wartosc: r2(wartosc), waluta: txt(komorka(w, k.waluta)) || 'PLN' });
         if (k.netto != null || k.grupa != null || k.opis != null) {   // plik kosztów: do obrazu finansów firmy
           var dk = dokumenty[dokumenty.length - 1], nt = liczba(komorka(w, k.netto));
@@ -1769,7 +1782,9 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     });
     var daty = dokumenty.map(function (d) { return d.data; }).filter(Boolean).sort();
     var naj = miesiacZDat(daty);
-    return { typ: 'B', dokumenty: dokumenty, arkusze: opis,
+    var pominiete = Object.keys(pom).map(function (t) { return { typ: t, dokumentow: pom[t].dokumentow, suma: pom[t].gr / 100 }; })
+      .sort(function (a, b) { return (b.dokumentow - a.dokumentow) || (a.typ < b.typ ? -1 : 1); });
+    return { typ: 'B', dokumenty: dokumenty, arkusze: opis, pominiete: pominiete,
       okres: daty.length ? { od: daty[0], do: daty[daty.length - 1], klucz: naj, tekst: nazwaMiesiaca(naj) } : null };
   }
 
@@ -2952,6 +2967,20 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     return h + '<div id="wynik">' + renderWynik() + '</div>';
   }
 
+  // FIRMINO · towary (16.11.2026): PZ i inne dokumenty niż faktury FAZ nie wchodzą do sumy ani do uzgodnienia — wiersz informacyjny
+  function pominieteOpis(d) {
+    var l = d && d.pominiete || [];
+    if (!l.length) return null;
+    var gr = 0;
+    l.forEach(function (x) { gr += Math.round(x.suma * 100); });
+    return { wartosc: l.map(function (x) { return x.dokumentow + ' ' + (x.typ || 'bez typu'); }).join(', ') + ' · ' + zl(gr / 100) + ' zł',
+      tylkoPz: l.every(function (x) { return x.typ === 'PZ'; }) };
+  }
+  function wierszPominietych(d) {                // krótka etykieta — w karcie kolumna etykiet bywa wąska (długi „Wgrane” z wersjami)
+    var p = pominieteOpis(d);
+    return p ? '<span>Pominięte</span><b class="pom">' + esc(p.wartosc) + '</b>' : '';
+  }
+
   function kartaPliku(k) {
     var o = OPIS[k], p = S.pliki[k], mog = moze(k);
     var wersji = S.wersje.filter(function (v) { return v.strona === k; }).length;
@@ -2976,7 +3005,7 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
     h += '<div class="plik-ok"><div class="nz">' + ik('plik') + '<span>' + esc(p.nazwa) + '</span>' +
       (mog ? '<label class="drugi maly plik-zmien" title="Wgraj nowszą wersję pliku">' + ik('wgraj', 'mala') + ' Nowsza<input type="file" accept="' + PLIKI_TYPY + '" data-plik="' + k + '" hidden></label>' : '') + '</div>' +
       '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b>' +
-      '<span>' + o.kwota + '</span><b>' + zl(suma) + ' zł</b>' +
+      '<span>' + o.kwota + '</span><b>' + zl(suma) + ' zł</b>' + wierszPominietych(d) +
       '<span>Okres</span><b>' + esc(okres) + '</b>' +
       '<span>' + (p.rozp.arkusze.length > 1 ? 'Arkusze' : 'Arkusz') + '</span><b class="ark">' + ark + '</b>' +
       '<span>Wgrane</span><b class="kto">' + esc(kiedy(p.kiedy)) + ' · ' + esc(p.kto_imie || '—') +
@@ -3333,8 +3362,11 @@ table.tab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px}
       var bylo = obecne[p.strona];
       h += '<div class="zapis-p"><div class="plik-g">' + lit(p.strona) +
         '<span class="plik-tyt"><b>' + OPIS[p.strona].tyt + '</b><span>' + esc(p.nazwa) + '</span></span><span></span></div>' +
-        '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b><span>' + OPIS[p.strona].kwota + '</span><b>' + zl(suma) + ' zł</b>' +
+        '<div class="licz-w"><span>Dokumenty</span><b>' + d.dokumenty.length + '</b><span>' + OPIS[p.strona].kwota + '</span><b>' + zl(suma) + ' zł</b>' + wierszPominietych(d) +
         '<span>Okres</span><b>' + esc(okres) + '</b></div>' +
+        (pominieteOpis(d) ? '<p class="podp pom-o">' + T('Do sumy liczą się tylko faktury zakupu (FAZ). ' + (pominieteOpis(d).tylkoPz
+          ? 'PZ to przyjęcia towaru do magazynu — kosztem jest faktura, więc PZ nie wchodzą do sumy ani do uzgodnienia.'
+          : 'Pozostałe dokumenty zostają w pliku, ale nie wchodzą do sumy ani do uzgodnienia.')) + '</p>' : '') +
         (p.inna ? '<p class="podp uw-t">' + T('Rozpoznany jako ' + OPIS[p.strona].co + ' — trafi do karty ' + p.strona + '.') + '</p>' : '') +
         (bylo ? '<p class="podp">' + (bylo.skrot === p.skrot ? T('Ten sam plik jest już zapisany w tym miesiącu — nic się nie zmieni.')
           : T('Zastąpi plik wgrany ' + kiedy(bylo.kiedy) + ' (' + (bylo.kto_imie || '—') + ')' + (bylo.zatwierdzono ? ', już zatwierdzony — nowy trzeba zatwierdzić ponownie, a miesiąc uzgodnić jeszcze raz' : '') + '. Poprzedni zostaje w historii miesiąca.')) + '</p>'
